@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <title> Sheet music sequencer </title>
+        <script src="/src/js/index.js"></script>
+        <style href="/src/css/main.css"></style>
+    </head>
+    <body>
+        <center>
+            <input type="text" id="freq"/>
+            <button id="sendit" onclick="generate_sound()">Play it</button> <button id="stopitplease" onclick="stopit()">Stop it</button>
+            <input type="range" min="-100" max="100" id="bend"/>
+        </center>
+    </body>
+</html>

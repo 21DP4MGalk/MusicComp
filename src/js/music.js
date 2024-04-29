@@ -1,31 +1,35 @@
-const a_context = new AudioContext();  
-var oscillator;
-var et12 = [261.63, 277.18, 293.66, 311.13, 329.63, 349.23, 369.99, 392.0, 415.3, 440, 466.16, 493.88];
-var temperament = et12;
-var concert_A = 440;
+const MainContext = new AudioContext();
+var temperament = [261.6255653005985, 277.182630976872, 293.66476791740746, 311.1269837220808, 329.62755691286986, 349.2282314330038, 369.99442271163434, 391.99543598174927, 415.3046975799451, 440, 466.1637615180899, 493.8833012561241, 523.2511306011974];
+var temperamentList = [[], []]; // NOTE: include 12tet, pythagorean, and some medieval ones, aswell as custom, of course.
+var concertA = 440;
 
-class Note{
-	constructor(pitch, duration){ //float, float
-		this.pitch = pitch;
-		this.duration = duration;
+function getPitchGivenA(desiredPitchNum, referenceANum = 69, referenceA = 440){		
+	// desiredPitchNum is the number assigned to the pitch we want to generate in a scale, for example how Middle C in MIDI format is 60
+	// referenceANum is the number assigned to concert A in the same context, reference A defines concert A. 
+	//All values should be INT
+	if(isNaN(desiredPitchNum) || isNaN(referenceANum) || isNaN(referenceA)){
+		throw new TypeError("One or more of of the parameters used for generating a pitched turned out not to be numbers, but rapscallions in trench coats!");
 	}
-	playDrone(duration){	// in seconds
-		oscillator = a_context.createOscillator();
-		
-		oscillator.type = document.getElementById('wave').value;
-		oscillator.connect(a_context.destination);
-		oscillator.frequency.value = this.pitch;
 
-		oscillator.start();
-		oscillator.stop(duration);
-	}
+	return (referenceA * (Math.pow( Math.pow(2, 1/12), (desiredPitchNum - referenceANum) ) ));
 }
 
-class MusicSection{
-	constructor(bpm, top_time, bottom_time){ //int, int, int
-		this.bpm = bpm;
-		this.top_time = top_time;
-		this.bottom_time = bottom_time;
+function getChromatic12TET(referenceA){
+	if(isNaN(referenceA)){
+		throw new TypeError("Concert A does not appear to be a number.");
+	}
+	
+	tet12 = [];
+	for(i = 0; i < 128; i++){
+		tet12.push(getPitchGivenA(i, 69, referenceA));
+	}
+	return tet12;
+}
+
+class Note{
+	constructor(pitch, duration){ //both must be numeric
+		this.pitch = pitch;
+		this.duration = duration;
 	}
 }
 
@@ -37,25 +41,26 @@ class MusicTextReader{
 	}
 	
 	playNote(note){
-		oscillator = a_context.createOscillator();
+		let oscillator = MainContext.createOscillator();
 
-		//oscillator.type = document.getElementById('wave').value;
+		oscillator.type = 'sine';
 		oscillator.frequency.value = note.pitch;
 		//oscillator.detune = detune;
 		console.log(note.duration * this.bottom_time * (60/this.bpm));
-		oscillator.connect(a_context.destination);
+		oscillator.connect(MainContext.destination);
  	   	oscillator.start();
-		oscillator.stop(note.duration * this.bottom_time * (60/this.bpm));
+		oscillator.stop( MainContext.currentTime + (note.duration * this.bottom_time * (60/this.bpm) ) );
 	}
 
 	playString(){
-		var song_left = this.song;
-		console.log(song_left, this.song);
-		var cur_note = new Note(0, 0);
-		var ascii = 0;
 
-		for(var i = 0; i < song_left.length; i++){
-			ascii = song_left[i].charCodeAt(0);
+		var cur_note = new Note(0, 0);
+		let ascii = 0;
+
+		for(var i = 0; i < this.song.length; i++){
+			ascii = this.song[i].charCodeAt(0);
+			console.log(ascii);
+
 			switch(ascii){
 				case 119:
 					cur_note.duration = 1;
@@ -70,42 +75,24 @@ class MusicTextReader{
 					cur_note.duration = 0.125;
 					break;
 			}
-			console.log(song_left.length, i, i+1);
+			
 			if(ascii < 58 && ascii > 47){
-				if(i+1 < song_left.length && song_left[i+1].charCodeAt(0) < 58 && song_left[i+1].charCodeAt(0) > 47){
-					cur_note.pitch = temperament[parseInt(i+song_left[i+1], 10) % 12];
-					this.playNote(cur_note);
-				}
-				else{
-					cur_note.pitch = temperament[parseInt(i, 10)];
-					this.playNote(cur_note);
-				}
+				ascii = (parseInt( this.song.substring(i) ) - 1) % temperament.length; 
+				cur_note.pitch = temperament[ ascii ];
+				i += ascii.toString().length;
+				console.log(cur_note);
+				this.playNote(cur_note);
 			}
 			console.log('One loop done!');
 		}
 	}
 }
 
-function getContext(){
-	var bpm = document.getElementById('').value;
-	var top_time = document.getElementById('').value;
-	var bottom_time = document.getElementById('').value;
-	return MusicSection(bpm, top_time, bottom_time);
+
+function testStringPlayer(){
+	var reader = new MusicTextReader('q1q2q3q4q5q6q7q8q9q10q11q12q13', 60, 4);
+	reader.playString();
 }
-
-function getNote(){
-	var pitch = document.getElementById('freq').value;
-	var duration = document.getElementById('duration').value;
-	var note = new Note(pitch, duration);
-	return note;
-}
-
-function startDrone(){
-	note = getNote();
-	note.playDrone(document.getElementById('dur').value);
-}
-
-
 
 
 

@@ -40,22 +40,31 @@ class MusicTextReader{
 		this.bottom_time = bottom_time;
 	}
 	
-	playNote(note){
-		let oscillator = MainContext.createOscillator();
+	playNote(note, delay){
+		let attackTime = 0.1;
+		let releaseTime = 3;
 
+		const oscillator = MainContext.createOscillator();
 		oscillator.type = 'sine';
 		oscillator.frequency.value = note.pitch;
-		//oscillator.detune = detune;
-		console.log(note.duration * this.bottom_time * (60/this.bpm));
-		oscillator.connect(MainContext.destination);
- 	   	oscillator.start();
-		oscillator.stop( MainContext.currentTime + (note.duration * this.bottom_time * (60/this.bpm) ) );
+
+		const gainModule = new GainNode(MainContext);
+		gainModule.gain.cancelScheduledValues( MainContext.currentTime + delay);
+		gainModule.gain.setValueAtTime(0, MainContext.currentTime + delay);
+		gainModule.gain.linearRampToValueAtTime(1, MainContext.currentTime + delay + attackTime);
+		gainModule.gain.linearRampToValueAtTime(0, MainContext.currentTime + delay + releaseTime);
+
+
+		oscillator.connect(gainModule).connect(MainContext.destination);
+ 	   	oscillator.start( MainContext.currentTime + delay);
+		oscillator.stop( MainContext.currentTime + delay + (note.duration * this.bottom_time * (60/this.bpm) ) );
 	}
 
 	playString(){
 
 		var cur_note = new Note(0, 0);
 		let ascii = 0;
+		let delay = 0;
 
 		for(var i = 0; i < this.song.length; i++){
 			ascii = this.song[i].charCodeAt(0);
@@ -77,11 +86,24 @@ class MusicTextReader{
 			}
 			
 			if(ascii < 58 && ascii > 47){
-				ascii = (parseInt( this.song.substring(i) ) - 1) % temperament.length; 
-				cur_note.pitch = temperament[ ascii ];
-				i += ascii.toString().length;
+				if(ascii == 48){
+					console.log()
+					cur_note.pitch = 0;
+					console.log(ascii, i);
+
+				}
+				else{
+					ascii = (parseInt( this.song.substring(i) )); 
+					console.log(ascii, i);
+					cur_note.pitch = temperament[ (ascii - 1) % temperament.length ];
+					i += ascii.toString().length - 1;
+					console.log(ascii, i);
+
+				}
 				console.log(cur_note);
-				this.playNote(cur_note);
+
+				this.playNote(cur_note, delay);
+				delay += (cur_note.duration * this.bottom_time * (60/this.bpm));
 			}
 			console.log('One loop done!');
 		}

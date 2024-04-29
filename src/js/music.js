@@ -40,9 +40,7 @@ class MusicTextReader{
 		this.bottom_time = bottom_time;
 	}
 	
-	playNote(note, delay){
-		let attackTime = 0.1;
-		let releaseTime = 3;
+	playNote(note, delay, attackTime = 0.1, releaseTime = 3){
 
 		const oscillator = MainContext.createOscillator();
 		oscillator.type = 'sine';
@@ -112,7 +110,7 @@ class MusicTextReader{
 
 
 function testStringPlayer(){
-	var reader = new MusicTextReader('q1q2q3q4q5q6q7q8q9q10q11q12q13', 60, 4);
+	var reader = new MusicTextReader('q1s8s6s4s2s1h7s5s3q13s2s1q3', 60, 4);
 	reader.playString();
 }
 

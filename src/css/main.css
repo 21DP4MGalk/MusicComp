@@ -1,3 +1,8 @@
+@font-face {
+	font-family: 'LelandMusic';
+	src: url("../font/Leland.otf") format("opentype");
+}
+
 .nav{
 	position: sticky;
         height: 40px;
@@ -32,4 +37,8 @@ button:active{
 	background-color: #EFEFEF;
 	color: #000015;
 
+}
+.notation{
+	font-family: 'LelandMusic';
+	font-size: 50;
 }

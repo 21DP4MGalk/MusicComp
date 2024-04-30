@@ -108,9 +108,12 @@ class MusicTextReader{
 	}
 }
 
+class GrandStaff{
+	
+}
 
 function testStringPlayer(){
-	var reader = new MusicTextReader('q1s8s6s4s2s1h7s5s3q13s2s1q3', 60, 4);
+	var reader = new MusicTextReader('s1s3s5s6s8s10s12s13q0h12q13s3s5s8s0s10s8s6s5s3', 60, 4);
 	reader.playString();
 }
 

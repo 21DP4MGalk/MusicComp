@@ -109,7 +109,18 @@ class MusicTextReader{
 }
 
 class GrandStaff{
-	
+	constructor(bpm, bottomTime, topTime, smallestUnit, song = [[]]){
+		this.bpm = bpm;
+		this.bottomTime = bottomTime;
+		this.topTime = topTime;
+		this.smallestUnit = smallestUnit;
+		generateEmptyStaff();
+	}
+
+	generateEmptyStaff(){
+		emptynote = new Note(0, this.smallestUnit);
+		//for(i = 0; i<)
+	}
 }
 
 function testStringPlayer(){

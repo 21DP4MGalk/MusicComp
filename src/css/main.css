@@ -42,3 +42,30 @@ button:active{
 	font-family: 'LelandMusic';
 	font-size: 50;
 }
+hr{
+	display: block;
+	margin-top: 0;
+	margin-bottom: 0;
+	background-color: black;
+	height: 1px;
+	border-style: solid;
+	border-color: #FFFFFF;
+	border-width: 2px;
+}
+.not{
+	height: 1px;
+	width: 100%;
+	padding-bottom: 5px;
+}
+.notes{
+	position: absolute;
+	font-family: LelandMusic;
+	top: 149px;
+	font-size: 49px;
+	text-transform: full-width;
+	letter-spacing: -15px;
+	white-space: pre;
+}
+/*.noteStrings{
+	user-select: none;
+}*/

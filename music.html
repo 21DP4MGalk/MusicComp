@@ -5,22 +5,76 @@
 		<script src="./src/js/music.js"></script>
 		<link rel="stylesheet" href="./src/css/main.css"></style>
 	</head>
-	<body>
+	<body onload="placeNoteStrings()">
 		<center>
 			
 			<p class="notation">Test &#xE0A4 &#xE0A2 &#xE1D3 &#xE1D5 &#xE1D7 &#xE1D9 &#xE1DB &#xE1D2 &#xE1D4 &#xE1D6 &#xE1D8 &#xE1DA &#xE1DC &#xE1D7 &#xE1D7 &#xE1D7</p>
 			
 			<hr>
 			
-			<select name="note" id="note">
-				<option value="whole">whole</option>
-				<option value="half">half</option>
-				<option value="quarter">quarter</option>
-				<option value="eighth">eighth</option>
-				<option value="sixteenth">sixteenth</option>
-				<option value="thirty-second">thirty-second</option>
+			<select id="noteSelect">
+				<option value="&#xE0A2">whole</option>
+				<option value="&#xE1D3">half</option>
+				<option value="&#xE1D5">quarter</option>
+				<option value="&#xE1D7">eighth</option>
+				<option value="&#xE1D9">sixteenth</option>
+				<option value="&#xE1DB">thirty-second</option>
 			</select>
+			<button onclick="setSelectedNote()"> Select </button>
 
+			<br>
+			<div id="notation" onclick="interpretClick()">
+					<div id="G4" class="not"></div>
+				<hr id="F4">
+					<div id="E4" class="not"></div>
+				<div id="D4"><hr id="D4"></div>
+					<div id="C4" class="not"></div>
+				<div id="B3"><hr id="B3"></div>
+					<div id="A3" class="not"></div>
+				<div id="G3"><hr id="G3"></div>
+					<div id="F3" class="not"></div>
+				<div id="E3"><hr id="E3"></div>
+					<div id="D3" class="not"></div>
+					<div id="C3" class="not" style="height: 10px"></div>
+					<div id="B2" class="not"></div>
+				<div id="A2"><hr id="A2"></div>
+					<div id="G2" class="not"></div>
+				<div id="F2"><hr id="F2"></div>
+					<div id="E2" class="not"></div>
+				<div id="D2"><hr id="D2"></div>
+					<div id="C2" class="not"></div>
+				<div id="B1"><hr id="B1"></div>
+					<div id="A1" class="not"></div>
+				<div id="G1"><hr id="G1"></div>
+					<div id="F1" class="not"></div>
+					<div id="E1" class="not"></div>
+			</div>
+			<div class="noteStrings">
+				<p id="G4n" class="notes"> </p>
+				<p id="F4n" class="notes"> </p>
+				<p id="E4n" class="notes"> </p>
+				<p id="D4n" class="notes"> </p>
+				<p id="C4n" class="notes"> </p>
+				<p id="B3n" class="notes"> </p>
+				<p id="A3n" class="notes"> </p>
+				<p id="G3n" class="notes"> </p>
+				<p id="F3n" class="notes"> </p>
+				<p id="E3n" class="notes"> </p>
+				<p id="D3n" class="notes"> </p>
+				<p id="C3n" class="notes"> </p>
+				<p id="B2n" class="notes"> </p>
+				<p id="A2n" class="notes"> </p>
+				<p id="G2n" class="notes"> </p>
+				<p id="F2n" class="notes"> </p>
+				<p id="E2n" class="notes"> </p>
+				<p id="D2n" class="notes"> </p>
+				<p id="C2n" class="notes"> </p>
+				<p id="B1n" class="notes"> </p>
+				<p id="A1n" class="notes"> </p>
+				<p id="G1n" class="notes"> </p>
+				<p id="F1n" class="notes"> </p>
+				<p id="E1n" class="notes"> </p>
+			</div>	
 		</center>
 	</body>
 </html>

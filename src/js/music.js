@@ -128,10 +128,50 @@ function testStringPlayer(){
 	reader.playString();
 }
 
+function addNoteToStaff(){}
 
+function refreshNotePosition(id){
+	var staffLine = document.getElementById(id);
+	var notes = document.getElementById(id + 'n');
+	notes.style.top = ((staffLine.getBoundingClientRect().top + window.scrollY)) - 145 + 'px';	
+}
 
+function placeNoteStrings(){
+	allLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+	allNums = ['1', '2', '3', '4'];
+	for(i = 0; i < allLetters.length; i++){
+		for(j = 0; j < allNums.length; j++){
+			console.log(i, j);
+			if( (i == 3 || i == 2) && (j == 0) || ((i == 0 || i == 1) && j==3 ) ){
+				continue;
+			}
+			else{
+				refreshNotePosition(allLetters[i] + allNums[j]);
+			}
+		}
+	}
+}
 
+function getPointedElement(){ 
+	var q = document.querySelectorAll(":hover"); 
+	return q[q.length-1]; 
+}
 
+function interpretClick(){
+	var staffLine = getPointedElement();
+	console.log(staffLine.id);
+	if(staffLine.id == "notation"){
+		return;
+	}
+	else{
+		var noteString = document.getElementById(staffLine.id + 'n');
+		var selectedNote = document.getElementById('noteSelect');
+		selectedNote = selectedNote.options[selectedNote.selectedIndex].value;
+		console.log(selectedNote);
+		//noteString.value += selectedNote + ' ';
+		document.getElementById(staffLine.id + 'n').innerHTML += selectedNote + ' ';
+	}
+}
 
 
 

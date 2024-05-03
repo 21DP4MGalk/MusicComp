@@ -15,3 +15,8 @@ $feedController = new UserController();
 $methodName = $uri[3] . "Action";
 $feedController->{$methodName}();
 ?>
+<html>
+    <body>
+        Darn
+    </body>
+</html>

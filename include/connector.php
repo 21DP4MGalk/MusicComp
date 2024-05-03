@@ -1,5 +1,5 @@
 <?php
-define("PROJECTDIR", "/workspaces/kvalifiq");
+define("PROJECTDIR", __DIR__ . "/../");
 
 require_once PROJECTDIR . "/include/config.php";
 

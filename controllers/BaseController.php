@@ -2,7 +2,7 @@
 class BaseController{
     
     function __call($name, $arguments){
-        $this->send_output('', array("HTTP/1.1 404 Error not found"));
+        $this->send_output('AAAAAAAAAAAAA', array("HTTP/1.1 404 Error not found"));
     }
 
     protected function getUriSegments(){

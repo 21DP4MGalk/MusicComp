@@ -141,7 +141,6 @@ function placeNoteStrings(){
 	allNums = ['1', '2', '3', '4'];
 	for(i = 0; i < allLetters.length; i++){
 		for(j = 0; j < allNums.length; j++){
-			console.log(i, j);
 			if( (i == 3 || i == 2) && (j == 0) || ((i == 0 || i == 1) && j==3 ) ){
 				continue;
 			}
@@ -159,18 +158,30 @@ function getPointedElement(){
 
 function interpretClick(){
 	var staffLine = getPointedElement();
-	console.log(staffLine.id);
-	if(staffLine.id == "notation"){
-		return;
-	}
-	else{
+	console.log(event.clientX);
+	var charClicked = Math.round(event.clientX/34);
+
+	if(staffLine.id != "notation"){
 		var noteString = document.getElementById(staffLine.id + 'n');
 		var selectedNote = document.getElementById('noteSelect');
 		selectedNote = selectedNote.options[selectedNote.selectedIndex].value;
-		console.log(selectedNote);
+		
+
+		if(noteString.innerHTML.length >= charClicked && (noteString.innerHTML.charAt(charClicked) != ' ') ){
+			noteString.innerHTML = noteString.innerHTML.substring(0, charClicked-1) + ' ' + noteString.innerHTML.substring(charClicked+1, noteString.innerHTML.length);
+			return;
+		}
+
+		for(i = noteString.innerHTML.length; i <= charClicked; i++){
+			noteString.innerHTML += ' ';
+		}
+
 		//noteString.value += selectedNote + ' ';
-		document.getElementById(staffLine.id + 'n').innerHTML += selectedNote + ' ';
+		noteString.innerHTML = noteString.innerHTML.substring(0, charClicked) + selectedNote + noteString.innerHTML.substring(charClicked, noteString.innerHTML.length);
+		
+		console.log(document.getElementById(staffLine.id + 'n').innerHTML);
 	}
+
 }
 
 

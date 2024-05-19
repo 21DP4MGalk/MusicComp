@@ -119,22 +119,99 @@ class GrandStaff{
 			[], [], [], [], [], 
 			[], [], [], [], [], 
 			[], [], [], [], [],
-			[], [], [], []
+			[], [], [], [], []
 		]	
 	}
 	
-	checkAvailable(Y, X){
+	addNote(Y, X, symbol){
+		var freq = 81 - Y; // Top note 81 is A4
+		var tet12 = getChromatic12TET(concertA);
+		var duration = 0;
+		freq = tet12[freq];
 		
-	}
-	
-	addNote(Y, X, duration){
-		
-	}
-	
-	drawStaff(){
+
+//######################### REWRITE THIS GARBAGE WHEN YOU GET THE CHANCE TO
+		if(symbol.charAt(1) == '4'){
+			freq = 0;
+			switch(symbol.charAt(3)){
+				case('3'):
+					duration = 1;
+					break;
+				case('4'):
+					duration = 0.5;
+					break;
+				case('5'):
+					duration = 0.25;
+					break;
+				case('6'):
+					duration = 0.125;
+					break;
+				case('7'):
+					duration = 0.0625;
+					break;
+				case('8'):
+					duration = 0.3125;
+					break;
+			}
+		}
+		else{
+			switch(symbol.charAt(3)){
+				case('2'):
+					duration = 1;
+					break;
+				case('3'):
+					duration = 0.5;
+					break;
+				case('5'):
+					duration = 0.25;
+					break;
+				case('7'):
+					duration = 0.125;
+					break;
+				case('9'):
+					duration = 0.0625;
+					break;
+				case('8'):
+					duration = 0.3125;
+					break;
+
+			}
+		}
+
+		var note = new Note(freq, duration, X);
+		this.noteArr[Y].push(note);
 
 	}
+
+	drawStaff(){
+		
+		for(var i = 0; i < 5; i++){
+                	 notationCtx.moveTo(0, 100 + i * 15);
+        	         notationCtx.lineTo(notationCan.width, 100 + i * 15);
+	                 notationCtx.stroke();
+
+	        }
+
+		for(var i = 0; i < 5; i++){
+        	         notationCtx.moveTo(0, 190 + i * 15);
+                	 notationCtx.lineTo(notationCan.width, 190 + i * 15);
+                	 notationCtx.stroke();
+
+         	}
+
+        	 notationCtx.stroke();
+	}
+	
+	drawNotes(){
+
+	}
+
+	playNotes(){
+	
+	}
 }
+
+mainStaff = new GrandStaff();
 
 function initCtx(){
 	notationCan = document.getElementById("notation");
@@ -144,23 +221,8 @@ function initCtx(){
 	//notationCan.width = window.screen.width * 0.95;
 	//notationCan.height = window.screen.height;
 	
-	var i;
-	
-	for(i = 0; i < 5; i++){
-		notationCtx.moveTo(0, 100 + i * 15);
-		notationCtx.lineTo(notationCan.width, 100 + i * 15);
-		notationCtx.stroke();
-		
-	}
-	
-	for(i = 0; i < 5; i++){
-		notationCtx.moveTo(0, 190 + i * 15);
-		notationCtx.lineTo(notationCan.width, 190 + i * 15);
-		notationCtx.stroke();
+	mainStaff.drawStaff();
 
-	}
-
-	notationCtx.stroke();
 	notationCtx.fillText(String.fromCharCode(parseInt('E0A2', 16)), -100, -100);
 
 
@@ -180,7 +242,7 @@ function interpretClick(){
 	selectedNote = selectedNote.options[selectedNote.selectedIndex].value;
 
 	mouseY = mouseY - ((mouseY-2) % 7.5);
-	mouseX = mouseX - 7;
+	mouseX = mouseX - ((mouseX-7) % 15);
 
 	if(mouseY < 80 || mouseY > 264.5){
 		return;
@@ -188,8 +250,9 @@ function interpretClick(){
 	
 	var lineFromTop = Math.floor((mouseY-80)/7.5);
 	console.log(lineFromTop)
-	console.log(mouseY)
-
+		
+	mainStaff.addNote(lineFromTop, mouseX, selectedNote);
+	
 	
 	//grandstaff.checkavailable(mouseY, mouseX);
 	notationCtx.fillText(String.fromCharCode(parseInt(selectedNote, 16)), mouseX, mouseY);	
@@ -200,11 +263,24 @@ function testStringPlayer(){
 	reader.playString();
 }
 
-
 function getPointedElement(){ 
 	var q = document.querySelectorAll(":hover"); 
 	return q[q.length-1]; 
 }
 
+async function fetchAddUser(){
+	
+	var data = {test : "cunt"};
+	console.log(JSON.stringify(data));
 
-grandestStaff = new GrandStaff();
+	var response = await fetch("http://localhost/api/addUser.php", {
+	method: "POST",
+	headers: {
+		"Content-Type": "application/json",
+	},
+	body: JSON.stringify(data),
+	});
+
+	var result = await response.json();
+	console.log(result)
+}

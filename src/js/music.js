@@ -123,10 +123,37 @@ class GrandStaff{
 		]	
 	}
 	
+	checkAvailable(Y, X){
+		var lowL = 0;
+		var highL = this.noteArr[Y].length - 1;
+		var cur_X = 0;
+
+		while(lowL <= highL){
+
+			cur_X = this.noteArr[Y][ Math.floor((lowL + highL) / 2) ].X;
+			if( cur_X = X){
+				return Math.floor((lowL+highL) / 2);
+			}
+			else if( cur_X < X ){
+				lowL = Math.floor((lowL + highL) / 2) + 1;
+			}
+			else{
+				highL = Math.floor((lowL + highL) / 2) - 1;
+			}
+		}
+		return -1;
+	}
+
+	compareNoteX(NoteA, NoteB){
+		return NoteA.X - NoteB.X;
+	}	
+	
 	addNote(Y, X, symbol){
 		var freq = 81 - Y; // Top note 81 is A4
 		var tet12 = getChromatic12TET(concertA);
 		var duration = 0;
+		var index;
+
 		freq = tet12[freq];
 		
 
@@ -178,8 +205,16 @@ class GrandStaff{
 			}
 		}
 
-		var note = new Note(freq, duration, X);
-		this.noteArr[Y].push(note);
+		index = this.checkAvailable(Y, X);
+		if(index == -1){
+			var note = new Note(freq, duration, X);
+			this.noteArr[Y].push(note);
+			this.noteArr[Y].sort(this.compareNoteX);
+		}
+		else{
+			this.noteArr[Y].splice(index, 1);
+			//redrawCanvas();
+		}
 
 	}
 
@@ -198,12 +233,38 @@ class GrandStaff{
                 	 notationCtx.stroke();
 
          	}
+        	notationCtx.stroke();
 
-        	 notationCtx.stroke();
+		notationCtx.fillText(String.fromCharCode(parseInt("E050", 16)), 60, 145);	
+		notationCtx.fillText(String.fromCharCode(parseInt("E062", 16)), 60, 205);	
+
+
 	}
 	
 	drawNotes(){
 
+		var notechars = ["E1DB", "E1D9", "E1D7", "E1D5", "E1D3", "E0A2"];
+		var restchars = ["E4E8", "E4E7", "E4E6", "E4E5", "E4E4", "E4E3"];
+		var duration = 0;
+		var posX, posY;
+
+		for(var i = 0; i < this.noteArr.length; i++){
+			for(var j = 0; j < this.noteArr[i].length; j++){
+
+				posX = this.noteArr[i][j].X
+				posY = i;
+				posY = posY * 7.5 + 84;
+
+				duration = Math.log2(this.noteArr[i][j].duration * 32);
+
+				if(this.noteArr[i][j].pitch == 0){
+					notationCtx.fillText(String.fromCharCode(parseInt(restchars[duration], 16)), posX, posY);	
+				}
+				else{
+					notationCtx.fillText(String.fromCharCode(parseInt(notechars[duration], 16)), posX, posY);	
+				}
+			}
+		}
 	}
 
 	playNotes(){
@@ -220,10 +281,9 @@ function initCtx(){
 
 	//notationCan.width = window.screen.width * 0.95;
 	//notationCan.height = window.screen.height;
-	
-	mainStaff.drawStaff();
-
 	notationCtx.fillText(String.fromCharCode(parseInt('E0A2', 16)), -100, -100);
+
+	setTimeout(mainStaff.drawStaff, 50);
 
 
 }
@@ -255,7 +315,7 @@ function interpretClick(){
 	
 	
 	//grandstaff.checkavailable(mouseY, mouseX);
-	notationCtx.fillText(String.fromCharCode(parseInt(selectedNote, 16)), mouseX, mouseY);	
+	//notationCtx.fillText(String.fromCharCode(parseInt(selectedNote, 16)), mouseX, mouseY);	
 }
 
 function testStringPlayer(){

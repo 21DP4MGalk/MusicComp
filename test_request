@@ -1,0 +1,1 @@
+curl --data '{"username":"Bob", "password":"Marley"}' http://localhost/api/addUser.php

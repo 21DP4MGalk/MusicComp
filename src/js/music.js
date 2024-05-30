@@ -314,8 +314,8 @@ function interpretClick(){
 	mainStaff.addNote(lineFromTop, mouseX, selectedNote);
 	
 	
-	//grandstaff.checkavailable(mouseY, mouseX);
-	//notationCtx.fillText(String.fromCharCode(parseInt(selectedNote, 16)), mouseX, mouseY);	
+	grandstaff.checkavailable(mouseY, mouseX);
+	notationCtx.fillText(String.fromCharCode(parseInt(selectedNote, 16)), mouseX, mouseY);	
 }
 
 function testStringPlayer(){

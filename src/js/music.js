@@ -70,7 +70,6 @@ class MusicTextReader{
 
 		for(var i = 0; i < this.song.length; i++){
 			ascii = this.song[i].charCodeAt(0);
-			console.log(ascii);
 
 			switch(ascii){
 				case 119:
@@ -89,25 +88,19 @@ class MusicTextReader{
 			
 			if(ascii < 58 && ascii > 47){
 				if(ascii == 48){
-					console.log()
 					cur_note.pitch = 0;
-					console.log(ascii, i);
 
 				}
 				else{
 					ascii = (parseInt( this.song.substring(i) )); 
-					console.log(ascii, i);
 					cur_note.pitch = temperament[ (ascii - 1) % temperament.length ];
 					i += ascii.toString().length - 1;
-					console.log(ascii, i);
 
 				}
-				console.log(cur_note);
 
 				this.playNote(cur_note, delay);
 				delay += (cur_note.duration * this.bottom_time * (60/this.bpm));
 			}
-			console.log('One loop done!');
 		}
 	}
 }
@@ -120,13 +113,18 @@ class GrandStaff{
 			[], [], [], [], [], 
 			[], [], [], [], [],
 			[], [], [], [], []
-		]	
+		];
+		this.barLines = [100];
 	}
 	
 	checkAvailable(Y, X){
 		var lowL = 0;
 		var highL = this.noteArr[Y].length - 1;
 		var cur_X = 0;
+
+		if(X < 100){
+			return -2;
+		}
 
 		while(lowL <= highL){
 
@@ -213,9 +211,8 @@ class GrandStaff{
 		}
 		else{
 			this.noteArr[Y].splice(index, 1);
-			//redrawCanvas();
 		}
-
+		this.redrawCanvas();
 	}
 
 	drawStaff(){
@@ -237,6 +234,14 @@ class GrandStaff{
 
 		notationCtx.fillText(String.fromCharCode(parseInt("E050", 16)), 60, 145);	
 		notationCtx.fillText(String.fromCharCode(parseInt("E062", 16)), 60, 205);	
+
+		//bars
+		notationCtx.fillText(String.fromCharCode(parseInt("E030", 16)), 80, 145);	
+		notationCtx.fillText(String.fromCharCode(parseInt("E030", 16)), 80, 205);	
+		for(var i = 1; i < this.barLines.length; i++){
+			notationCtx.fillText(String.fromCharCode(parseInt("E030", 16)), this.barLines[i], 145);	
+			notationCtx.fillText(String.fromCharCode(parseInt("E030", 16)), this.barLines[i], 205);	
+		}
 
 
 	}
@@ -267,8 +272,20 @@ class GrandStaff{
 		}
 	}
 
+	redrawCanvas(){
+		notationCtx.clearRect(0, 0, notationCan.width, notationCan.height);
+		this.drawStaff();
+		this.drawNotes();
+	}
+
+
 	playNotes(){
-	
+		notes = this.noteArr;
+		cur_X = 0;
+		cur_notes = [];
+		for(var i = 0; i < this.noteArr.length; i++){
+			
+		}
 	}
 }
 
@@ -283,7 +300,7 @@ function initCtx(){
 	//notationCan.height = window.screen.height;
 	notationCtx.fillText(String.fromCharCode(parseInt('E0A2', 16)), -100, -100);
 
-	setTimeout(mainStaff.drawStaff, 50);
+	setTimeout(mainStaff.drawStaff, 500);
 
 
 }
@@ -293,9 +310,6 @@ function interpretClick(){
 	var rect = notationCan.getBoundingClientRect();
 	var mouseX = event.clientX - rect.left;
 	var mouseY = event.clientY - rect.top;
-	console.log(mouseX);
-	console.log(mouseY);
-	
 
 
 	var selectedNote = document.getElementById('noteSelect');
@@ -309,13 +323,15 @@ function interpretClick(){
 	}
 	
 	var lineFromTop = Math.floor((mouseY-80)/7.5);
-	console.log(lineFromTop)
-		
+	
 	mainStaff.addNote(lineFromTop, mouseX, selectedNote);
-	
-	
-	grandstaff.checkavailable(mouseY, mouseX);
-	notationCtx.fillText(String.fromCharCode(parseInt(selectedNote, 16)), mouseX, mouseY);	
+
+	/*if(mainStaff.checkAvailable(lineFromTop, mouseX) != -1){
+		
+	}
+	else{
+		console.log("UNAVAILABLE");
+	}*/
 }
 
 function testStringPlayer(){
@@ -330,7 +346,7 @@ function getPointedElement(){
 
 async function fetchAddUser(){
 	
-	var data = {test : "cunt"};
+	var data = {username:"BOB",password:"Marley"};
 	console.log(JSON.stringify(data));
 
 	var response = await fetch("http://localhost/api/addUser.php", {

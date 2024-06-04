@@ -4,7 +4,7 @@ var temperament = [261.6255653005985, 277.182630976872, 293.66476791740746, 311.
 var concertA = 440;
 var notationCan;
 var notationCtx;
-
+var mainStaff;
 
 function getPitchGivenA(desiredPitchNum, referenceANum = 69, referenceA = 440){		
 	// desiredPitchNum is the number assigned to the pitch we want to generate in a scale, for example how Middle C in MIDI format is 60
@@ -106,7 +106,7 @@ class MusicTextReader{
 }
 
 class GrandStaff{
-	constructor(){
+	constructor(topTime = 4, bottomTime = 4){
 		this.noteArr = [
 			[], [], [], [], [], 
 			[], [], [], [], [], 
@@ -114,14 +114,20 @@ class GrandStaff{
 			[], [], [], [], [],
 			[], [], [], [], []
 		];
+		this.topTime = topTime;
+		this.bottomTime = bottomTime;
+
 		this.barLines = [100];
+		for(var i = 100; i < notationCan.width; i+=(50*topTime)){
+			this.barLines.push(i);
+		}
 	}
 	
 	checkAvailable(Y, X){
 		var lowL = 0;
 		var highL = this.noteArr[Y].length - 1;
 		var cur_X = 0;
-
+		var X;
 		if(X < 100){
 			return -2;
 		}
@@ -129,7 +135,7 @@ class GrandStaff{
 		while(lowL <= highL){
 
 			cur_X = this.noteArr[Y][ Math.floor((lowL + highL) / 2) ].X;
-			if( cur_X = X){
+			if( cur_X == X){
 				return Math.floor((lowL+highL) / 2);
 			}
 			else if( cur_X < X ){
@@ -146,61 +152,15 @@ class GrandStaff{
 		return NoteA.X - NoteB.X;
 	}	
 	
-	addNote(Y, X, symbol){
+	addNote(Y, X, duration, rest = false){
 		var freq = 81 - Y; // Top note 81 is A4
 		var tet12 = getChromatic12TET(concertA);
-		var duration = 0;
+
 		var index;
 
 		freq = tet12[freq];
-		
-
-//######################### REWRITE THIS GARBAGE WHEN YOU GET THE CHANCE TO
-		if(symbol.charAt(1) == '4'){
+		if(rest){
 			freq = 0;
-			switch(symbol.charAt(3)){
-				case('3'):
-					duration = 1;
-					break;
-				case('4'):
-					duration = 0.5;
-					break;
-				case('5'):
-					duration = 0.25;
-					break;
-				case('6'):
-					duration = 0.125;
-					break;
-				case('7'):
-					duration = 0.0625;
-					break;
-				case('8'):
-					duration = 0.3125;
-					break;
-			}
-		}
-		else{
-			switch(symbol.charAt(3)){
-				case('2'):
-					duration = 1;
-					break;
-				case('3'):
-					duration = 0.5;
-					break;
-				case('5'):
-					duration = 0.25;
-					break;
-				case('7'):
-					duration = 0.125;
-					break;
-				case('9'):
-					duration = 0.0625;
-					break;
-				case('8'):
-					duration = 0.3125;
-					break;
-
-			}
 		}
 
 		index = this.checkAvailable(Y, X);
@@ -209,41 +169,40 @@ class GrandStaff{
 			this.noteArr[Y].push(note);
 			this.noteArr[Y].sort(this.compareNoteX);
 		}
-		else{
+		else if(index >= 0){
 			this.noteArr[Y].splice(index, 1);
 		}
 		this.redrawCanvas();
 	}
 
 	drawStaff(){
-		
+
 		for(var i = 0; i < 5; i++){
                 	 notationCtx.moveTo(0, 100 + i * 15);
         	         notationCtx.lineTo(notationCan.width, 100 + i * 15);
 	                 notationCtx.stroke();
-
 	        }
 
 		for(var i = 0; i < 5; i++){
         	         notationCtx.moveTo(0, 190 + i * 15);
                 	 notationCtx.lineTo(notationCan.width, 190 + i * 15);
                 	 notationCtx.stroke();
-
          	}
-        	notationCtx.stroke();
 
-		notationCtx.fillText(String.fromCharCode(parseInt("E050", 16)), 60, 145);	
-		notationCtx.fillText(String.fromCharCode(parseInt("E062", 16)), 60, 205);	
+		notationCtx.fillText(String.fromCharCode(parseInt("E050", 16)), 10, 145);	
+		notationCtx.fillText(String.fromCharCode(parseInt("E062", 16)), 10, 205);	
 
 		//bars
-		notationCtx.fillText(String.fromCharCode(parseInt("E030", 16)), 80, 145);	
-		notationCtx.fillText(String.fromCharCode(parseInt("E030", 16)), 80, 205);	
-		for(var i = 1; i < this.barLines.length; i++){
-			notationCtx.fillText(String.fromCharCode(parseInt("E030", 16)), this.barLines[i], 145);	
-			notationCtx.fillText(String.fromCharCode(parseInt("E030", 16)), this.barLines[i], 205);	
+	
+		notationCtx.moveTo(100, 100);
+		notationCtx.lineTo(100, 250);
+		notationCtx.stroke();
+
+		for(var i = 1; i < mainStaff.barLines.length; i++){
+			notationCtx.moveTo(this.barLines[i], 100);
+			notationCtx.lineTo(this.barLines[i], 250);
+			notationCtx.stroke();
 		}
-
-
 	}
 	
 	drawNotes(){
@@ -274,6 +233,7 @@ class GrandStaff{
 
 	redrawCanvas(){
 		notationCtx.clearRect(0, 0, notationCan.width, notationCan.height);
+		notationCtx.beginPath();
 		this.drawStaff();
 		this.drawNotes();
 	}
@@ -287,21 +247,84 @@ class GrandStaff{
 			
 		}
 	}
+
+	getNotes(bar){
+		var notes = [];
+		var bottomBound = this.barLines[bar];
+		var topBound = this.barLines[bar+1];
+		for(var i = 0; i < 25; i++){
+			for(var j = 0; j < this.noteArr[i].length; j++){
+				if(this.noteArr[i][j].X > topBound){
+					break;
+				}
+				else if(this.noteArr[i][j].X > bottomBound){
+					notes.push(this.noteArr[i][j])
+				}
+			}
+		}
+		return notes;
+	}
+
+	expandBar(bar, amount){
+		var defaultBar = 50*this.topTime;
+		var targetBar = this.barLines[bar] * amount;
+		var barStart = this.barLines[bar];
+		var notes = this.getNotes(bar);
+		console.log(barStart);
+		if(this.barLines[bar+1] === undefined){
+			return;
+		}
+		var amountPx = (this.barLines[bar+1] - barStart) * (amount-1);
+
+		for(var i = this.barLines.length-1; i > bar; i--){
+			console.log(amountPx);
+			notes = this.getNotes(i);
+			
+			for(var j = 0; j < notes.length; j++){
+				notes[j].X += amountPx;
+			}
+
+			if(i == bar+1){
+				notes = this.getNotes(i-1);
+				for(var j = 0; j < notes.length; j++){
+					notes[j].X = barStart + ((notes[j].X - barStart) * amount);
+				}
+
+				
+			}
+			this.barLines[i] += amountPx;
+
+		} // May you please forgive the inefficency
+		if(amount < 1){
+			for(var i = bar+1; i < this.barLines.length; i++){
+				notes = this.getNotes(i);
+				for(var j = 0; j < notes.length; j++){
+					notes[j].X += amountPx;
+				}
+			}
+		}
+		this.redrawCanvas();
+		console.log(targetBar, this.barLines[bar+1] - this.barLines[bar])
+
+	}
 }
 
-mainStaff = new GrandStaff();
-
 function initCtx(){
+	
+
 	notationCan = document.getElementById("notation");
 	notationCtx = notationCan.getContext("2d");
 	notationCtx.font = "50px LelandMusic";
+	
+	mainStaff = new GrandStaff();
+
 
 	//notationCan.width = window.screen.width * 0.95;
 	//notationCan.height = window.screen.height;
 	notationCtx.fillText(String.fromCharCode(parseInt('E0A2', 16)), -100, -100);
 
-	setTimeout(mainStaff.drawStaff, 500);
-
+	//setTimeout(mainStaff.redrawCanvas, 500);
+	mainStaff.redrawCanvas();
 
 }
 
@@ -310,21 +333,76 @@ function interpretClick(){
 	var rect = notationCan.getBoundingClientRect();
 	var mouseX = event.clientX - rect.left;
 	var mouseY = event.clientY - rect.top;
+	var rest = false;
+
+	var symbol = document.getElementById('noteSelect');
+	symbol = symbol.options[symbol.selectedIndex].value;
+	if(symbol.charAt(1) == '4'){
+		rest = true;;
+		switch(symbol.charAt(3)){
+			case('3'):
+				duration = 1;
+				break;
+			case('4'):
+				duration = 0.5;
+				break;
+			case('5'):
+				duration = 0.25;
+				break;
+			case('6'):
+				duration = 0.125;
+				break;
+			case('7'):
+				duration = 0.0625;
+				break;
+			case('8'):
+				duration = 0.3125;
+				break;
+		}
+	}
+	else{
+		switch(symbol.charAt(3)){
+			case('2'):
+				duration = 1;
+				break;
+			case('3'):
+				duration = 0.5;
+				break;
+			case('5'):
+				duration = 0.25;
+				break;
+			case('7'):
+				duration = 0.125;
+				break;
+			case('9'):
+				duration = 0.0625;
+				break;
+			case('8'):
+				duration = 0.3125;
+				break;
+
+		}
+	}
 
 
-	var selectedNote = document.getElementById('noteSelect');
-	selectedNote = selectedNote.options[selectedNote.selectedIndex].value;
 
 	mouseY = mouseY - ((mouseY-2) % 7.5);
-	mouseX = mouseX - ((mouseX-7) % 15);
-
+	if(duration < 1/this.topTime){
+		mouseX = mouseX - ((mouseX-7) % ( 50 / (duration / (1/this.topTime)) ) );
+	}
+	else{
+		mouseX = mouseX - ((mouseX-7) % 50); 	// first writable position is 107
+	}
+	
 	if(mouseY < 80 || mouseY > 264.5){
 		return;
 	}
 	
+	console.log(mouseX);
 	var lineFromTop = Math.floor((mouseY-80)/7.5);
 	
-	mainStaff.addNote(lineFromTop, mouseX, selectedNote);
+
+	mainStaff.addNote(lineFromTop, mouseX, duration, rest);
 
 	/*if(mainStaff.checkAvailable(lineFromTop, mouseX) != -1){
 		

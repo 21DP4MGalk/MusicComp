@@ -1,4 +1,4 @@
-const AContext = new AudioContext();
+const audioCtx = new AudioContext();
 var temperament = [261.6255653005985, 277.182630976872, 293.66476791740746, 311.1269837220808, 329.62755691286986, 349.2282314330038, 369.99442271163434, 391.99543598174927, 415.3046975799451, 440, 466.1637615180899, 493.8833012561241, 523.2511306011974];
 //var temperamentList = [[], []]; // NOTE: include 12tet, pythagorean, and some medieval ones, aswell as custom, of course.
 var concertA = 440;
@@ -46,20 +46,20 @@ class MusicTextReader{
 	
 	playNote(note, delay, attackTime = 0.1, releaseTime = 3){
 
-		const oscillator = AContext.createOscillator();
+		const oscillator = audioCtx.createOscillator();
 		oscillator.type = 'sine';
 		oscillator.frequency.value = note.pitch;
 
-		const gainModule = new GainNode(AContext);
-		gainModule.gain.cancelScheduledValues( AContext.currentTime + delay);
-		gainModule.gain.setValueAtTime(0, AContext.currentTime + delay);
-		gainModule.gain.linearRampToValueAtTime(1, AContext.currentTime + delay + attackTime);
-		gainModule.gain.linearRampToValueAtTime(0, AContext.currentTime + delay + releaseTime);
+		const gainModule = new GainNode(audioCtx);
+		gainModule.gain.cancelScheduledValues( audioCtx.currentTime + delay);
+		gainModule.gain.setValueAtTime(0, audioCtx.currentTime + delay);
+		gainModule.gain.linearRampToValueAtTime(1, audioCtx.currentTime + delay + attackTime);
+		gainModule.gain.linearRampToValueAtTime(0, audioCtx.currentTime + delay + releaseTime);
 
 
-		oscillator.connect(gainModule).connect(AContext.destination);
- 	   	oscillator.start( AContext.currentTime + delay);
-		oscillator.stop( AContext.currentTime + delay + (note.duration * this.bottom_time * (60/this.bpm) ) );
+		oscillator.connect(gainModule).connect(audioCtx.destination);
+ 	   	oscillator.start( audioCtx.currentTime + delay);
+		oscillator.stop( audioCtx.currentTime + delay + (note.duration * this.bottom_time * (60/this.bpm) ) );
 	}
 
 	playString(){
@@ -106,7 +106,7 @@ class MusicTextReader{
 }
 
 class GrandStaff{
-	constructor(topTime = 4, bottomTime = 4){
+	constructor(bpm = 120, topTime = 4, bottomTime = 4){
 		this.noteArr = [
 			[], [], [], [], [], 
 			[], [], [], [], [], 
@@ -116,6 +116,7 @@ class GrandStaff{
 		];
 		this.topTime = topTime;
 		this.bottomTime = bottomTime;
+		this.bpm = bpm;
 
 		this.barLines = [100];
 		for(var i = 100; i < notationCan.width; i+=(50*topTime)){
@@ -307,6 +308,24 @@ class GrandStaff{
 		console.log(targetBar, this.barLines[bar+1] - this.barLines[bar])
 
 	}
+
+	play(){
+		
+	}
+
+	playLine(Y){
+		notes = this.noteArr[Y];
+		for(var i = 0; i < notes.length(); i++){
+			playNote(notes[i]);
+		}
+	}
+
+	playNote(note){
+		var compressor = audioCtx.createDynamicsCompressor();
+		var gainNode = audioCtx.createGain();
+		var oscillator = audioCtx.createOscillator();
+	}
+
 }
 
 function initCtx(){

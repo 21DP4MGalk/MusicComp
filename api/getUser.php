@@ -2,12 +2,13 @@
 include 'config.php';
 
 
-$query = "SELECT * FROM users";
-$result = $connection->query($query);
-
-//$result = $result->fetch_all(MYSQLI_NUM);
-while($row = $result->fetch_assoc()) {
-    echo $row['username']; 
-}
+$query = "SELECT * FROM users WHERE username = ?";
+$stmnt = $connection->prepare($query);
+$stmnt->bind_param('s', $user);
+$stmnt->execute();
+$result = $stmnt->get_result();
+$result = $result->fetch_assoc();
+echo $row["username"]; 
+echo $row["type"];
 ?>
 

@@ -170,6 +170,8 @@ class GrandStaff{
 	}	
 	
 	addNote(Y, X, duration, rest = false){
+		
+	
 		var freq = 47 - Y; // Top note 47 is A5
 		
 		var index;
@@ -320,6 +322,9 @@ class GrandStaff{
 		for(var i = 0; i < notes.length(); i++){
 			playNote(notes[i]);
 		}
+		fetch('./src/waves/Piano')
+    			.then((response) => response.json())
+    			.then((json) => console.log(json));
 	}
 
 	playNote(note, startTime, bar){

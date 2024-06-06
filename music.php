@@ -4,10 +4,12 @@
 		<title> Musical experiments </title>
 		<script src="./src/js/music.js"></script>
 		<link rel="stylesheet" href="./src/css/main.css"></style>
+		<meta charset="utf-8">
 	</head>
 	<body onload="initCtx()">
 		<center>
-			<button onclick="audioCtx.resume()">START</button>
+			<button onclick="audioCtx.resume()">Turn on audio</button>
+			<button onclick="mainStaff.playPiece()">Play your work</button>
 			<select id="noteSelect">
 				<option value="E0A2">whole</option>
 				<option value="E1D3">half</option>

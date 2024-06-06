@@ -87,5 +87,15 @@
 			"This is the most glorious thing I've ever seen." <br>
 			- <i> I made this one up </i>
 		</blockquote>
+		
+		<p> And now for quotes from our most honoured users, starting from the triple A indie developer of a hit tycoon game Business Road who chimed in to share his opinion on our product. </p>
+		<blockquote>
+		    "Yeah, looks about right" - <i>Krister</i>
+		</blockquote>
+
+		<p> Next up on our list of high profile clients is the world-renown singer songwriter/guitarist know for such songs as _, , __. </p>
+		<blockquote>
+		    "The song is too cliché, start again from scratch" - <i> Asher Gricman </i>
+		</blockquote>
 	</body>
 </html>

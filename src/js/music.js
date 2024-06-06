@@ -1,7 +1,4 @@
 const audioCtx = new AudioContext();
-var temperament = [261.6255653005985, 277.182630976872, 293.66476791740746, 311.1269837220808, 329.62755691286986, 349.2282314330038, 369.99442271163434, 391.99543598174927, 415.3046975799451, 440, 466.1637615180899, 493.8833012561241, 523.2511306011974];
-//var temperamentList = [[], []]; // NOTE: include 12tet, pythagorean, and some medieval ones, aswell as custom, of course.
-var concertA = 440;
 var notationCan;
 var notationCtx;
 var mainStaff;
@@ -105,8 +102,25 @@ class MusicTextReader{
 	}
 }
 
+class Key{
+	constructor(key = 0){
+		this.scale = [];
+		var tet12 = getChromatic12TET(440);
+		
+		for(var i = 0+key; i <= 116+key; i+=12){
+			this.scale.push(i);
+			this.scale.push(i+2);
+			this.scale.push(i+4);
+			this.scale.push(i+5);
+			this.scale.push(i+7);
+			this.scale.push(i+9);
+			this.scale.push(i+11);
+		}
+	}
+}
+
 class GrandStaff{
-	constructor(bpm = 120, topTime = 4, bottomTime = 4){
+	constructor(bpm = 120, key=0, topTime = 4, bottomTime = 4){
 		this.noteArr = [
 			[], [], [], [], [], 
 			[], [], [], [], [], 
@@ -117,6 +131,8 @@ class GrandStaff{
 		this.topTime = topTime;
 		this.bottomTime = bottomTime;
 		this.bpm = bpm;
+		this.temperament = getChromatic12TET(440);
+		this.key = new Key(key);
 
 		this.barLines = [100];
 		for(var i = 100; i < notationCan.width; i+=(50*topTime)){
@@ -154,12 +170,11 @@ class GrandStaff{
 	}	
 	
 	addNote(Y, X, duration, rest = false){
-		var freq = 81 - Y; // Top note 81 is A4
-		var tet12 = getChromatic12TET(concertA);
-
+		var freq = 47 - Y; // Top note 47 is A5
+		
 		var index;
 
-		freq = tet12[freq];
+		freq = this.temperament[this.key.scale[freq]];
 		if(rest){
 			freq = 0;
 		}
@@ -240,15 +255,6 @@ class GrandStaff{
 	}
 
 
-	playNotes(){
-		notes = this.noteArr;
-		cur_X = 0;
-		cur_notes = [];
-		for(var i = 0; i < this.noteArr.length; i++){
-			
-		}
-	}
-
 	getNotes(bar){
 		var notes = [];
 		var bottomBound = this.barLines[bar];
@@ -309,10 +315,6 @@ class GrandStaff{
 
 	}
 
-	play(){
-		
-	}
-
 	playLine(Y){
 		notes = this.noteArr[Y];
 		for(var i = 0; i < notes.length(); i++){
@@ -320,10 +322,39 @@ class GrandStaff{
 		}
 	}
 
-	playNote(note){
-		var compressor = audioCtx.createDynamicsCompressor();
-		var gainNode = audioCtx.createGain();
+	playNote(note, startTime, bar){
+		var beatSec = 60/this.bpm
+		var beatDist = (this.barLines[bar+1] - this.barLines[bar]) / this.topTime;
+    
+		var startPlay = this.topTime * (bar-1) * beatSec + Math.round((note.X - this.barLines[bar])/beatDist) * beatSec
+		var startMute = startPlay + (note.duration * this.bottomTime * beatSec)
+		
 		var oscillator = audioCtx.createOscillator();
+		oscillator.type = "sine";
+		oscillator.frequency.value = note.pitch;
+    
+    		var gainModule = new GainNode(audioCtx);
+
+    		gainModule.gain.cancelScheduledValues( audioCtx.currentTime + startPlay);
+  		gainModule.gain.setValueAtTime(0, audioCtx.currentTime + startPlay);
+  		gainModule.gain.linearRampToValueAtTime(1, audioCtx.currentTime + startPlay + 0.1);
+  		gainModule.gain.linearRampToValueAtTime(0, audioCtx.currentTime + startPlay + 3);
+
+    		oscillator.connect(gainModule).connect(audioCtx.destination);
+    		oscillator.start(audioCtx.currentTime + startPlay - ((Date.now() - startTime)/1000));
+		oscillator.stop(audioCtx.currentTime + startMute - ((Date.now() - startTime)/1000));
+	}
+
+	playPiece(curBar = 0, endBar = this.barLines.length){
+    		var notes = [];
+    		var startTime = Date.now();
+
+    		for(; curBar <= endBar; curBar++){
+        		notes = this.getNotes(curBar);
+        		for(var i = 0; i < notes.length; i++){
+				this.playNote(notes[i], startTime, curBar);
+        		}
+    		}
 	}
 
 }

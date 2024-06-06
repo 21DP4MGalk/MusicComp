@@ -7,7 +7,7 @@
 	</head>
 	<body onload="initCtx()">
 		<center>
-			
+			<button onclick="audioCtx.resume()">START</button>
 			<select id="noteSelect">
 				<option value="E0A2">whole</option>
 				<option value="E1D3">half</option>

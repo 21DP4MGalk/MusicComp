@@ -6,9 +6,9 @@
 	</head>
 	<body>
 		<h1> Join our ranks </h1>
-		<form action="api/addUser.php">
-			<input type="text" id="username" placeholder="Username"></input>
-			<input type="password" id="password" placeholder="Password"></input>
+		<form action="api/addUser.php" method="POST">
+			<input name="username" type="text" id="username" placeholder="Username"></input>
+			<input name="password" type="password" id="password" placeholder="Password"></input>
 			<input type="submit" value="Submit">
 		</form>
 	</body>

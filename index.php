@@ -30,7 +30,12 @@
 
 <br> <br>
 
-		<h1 align="center"> YOU ARE WELCOME!!!! </h1>
+		<h1 align="center"> YOU ARE WELCOME!!!! </h1> <h6> JK you are 
+		<?php 
+		include 'api/getName.php';
+
+		echo $result['username'];
+		?> </h6>
 		<p align="center"> Have you ever wondered, what it would be like, to bask <br>
 			in the glory of a really janky and bad sequencer that runs<br>
 			on the web, made by someone who does not know what he is<br>

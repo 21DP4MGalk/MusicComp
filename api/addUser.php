@@ -12,6 +12,14 @@ $pass = $_POST['password'];
 
 $pass_pln = $pass;
 
+// new section
+$query = "SELECT * FROM users where username = ?";
+$stmnt = $connection->prepare($query);
+$stmnt->bind_param("s", $user);
+$stmnt->execute();
+$result = $stmnt->get_result();
+if($result->num_rows == 0){
+//
 $pass = password_hash($pass, PASSWORD_BCRYPT);
 
 $query = "INSERT INTO users VALUES(NULL, ?, ?, NULL, NULL)";
@@ -28,10 +36,7 @@ $stmnt->execute();
 $result = $stmnt->get_result();
 $result = $result->fetch_assoc();
 
-echo $pass;
-echo $result["password"];
 if( $pass == $result["password"]){
-	echo "AAA";
 }
 
 if(password_verify($pass_pln, $result["password"])){
@@ -42,10 +47,13 @@ $query = "UPDATE users SET token = ? WHERE ID = ?";
 $stmnt = $connection->prepare($query);
 $stmnt->bind_param("si", $token, $result["ID"]);
 $stmnt->execute();
-echo 'test';
-echo $token;
 
-setcookie("token", $token, time() + (86400 * 30), "/");
-echo $_COOKIE['token'];
-
+unset($_COOKIE["token"]);
+unset($_COOKIE["username"]);
+setcookie("token", $token, time() + (86400), "/");
+setcookie("username", $result["username"], time() + (86400), "/");
+}
+else{
+	echo "USERNAME TAKEN, try again";
+}
 ?>

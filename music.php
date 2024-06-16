@@ -26,6 +26,8 @@
 				<option value="E4E7">sixteenth r</option>
 				<option value="E4E8">thirty-second r</option>
 			</select>
+			<input id="bpmtext" placeholder="BPM: 120"/>
+			<button onclick="mainStaff.updateBPM()">Update BPM</button>
 			<canvas id="notation" onclick="interpretClick()" width="1800px" height="1080px"> </canvas>
 
 		</center>

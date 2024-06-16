@@ -26,15 +26,19 @@
 			<a href="register.php">Register</a>
 			<a href="login.php">Login</a>
 			<a href="https://www.youtube.com/watch?v=doEqUhFiQS4">Documentation of my development process</a>
+			<a href="api/logout.php">Logout</a>
 		</div>
 
 <br> <br>
 
 		<h1 align="center"> YOU ARE WELCOME!!!! </h1> <h6> JK you are 
 		<?php 
-		include 'api/getName.php';
-
-		echo $result['username'];
+		if(isset($_COOKIE["username"])){
+			echo $_COOKIE["username"];
+		}
+		else{
+			echo "an unregisterd pleb";
+		}
 		?> </h6>
 		<p align="center"> Have you ever wondered, what it would be like, to bask <br>
 			in the glory of a really janky and bad sequencer that runs<br>

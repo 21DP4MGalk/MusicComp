@@ -362,6 +362,13 @@ class GrandStaff{
     		}
 	}
 
+	updateBPM(){
+		var bpm = document.getElementById('bpmtext');
+		if(!isNaN(bpm.value)){
+			this.bpm = +bpm.value;
+		}
+	}
+
 }
 
 function initCtx(){

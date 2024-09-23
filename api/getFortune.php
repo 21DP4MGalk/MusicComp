@@ -1,5 +1,4 @@
 <?php
-
 	$messages = array(
 	"I hold no opinion on this website.",
 	"This sucks I wanna go home.",
@@ -19,7 +18,8 @@
 	"Can I has testimonial?",
 	"Despite the allegations I was never a race car driver.",
 	"Music to my ears.",
-	"Will probably look cool once it's finished.");
-        echo $messages[rand(0, 17)];
-
+	"Will probably look cool once it's finished.",
+	"Reborn after abandonment!",
+	"I LIVE!");
+        echo $messages[rand(0, 19)];
 ?>

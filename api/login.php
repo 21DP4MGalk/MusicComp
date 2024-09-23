@@ -6,7 +6,6 @@ include 'config.php';
 $pass = $_POST["password"];
 $username = $_POST["username"];
 
-
 $query = "SELECT *  FROM users WHERE username = ?";
 $stmnt = $connection->prepare($query);
 $stmnt->bind_param("s", $username);

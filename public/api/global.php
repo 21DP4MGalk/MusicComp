@@ -1,5 +1,5 @@
 <?php
-verifyData($str, $len){
+function verifyData($str, $len){
 	if(strlen($str) > $len){
 		return 1;
 	}

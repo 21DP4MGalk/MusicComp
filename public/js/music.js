@@ -483,20 +483,3 @@ function getPointedElement(){
 	var q = document.querySelectorAll(":hover"); 
 	return q[q.length-1]; 
 }
-
-async function fetchAddUser(){
-	
-	var data = {username:"BOB",password:"Marley"};
-	console.log(JSON.stringify(data));
-
-	var response = await fetch("http://localhost/api/addUser.php", {
-	method: "POST",
-	headers: {
-		"Content-Type": "application/json",
-	},
-	body: JSON.stringify(data),
-	});
-
-	var result = await response.json();
-	console.log(result)
-}

@@ -1,23 +1,7 @@
 <html>
 	<head>
-		<link rel="stylesheet" href="./src/css/main.css">
-		<style>
-			input{
-				pointer-events: none;
-			}
-			div#nav{
-				display: box;
-				background-color: #EFEFEF;
-				width: 100%;
-				height: 50px;
-				position: fixed;
-			}
-			a{	
-				display: box;
-				margin-left: 25px;
-				font-size: 20px;
-			}
-		</style>
+		<link rel="stylesheet" href="./css/main.css">
+		<link rel="stylesheet" href="./css/index.css">
 	</head>
 	<body>
 		

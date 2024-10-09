@@ -7,8 +7,11 @@ include 'global.php';
 //$user = $data->username;
 //$pass = $data->password;
 
-$user = $_POST['username'];
-$pass = $_POST['password'];
+//$user = $_POST['username'];
+//$pass = $_POST['password'];
+
+$user = "testbioy";
+$pass = "passwordmang";
 
 if(verifyData($user, 20)){
 	echo("I'm hip to your nonsense");
@@ -29,7 +32,11 @@ if($result->num_rows == 0){ // if there are no users with the same username, go 
 	$stmnt = $connection->prepare($query);
 	$stmnt->bind_param('ss', $user, $pass);
 	$stmnt->execute();
+	$result = $stmnt->get_result();
+	$result = $result->fetch_assoc();
 
+	$var_dump($result);
+		
 	$token = bin2hex(random_bytes(16));
 
 	$query = "UPDATE users SET token = ? WHERE username = ?";
@@ -45,4 +52,5 @@ if($result->num_rows == 0){ // if there are no users with the same username, go 
 else{
 	echo "USERNAME TAKEN, try again";
 }
+$connection->close();
 ?>

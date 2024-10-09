@@ -2,6 +2,7 @@ CREATE TABLE `users` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `username` varchar(20) NOT NULL,
   `password` char(60) NOT NULL,
+  `token` char(128) NOT NULL,
   `type` enum('registered','admin') DEFAULT 'registered',
   PRIMARY KEY (`ID`)
 )

@@ -2,10 +2,10 @@ CREATE TABLE `users` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `username` varchar(20) NOT NULL,
   `password` char(60) NOT NULL,
-  `token` char(128) NOT NULL,
+  `token` char(128) DEFAULT NULL,
   `type` enum('registered','admin') DEFAULT 'registered',
   PRIMARY KEY (`ID`)
-)
+);
 
 
 CREATE TABLE `pieces` (
@@ -16,7 +16,7 @@ CREATE TABLE `pieces` (
   PRIMARY KEY (`ID`),
   KEY `userID` (`userID`),
   CONSTRAINT `pieces_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`ID`)
-)
+);
 
 
 CREATE TABLE `instruments` (
@@ -28,4 +28,4 @@ CREATE TABLE `instruments` (
   PRIMARY KEY (`ID`),
   KEY `pieceID` (`pieceID`),
   CONSTRAINT `instruments_ibfk_1` FOREIGN KEY (`pieceID`) REFERENCES `pieces` (`ID`)
-) 
+);

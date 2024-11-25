@@ -1,8 +1,6 @@
 <?php
+include 'config.php';
 function getLoginToken($pass, $user){
-	include 'config.php';
-
-
 	$query = "SELECT * FROM users WHERE username = ?";
 	$stmnt = $connection->prepare($query);
 	$stmnt->bind_param("s", $user);

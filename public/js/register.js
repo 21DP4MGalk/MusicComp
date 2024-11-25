@@ -1,18 +1,17 @@
-async function fetchAddUser(){
+async function submitRegistrationForm(){
 	
 	var usernameField = document.getElementById("username");
 	var passwordField = document.getElementById("password");
-	var data = {username:usernameField.value,password:passwordField.value};
-	console.log(JSON.stringify(data));
-
-	var response = await fetch("http://localhost/api/addUser.php", {
-	method: "POST",
-	headers: {
-		"Content-Type": "application/json",
-	},
-	body: JSON.stringify(data),
+	data = new FormData;
+	data.append("username", usernameField.value)
+	data.append("password", passwordField.value)
+	
+	var response = await fetch("/api/addUser.php", {
+		method: "POST",
+		body: data,
 	});
-
-	var result = await response.json();
-	console.log(result)
+	var result = await response
+	if(result.ok){
+		window.location.href = "tutorial.php";
+	}
 }

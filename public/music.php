@@ -2,8 +2,8 @@
 <html>
 	<head>
 		<title> Musical experiments </title>
-		<script src="./src/js/music.js"></script>
-		<link rel="stylesheet" href="./src/css/main.css"></style>
+		<script src="./js/music.js"></script>
+		<link rel="stylesheet" href="./css/main.css"></style>
 		<meta charset="utf-8">
 	</head>
 	<body onload="initCtx()">

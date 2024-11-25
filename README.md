@@ -1,4 +1,4 @@
-# MusicComp
+# MusicComp demilitarized zone
 
 Polar bears yes database tree music-comp.org.
 Above lazy explosion.
@@ -22,40 +22,80 @@ Tesladownunder.jpg
                 - Nikolai Eddison - professional
 
 ```
-       /\      
-      /  \     
-     / _o \    
-    / <(\  \   
-   /   />`A \  
-  '----------`
+조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 조선민주주의인민공화국 UOOOOOOOOOOOOOOOOOOO
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWKKNNWMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMW0c:clxKNMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMXl'''''lKMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWx,''''':OWMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMXl''''''';oxONMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWXNWWNO:''.''''''';xNM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMW0o::ol:;'.'''''''''',dX
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM0:'''''''''.'''''';dOxxK
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWWKxdddddddddddddodxKWMMWM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWXXKKXXXKKKKKKKXXXXXXXXXXXXXXNNWWWMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMXxccccccc::c::cccccccccccccccdKWMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWNXNWMMMMMMMMMMMMMMMNx;;;;;;;;;;;;;;;;;;;;;;;;;:dXWMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWXOxoclkNMMMMMMMMMMMMMMWKd:;;;;;;;;;;;;;;;;;;;;;:oOXMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWOl:;;::cxXWMMMMMMMMMMMMMMN0l;;;;;;;;;;;;;;;;;;;:dXMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMXxdxkO0KKOKNWWWWWWWMMWNNWMWOc;;;;;;;;;;;;;;;;;;;cOWMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWXNWWMMMMXxkNWWWWWWWWWXOddkxc;;;;;;;;;;;;;;;;;;;;;lkNMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWWWMMMMMMWk:cOWMMMMMMMMMWKkl:;;;;;;;;;;;;;;;;;;;;;;;dXMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMWWWWMMMMMMMWKl;;oKMMMMMMMMMMMWXOl;;;;;;;;;;;;;;;;;;;;;l0WMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMWWWWMMMMMMMMMNd;;;:xNMMMMMMMMMMMMWXxc;;;;;;;;;;;;;;;;;;;lKMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMWWWWWNWMMMMMMMMMMWOc;;;;c0WMMMMMMMMMMMMMWOl;;;;;;;;;;;;;;;;;;c0WMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMWKxkXWWWMMMMMMMMMMWKo;;;;;;oXWWMMMMMMMMMMMMW0l;;;;;;;;;;;;;;:coxKMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMWWXkdccOXKKKKKKKKKKKK00d:;;;;;;:dO0KKKKKKKKKKK0KXkc;;;;;;;;;:cdOKXWWMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMWX0kddc;;:xNXOdc:::::::::::;;;;;;;;;;::::::::::::cdOXXd;;;;;;;;lOXWMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMWX0xc:;;;;;;cOWMWN0xl:;;;;;;;;;;;;;;;;;;;;;;;;;;;:lxKNWMWk:;;;;;:lOWMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMNOdcc:;;;;;;;;lKMMMMMWN0dc;;;;;;;;;;;;;;;;;;;;;;:lx0NWMMMMW0c;;:okKXWMMMMMMMMMMMMMMMMMMMMMMM
+MMMMWN0ko:;;;;;;;;;;;;lKMMMMMMMMWXOoc;;;;;;;;;;;;;;;;;cdOXWMMMMMMMW0odOKNWMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMNOo:;;;;;;;;;;;;;;;c0WMMMMMMMMMWNOc;;;;;;;;;;;;;;;c0WMMMMMMMMMMWKOXMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMXd:;;;;;;;;;;;;;;;;;:xNMMMMMMMMMMNk:;;;;;;;;;;;;;;;:OWMMWWWWWWWWWWWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+WW0l;;;;;;;;;;;;;;;;;;;l0WMMMMMMMMW0l;;;;;;;;;;;;;;;;;lKWWWWWNNWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+X00xlc;;;;;;;;;;;;;;;;;;dXWMMMMMMWXd;;;;;;cdkkoc;;;;:coONWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+NNWWNKd::lc:;;;;;;;;;;;;:dXWMMMMMNk:;;;:okKWMWNKkocoOXNWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMKddK0xdl:;;;;;;;;;;;o0WMMMW0l;:lxKNWMMMMMMWNXXWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMN0KN00NN0Okxo:;;;;;;;cxKWWXxld0NWMMMMMMMMMMMMWWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMWWWWWWMMMMMXd:;;;;;;;;;cx0K0XWMMMMMMMMMMMMWNXXNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMWOc;;;;;;;;;;;:okKNWMMMMMMMMMMMNXNNNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMW0l;;;;;;;;;;;;;;;:ldxO0KXNNNNNNX00KKXWWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMW0l;;;;;;;;;;;;;;;;;;;;;::cllllllc:::cloxKWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMWKl;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;lkXWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMXd;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:lkKNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMNOl::c::;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;cdOKNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMWNNNXKKK0OO00000000000000000000000000000000000000000NMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMNXNKkxkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk0NMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMWXkc'''''''''''''''''''''''''''''''''''''''''''''''',cOWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMM0:''''''''''''''''''''''''''''''',:oddddooddxddddodOXWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMWX0l,''''''''''''''''''''''''''''''cONWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMN0xxdlcc:,''''''''''''''''''''''';dKWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMWKxl;,'''',;ll;''''''''.''';lOWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMKxooo:::,'c0XOlc;';cloc,';kWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMWNWXOdlloxKWWWWNKdONWWN0kONMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMWKkkKNMMMMMMMMWWMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 
-            O
-    /~~~|#|]|=\|---\__
-  |-=_____________  |\\ ,               O       O                         _[TT]_j__,(  j"n,.      __i_[TT]_
- I|_/,-.-.-.-.-,-.\_|='(               T/\     /\=,---.                  (_)oooo(_)'  ,m^.Y.v   )"(_)oooo(_)
-    ( o )( o )( o )     \              U /\   /\   `O'           
-     `-'-'-'-'-`-'
-
-
-                             ___
-                     /======/
-            ____    //      \___       ,/
-             | \\  //           :,   ./
-     |_______|__|_//            ;:; /
-    _L_____________\o           ;;;/
-____(CCCCCCCCCCCCCC)____________-/_____________________
-
-
-       /\      
-      /  \     
-     / _o \    
-    / <(\  \   
-   /   />`A \  
-  '----------` 
+                                  |>>>
+                                  |
+                    |>>>      _  _|_  _         |>>>
+                    |        |;| |;| |;|        |
+                _  _|_  _    \\.    .  /    _  _|_  _
+               |;|_|;|_|;|    \\:. ,  /    |;|_|;|_|;|
+               \\..      /    ||;   . |    \\.    .  /
+                \\.  ,  /     ||:  .  |     \\:  .  /
+                 ||:   |_   _ ||_ . _ | _   _||:   |
+                 ||:  .|||_|;|_|;|_|;|_|;|_|;||:.  |
+                 ||:   ||.    .     .      . ||:  .|
+                 ||: . || .     . .   .  ,   ||:   |       \,/
+                 ||:   ||:  ,  _______   .   ||: , |            /`\
+                 ||:   || .   /+++++++\    . ||:   |
+                 ||:   ||.    |+++++++| .    ||: . |
+              __ ||: . ||: ,  |+++++++|.  . _||_   |
+     ____--`~    '--~~__|.    |+++++__|----~    ~`---,              ___
+-~--~                   ~---__|,--~'                  ~~----_____-~'   `~----~~
+The Gnome Castle
 
 ```
-Ascii art shamelessly stolen from cww, kg, Krzysztof Biolik and stef.
-
+The usage of chemical weapons is strictly ~~forbidden~~ enforced
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>

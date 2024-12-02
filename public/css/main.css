@@ -1,13 +1,13 @@
 @font-face {
 	font-family: 'LelandMusic';
-	src: url("../font/Leland.otf") format("opentype");
+	src: url("/font/Leland.otf") format("opentype");
 }
 
 .nav{
 	position: sticky;
-        height: 40px;
-        box-shadow: 0px 2px;
-        width: 100%;
+    height: 40px;
+    box-shadow: 0px 2px;
+    width: 100%;
 	background-color: #ffffff;
 	position: fixed;
 	top: 0;
@@ -75,3 +75,5 @@ hr{
 h1{
 	align: center;
 }
+
+

@@ -1,20 +1,23 @@
 <html>
 	<head>
-		<link rel="stylesheet" href="./css/main.css">
-		<link rel="stylesheet" href="./css/index.css">
+		<script src="/js/navbar.js"></script>
+		<script src="/js/index.js"></script>
+		<link rel="stylesheet" href="/css/navbar.css"/>
+		<link rel="stylesheet" href="/css/index.css"/>
+		<link rel="stylesheet" href="/css/global.css"/>
 	</head>
-	<body>
-		
+	<body onload="init()">
 		<div id="nav"> 
-			<a class="navlink" href="music.php">Music Page</a> 
-			<a class="navlink" href="register.php">Register</a>
-			<a class="navlink" href="login.php">Login</a>
-			<a class="navlink" href="https://www.youtube.com/watch?v=doEqUhFiQS4">Documentation of my development process</a>
-			<a class="navlink" onclick="logout()">Logout</a>
+			<a id="navIndex" href="index.php">Home</a>
+			<a id="navMusic" href="music.php">Music Page</a> 
+			<a id="navRegister" href="register.php">Register</a>
+			<a id="navLogin" href="login.php">Login</a>
+			<a id="navAstley" href="https://www.youtube.com/watch?v=doEqUhFiQS4">Documentation of my development process</a>
+			<a id="navLogout" onclick="logout()">Logout</a>
 		</div>
-		<div id="content">
+		<div id="contentStart"></div>
 			<h1 align="center"> YOU ARE WELCOME!!!! </h1> 
-			<h6> JK you are 
+			<h6 align="center"> JK you are 
 			<?php 
 			if(isset($_COOKIE["username"])){
 				echo $_COOKIE["username"];
@@ -31,27 +34,30 @@
 				SQL injections. I will gladly rip my hair out trying to undo<br>
 				the damages, you scullywagger. Also I do not know what to put<br>
 				here for now so I will add faux news. <br></p>
-
+			<br>
 			<hr>
 			<br>
+		
 			<h2> Current development status. </h2>
 
 			<p> Below you can observe all kinds of neat tidbits about the current
-			progress of the development of this inglorious website. <br>
+			progress of the development of this inglorious website. <br> <br>
 			Current progress: </p>
 
-			<progress value=0.1>I AM SCREWED</progress> <br>
+			<progress value=0.1>Hey at least it looks kind of pretty</progress> <br>
 			<p> I AM SCREWED </p>
-			<h3> Goals:</h3> <br>
-			<p> Writing basic classical notation: </p> <input type="checkbox" checked>
-			<p> Basic crud API: </p> <input type="checkbox" >
-			<p> Login system: </p> <input type="checkbox" >
-			<p> Witty pages: </p> <input type="checkbox" >
-			<p> Modern UI: </p> <input type="checkbox" >
-			<p> Horribly outdated UI: </p> <input type="checkbox" checked>
+			<div class="goals">
+				<h3> Goals:</h3>
+				<p> Rewrite the backend </p> <input type="checkbox"> <br>
+				<p> Rewrite the music page: </p> <input type="checkbox"> <br>
+				<p> Login system: </p> <input type="checkbox"> <br>
+				<p> Better UI: </p> <input type="checkbox"> <br>
+			</div>
 		
+			<br>
 			<hr>
 			<br>
+		
 			<h2> SATISFIED CUSTOMER TESTIMONIALS </h2>
 			<p> You're reading that right, despite our website <br>
 			having an uptime of approximately 0 minutes on public servers, <br>
@@ -87,10 +93,20 @@
 
 			<p> Next up on our list of high profile clients is the world-renown singer songwriter/guitarist know for such songs as _, , __. </p>
 			<blockquote>
-				"The song is too cliché, start again from scratch" - <i> Asher Gricman </i>
+				"The song is too cliché, start again from scratch" - <i> Asher </i>
 			</blockquote>
-		</div>
-		<footer>
-		</footer>
+
+			<p>  </p>
+			<blockquote>
+				"Call me Sancho, for thou website hast noteworthty notes, capable of altering human society as a whole, I'm certainly certain that the Index would approve of such a donation to the society defined by the fingers, the thumb might not agree, however my response to that is "I have a gun"." - <i> Nils (verified owner of a scam site known as EchoAuctions) </i>
+			</blockquote>
+			
+			<p>  </p>
+			<blockquote>
+				"Good shit, I like it, and not because I'm a paid actor." - <i> Aleksanya </i>
+			</blockquote>
+			
+		<div id="fadeIn"></div>
+	
 	</body>
 </html>

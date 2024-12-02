@@ -1,5 +1,8 @@
 # MusicComp demilitarized zone
 
+Disclaimer:
+我爱蛋黄酱,我一直喜欢蛋黄酱, 我和我的家人一直喜欢蛋黄酱。 我和芥末没有关系.
+
 Polar bears yes database tree music-comp.org.
 Above lazy explosion.
 Hairless Drugdealer is Jimmy "Beast" Lime, Mr.

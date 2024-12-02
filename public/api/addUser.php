@@ -32,17 +32,11 @@ if($result->num_rows == 0){ // if there are no users with the same username, go 
 	$stmnt->execute();
 	$result = $stmnt->get_result();
 
-
-	/*$query = "UPDATE users SET token = ? WHERE username = ?";
-	$stmnt = $connection->prepare($query);
-	$stmnt->bind_param("ss", $token, $user);
-	$stmnt->execute();
-*/
 	unset($_COOKIE["token"]);
 	unset($_COOKIE["username"]);
 	setcookie("token", $token, time() + (86400), "/");
-	setcookie("username", $user, time() + (86400), "/");
-	echo("All good man");
+
+	echo($user);
 }
 else{
 	echo "USERNAME TAKEN, try again";

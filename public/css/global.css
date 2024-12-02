@@ -1,0 +1,33 @@
+body{
+    background-color: ivory;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+}
+button{
+	background-color: snow;
+	color: #232323;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color color;
+    transition-duration: 0.25s;
+    border-radius: 5px;
+}
+button:hover{
+	background-color: #232323;
+	color: #FAFAFA;
+}
+.left{
+    text-align: left;
+}
+.right{
+    text-align: right;
+}
+#contentStart{
+    margin-top: 80px;
+}
+.content{
+    background-color: oldlace;
+}
+hr{
+	width: 50%;
+}

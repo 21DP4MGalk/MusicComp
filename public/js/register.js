@@ -1,17 +1,45 @@
 async function submitRegistrationForm(){
-	
+	var errorMsg = document.getElementById("error");
+	errorMsg.innerText = "";
+
 	var usernameField = document.getElementById("username");
+	var emailField = document.getElementById("email");
 	var passwordField = document.getElementById("password");
+	var passConfirmField = document.getElementById("passConfirm");
+
+	if(passwordField.value != passConfirmField.value){
+		errorMsg.innerText = "Passwords do not match!";
+		return;
+	}
+
+	if(!usernameField.value || !emailField.value || !passwordField.value || !passConfirmField.value){
+		errorMsg.innerText = "Please fill out all the fields";
+		return;
+	}
+
+	if(!(/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/.test(emailField.value))){
+		errorMsg.innerText = "Not a valid email!";
+		return;
+	}
+	if(!( /^.{12,}$/.test(passwordField.value))){
+		errorMsg.innerText = "Please make the password longer than 12 characters!";
+		return;
+	}
+
 	data = new FormData;
-	data.append("username", usernameField.value)
-	data.append("password", passwordField.value)
+	data.append("username", usernameField.value);
+	data.append("password", passwordField.value);
 	
 	var response = await fetch("/api/addUser.php", {
 		method: "POST",
 		body: data,
 	});
-	var result = await response
+	var result = await response;
+
 	if(result.ok){
-		window.location.href = "tutorial.php";
+		result = result.body;
+		sessionStorage.setItem("username", result.username);
+		document.getElementById
+		setTimeout(() => {window.location.href = "tutorial.php";}, 2500)
 	}
 }

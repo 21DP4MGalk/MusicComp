@@ -1,16 +1,14 @@
 <html>
-	<head>
-		<title>Register to our bad site</title>
-		<script src="/js/register.js"></script>
-		<script src="/js/navbar.js"></script>
-		<link rel="stylesheet" href="/css/global.css">
-		<link rel="stylesheet" href="/css/register.css">
-		<link rel="stylesheet" href="/css/navbar.css">
+    <head>
+        <title>Privacy and cookies</title>
+        <script src="/js/navbar.js"></script>
+		<link rel="stylesheet" href="/css/navbar.css"/>
+        <link rel="stylesheet" href="/css/global.css"/>
+		<link rel="stylesheet" href="/css/privacy.css"/>
 		<link rel="stylesheet" href="/css/footer.css"/>
-	</head>
-	<body onload="navInit();">
-
-		<div id="nav"> 
+    </head>
+    <body>
+        <div id="nav"> 
 			<a id="navHome" href="index.php">Home</a>
 			<a id="navMusic" href="music.php">Music Page</a> 
 			<a id="navRegister" href="register.php">Register</a>
@@ -18,25 +16,17 @@
 			<a id="navAstley" href="https://www.youtube.com/watch?v=doEqUhFiQS4">Documentation of my development process</a>
 			<a id="navLogout" onclick="logout()">Logout</a>
 		</div>
-
-		<div id="contentStart"></div>
-		<div id="registrationForm">
-			<h1 align="center"> Join our ranks </h1>
-			<div id="inputFields">
-				<p class="fieldNames">Username: </p><input id="username" placeholder="Enter your username"/> <br><br>
-				<p class="fieldNames">Email:</p><input id="email" placeholder="Enter your email"/> <br><br>
-				<p class="fieldNames">Password:</p><input id="password" type="password" placeholder="Enter a password, at least 12 characters"/> <br><br>
-				<p class="fieldNames">Confirm password:</p><input id="passConfirm" type="password" placeholder="Enter the password again to confirm it"/> <br><br>
-				<p id="error"></p>
-			</div>
-			<button id="submit" onclick="submitRegistrationForm()">Register</button>
-		</div>
-		<div id="success">
-			<h1>Registration successful!</h1>
-		</div>
-
-
-		<div id="footer">
+        <div id="contentStart"></div>
+        <h1> THIS SITE USES COOKIES FOR YOUR LOGIN TOKEN </h1>
+        <h4> So far that's it, you can check it yourself, I don't collect shit.</h4>
+        <h6> Your username is also stored in session storage and that's it.</h6>
+        <p>If you don't trust me, go check the code out you bald bastard.</p>
+        <a href="https://github.com/21DP4MGalk/MusicComp">My github</a>
+        <p>Enjoy this pic stolen shamelessly from <a href="https://tesladownunder.com/">tesladownunder.com</a>, I really like it. All rights reserved by them obviously.</p>
+        <p>Alternatively, enjoy <a href="https://vimm.net/vault/290">Duck Tales for the NES</a></p>
+        <img src="https://tesladownunder.com/TeslaColorREDBilat00811000.jpg" alt="Picture of a man hooked up to a ladder via tesla coil, looks cool"/>
+        
+        <div id="footer">
 			<div id="footerPages">
 				<p class="footerHeader">Main links:</p>
 				<p class="footerContent">
@@ -67,5 +57,5 @@ Address: Aiz maķīša
 Your IP: <?php echo($_SERVER['REMOTE_ADDR'])?></p></pre>
 			</div>
 		</div>
-	</body>
+    </body>
 </html>

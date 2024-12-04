@@ -11,4 +11,18 @@ function navInit(){
     }
 }
 
-//setTimeout(navInit, 5);
+async function logout(){
+    if(confirm("Are you sure you wish to log out?")){
+        var response = await fetch("/api/logout.php");
+        if(!response.ok){
+            alert(response.body);
+            return
+        }
+        sessionStorage.setItem("username", "");
+        window.location.href = "";
+    }
+}
+
+window.onload = function(){
+    navInit(); 
+}

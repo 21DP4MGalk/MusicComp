@@ -20,6 +20,18 @@
 	"Music to my ears.",
 	"Will probably look cool once it's finished.",
 	"Reborn after abandonment!",
-	"I LIVE!");
-        echo $messages[rand(0, 19)];
+	"I LIVE!",
+	"Ay Tone",
+	"What's all this gabagool?",
+	"You come to me girthless, on fat bear weeb.",
+	"Free tidbit",
+	"Free gonbong",
+	"Glory to broadband kanye",
+	"Aye I'm walkin' 'ere",
+	"Lobu rītu!",
+	"Latgale iz myužu",
+	"Lobs bej puika myusu Džerijs",
+	"I'm jerry dabu di dabu dai",
+	"Only shooting dope, breaks the moold");
+    echo $messages[rand(0, count($messages)-1)];
 ?>

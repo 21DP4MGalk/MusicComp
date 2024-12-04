@@ -39,7 +39,26 @@ async function submitRegistrationForm(){
 	if(result.ok){
 		result = result.body;
 		sessionStorage.setItem("username", result.username);
-		document.getElementById
-		setTimeout(() => {window.location.href = "tutorial.php";}, 2500)
+
+		var success = document.getElementById("success");
+		success.style.visibility = "visible";
+		success.style.opacity = "1";
+		setTimeout(() => {window.location.href = "tutorial.php";}, 2500);
 	}
+	else{
+		errorMsg.innerText = result.status + result.body;
+	}
+}
+
+function debugRegister(){
+	var usernameField = document.getElementById("username");
+	var emailField = document.getElementById("email");
+	var passwordField = document.getElementById("password");
+	var passConfirmField = document.getElementById("passConfirm");	
+	var submit = document.getElementById("submit");
+	usernameField.value = Math.random() * 10;
+	emailField.value = "asdasd@asd.asd";
+	passwordField.value = "asdasdasdqweqwe"
+	passConfirmField.value = "asdasdasdqweqwe"
+	submit.click()
 }

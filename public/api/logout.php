@@ -1,12 +1,10 @@
 <?php
 include 'config.php';
 
-$query = "UPDATE users set token = '' where username = ?";
+$query = "UPDATE users set token = '' where token = ?";
 $stmnt = $connection->prepare($query);
-$stmnt->bind_param('s', $_COOKIE['username']);
+$stmnt->bind_param('s', $_COOKIE['token']);
 $stmnt->execute();
 unset($_COOKIE['token']);
-unset($_COOKIE['username']);
 setcookie('token', null, -1, '/');
-setcookie('username', null, -1, '/');
 ?>

@@ -2,13 +2,23 @@
 	<head>
 		<script src="/js/navbar.js"></script>
 		<script src="/js/index.js"></script>
-		<link rel="stylesheet" href="/css/navbar.css"/>
-		<link rel="stylesheet" href="/css/index.css"/>
 		<link rel="stylesheet" href="/css/global.css"/>
+		<link rel="stylesheet" href="/css/navbar.css"/>
+		<link rel="stylesheet" href="/css/footer.css"/>
+		<link rel="stylesheet" href="/css/index.css"/>
 	</head>
 	<body onload="init()">
+
+		<noscript>
+			<div id="noscript">
+				<h1> Hey man </h1>
+				<h3> I get it, I don't like JS either, not one bit, but ya gotta turn it on to view this page, sadly. </h3>
+				<h5> If you don't trust us, there's always the option of checking the source code <a href="https://github.com/21DP4MGalk/MusicComp">here</a></h5>
+			</div>
+		</noscript>
+
 		<div id="nav"> 
-			<a id="navIndex" href="index.php">Home</a>
+			<a id="navHome" href="index.php">Home</a>
 			<a id="navMusic" href="music.php">Music Page</a> 
 			<a id="navRegister" href="register.php">Register</a>
 			<a id="navLogin" href="login.php">Login</a>
@@ -17,15 +27,17 @@
 		</div>
 		<div id="contentStart"></div>
 			<h1 align="center"> YOU ARE WELCOME!!!! </h1> 
-			<h6 align="center"> JK you are 
-			<?php 
-			if(isset($_COOKIE["username"])){
-				echo $_COOKIE["username"];
-			}
-			else{
-				echo "an unregisterd pleb";
-			}
-			?> </h6>
+			<h6 id="userMessage" align="center"> JK you are 
+			<script>
+				var username = sessionStorage.getItem("username");
+				var userMessage = document.getElementById("userMessage");
+				if(!username){
+					userMessage.innerText += " an unregistered pleb";
+				}
+				else{
+					userMessage.innerText += username;
+				}
+			</script> </h6>
 			<p align="center"> Have you ever wondered, what it would be like, to bask <br>
 				in the glory of a really janky and bad sequencer that runs<br>
 				on the web, made by someone who does not know what he is<br>
@@ -38,7 +50,7 @@
 			<hr>
 			<br>
 		
-			<h2> Current development status. </h2>
+			<h2> CURRENT DEVELOPMENT STATUS </h2>
 
 			<p> Below you can observe all kinds of neat tidbits about the current
 			progress of the development of this inglorious website. <br> <br>
@@ -63,7 +75,7 @@
 			having an uptime of approximately 0 minutes on public servers, <br>
 			we've decided to indulge in insider trading (legally a joke) <br>
 			and we're more than happy to show off what our satisfied clients <br>
-			have reported so far!. <br>
+			have reported so far!. <br> <br>
 
 			<blockquote cite="Project founder and only developer">
 				"Honestly this is the best thing to have happenned to me, <br>
@@ -73,13 +85,11 @@
 				and get a 10 in the exam. Your results may vary though, don't <br>
 				sue me." - <i>Project founder and only developer</i>
 			</blockquote>
-		
 
-			<pre>
+
 			<blockquote cite="">
 	"<?php require "api/getFortune.php"; ?>" - <i>Jerry</i>
 			</blockquote>
-			</pre>
 
 			<blockquote>
 				"This is the most glorious thing I've ever seen." <br>
@@ -103,10 +113,43 @@
 			
 			<p>  </p>
 			<blockquote>
-				"Good shit, I like it, and not because I'm a paid actor." - <i> Aleksanya </i>
+				"Good shit, I like it, and not because I'm a paid actor." - <i> Aleksanya, unpaid actor </i>
 			</blockquote>
 			
 		<div id="fadeIn"></div>
-	
+
+		
+
+		<div id="footer">
+			<div id="footerPages">
+				<p class="footerHeader">Main links:</p>
+				<p class="footerContent">
+					<a id="footHome" href="index.php">Home</a>
+					<a id="footMusic" href="music.php">Music Page</a> <br>
+					<a id="footRegister" href="register.php">Register</a>
+					<a id="footLogin" href="login.php">Login</a> <br>
+					<a id="footLogout" onclick="logout()">Logout</a> <br>
+				</p>
+			</div>
+			<hr>
+			<div id="footerLinks">
+				<p class="footerHeader">Additional links:</p>
+				<p class="footerContent">
+					<a id="footAstley" href="https://www.youtube.com/watch?v=doEqUhFiQS4">Not Rick Astley</a>
+					<a id="footPrivacy" href="privacy.php">Privacy & Cookies</a> <br>
+					<a id="footRepo" href="https://github.com/21DP4MGalk/MusicComp">Repository</a> 
+					<a id="footLicense" href="license.php">License</a> <br>
+					<a id="footRealLicense" href="LICENSE.txt">Actual license</a> <br>
+				</p>	
+			</div>
+			<hr>
+			<div id="footerContact">
+				<p class="footerHeader">Contact:</p>
+				<pre><p class="footerContent" style="padding-left: 10px;">Email: 14DPMGalkins@rvt.lv
+Telephone: No
+Address: Aiz maķīša
+Your IP: <?php echo($_SERVER['REMOTE_ADDR'])?></p></pre>
+			</div>
+		</div>
 	</body>
 </html>

@@ -1,7 +1,10 @@
+
 body{
     background-color: ivory;
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
+    padding: 0;
+    margin: 0;
 }
 button{
 	background-color: snow;
@@ -30,4 +33,13 @@ button:hover{
 }
 hr{
 	width: 50%;
+}
+
+#noscript{
+    z-index: 1000;
+    background-color: #FFF;
+    color: #000;
+    width: 100%;
+    height: 100%;
+    position:fixed;
 }

@@ -1,3 +1,4 @@
+<!dOCtYPE hTMl>
 <html>
     <head>
         <title>Privacy and cookies</title>
@@ -45,7 +46,8 @@
 					<a id="footPrivacy" href="privacy.php">Privacy & Cookies</a> <br>
 					<a id="footRepo" href="https://github.com/21DP4MGalk/MusicComp">Repository</a> 
 					<a id="footLicense" href="license.php">License</a> <br>
-					<a id="footRealLicense" href="LICENSE.txt">Actual license</a> <br>
+					<a id="footRealLicense" href="LICENSE.txt">Actual license</a>
+					<a id="footTutorial" href="tutorial.php">Tutorial</a> <br>
 				</p>	
 			</div>
 			<hr>

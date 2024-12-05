@@ -1,3 +1,4 @@
+<!dOCtYPE hTMl>
 <html>
     <head>
         <title>License</title>

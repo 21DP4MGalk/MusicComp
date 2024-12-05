@@ -1,10 +1,13 @@
-
+html{
+    height: 100%;
+}
 body{
     background-color: ivory;
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
     padding: 0;
     margin: 0;
+    min-height: 100%
 }
 button{
 	background-color: snow;

@@ -1,17 +1,21 @@
-<!DOCTYPE HTML>
+<!dOCtYPE hTMl>
 <html>
 	<head>
 		<title> Musical experiments </title>
 		<script src="./js/music.js"></script>
-		<link rel="stylesheet" href="./css/main.css"></style>
+		<link rel="stylesheet" href="./css/global.css">
+		<link rel="stylesheet" href="./css/navbar.css">
+		<link rel="stylesheet" href="./css/footer.css">
+		<link rel="stylesheet" href="./css/music.css">
 		<meta charset="utf-8">
 	</head>
-	<body onload="initCtx()">
+	<body onload="init()">
 		<center>
 			<button onclick="audioCtx.resume()">Turn on audio</button>
 			<button onclick="mainStaff.playPiece()">Play your work</button>
+			<!--
 			<select id="noteSelect">
-				<option value="E0A2">whole</option>
+				<option value="E0A2">whole &#xE0A2; </option>
 				<option value="E1D3">half</option>
 				<option value="E1D5">quarter</option>
 				<option value="E1D7">eighth</option>
@@ -25,7 +29,15 @@
 				<option value="E4E6">eighth r</option>
 				<option value="E4E7">sixteenth r</option>
 				<option value="E4E8">thirty-second r</option>
-			</select>
+			</select> -->
+			<div id="noteSelect" onclick="selectNote();">
+				<button class="noteButton">&#xE0A2;</button>
+				<button class="noteButton">&#xE1D3;</button>
+				<button class="noteButton">&#xE1D5;</button>
+				<button class="noteButton">&#xE1D7;</button>
+				<button class="noteButton">&#xE1D9;</button>
+				<button class="noteButton">&#xE1DB;</button>
+			</div>
 			<input id="bpmtext" placeholder="BPM: 120"/>
 			<button onclick="mainStaff.updateBPM()">Update BPM</button>
 			<canvas id="notation" onclick="interpretClick()" width="1800px" height="1080px"> </canvas>

@@ -17,7 +17,7 @@
     color: #545454;
     text-align: left;
     float: left;
-    margin: 0;
+    margin: 0px;
     padding-left: 10px;
     text-decoration: underline;
     cursor: pointer;
@@ -26,7 +26,7 @@
     margin-top: 0;
 }
 .footerHeader{
-    font-size: 16px;
+    font-size: 17px;
     margin: 5px 0 5px 10%;
     font-weight:bold;
 }
@@ -34,7 +34,7 @@
     color: #545454;
     margin: 0 0 0 10%;
     font-family:'Times New Roman', Times, serif;
-    font-size: 14px; 
+    font-size: 15px; 
 }
 #footer hr{
     width: initial;

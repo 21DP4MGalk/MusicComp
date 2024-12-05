@@ -16,7 +16,7 @@
 
 		<div id="nav"> 
 			<a id="navHome" href="index.php">Home</a>
-			<a id="navMusic" href="music.php">Music Page</a> 
+			<a id="navMusic" href="music/projects.php">Music Page</a> 
 			<a id="navRegister" href="register.php">Register</a>
 			<a id="navLogin" href="login.php">Login</a>
 			<a id="navAstley" href="https://www.youtube.com/watch?v=doEqUhFiQS4">Documentation of my development process</a>

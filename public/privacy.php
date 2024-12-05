@@ -12,14 +12,16 @@
 		<link rel="stylesheet" href="/css/footer.css"/>
     </head>
     <body>
-        <div id="nav"> 
+
+		<div id="nav"> 
 			<a id="navHome" href="index.php">Home</a>
-			<a id="navMusic" href="music.php">Music Page</a> 
+			<a id="navMusic" href="music/projects.php">Music Page</a> 
 			<a id="navRegister" href="register.php">Register</a>
 			<a id="navLogin" href="login.php">Login</a>
 			<a id="navAstley" href="https://www.youtube.com/watch?v=doEqUhFiQS4">Documentation of my development process</a>
 			<a id="navLogout" onclick="logout()">Logout</a>
 		</div>
+		
         <div id="contentStart"></div>
         <h1> THIS SITE USES COOKIES FOR YOUR LOGIN TOKEN </h1>
         <h4> So far that's it, you can check it yourself, I don't collect shit.</h4>

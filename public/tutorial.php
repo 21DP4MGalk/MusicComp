@@ -13,9 +13,10 @@
 		<link rel="stylesheet" href="/css/footer.css"/>
     </head>
     <body onload="init()">
-        <div id="nav"> 
-            <a id="navHome" href="index.php">Home</a>
-			<a id="navMusic" href="music.php">Music Page</a> 
+        
+    <div id="nav"> 
+			<a id="navHome" href="index.php">Home</a>
+			<a id="navMusic" href="music/projects.php">Music Page</a> 
 			<a id="navRegister" href="register.php">Register</a>
 			<a id="navLogin" href="login.php">Login</a>
 			<a id="navAstley" href="https://www.youtube.com/watch?v=doEqUhFiQS4">Documentation of my development process</a>
@@ -50,6 +51,7 @@
         <p class="explanation">Who are you talking about? I don't know any Jerries, not since we lost him.</p>
 
         <hr>
+        
         <h1 onclick="window.location.href = 'index.php';" style="cursor: pointer; text-decoration: underline;">NOW THAT YOU'RE EDUCATED, GO AND ENJOY!</h1>
 
         <div id="footer">
@@ -75,7 +77,9 @@
                     <a id="footTutorial" href="tutorial.php">Tutorial</a> <br>
 				</p>	
 			</div>
-			<hr>
+			
+            <hr>
+
 			<div id="footerContact">
 				<p class="footerHeader">Contact:</p>
 				<pre><p class="footerContent" style="padding-left: 10px;">Email: 14DPMGalkins@rvt.lv

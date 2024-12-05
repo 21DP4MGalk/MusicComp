@@ -1,5 +1,5 @@
 <!dOCtYPE hTMl>
-<html>
+<html lang="en">
 	<head>
 		<title>417 Expectation Failed</title>
 	</head>

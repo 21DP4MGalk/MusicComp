@@ -1,5 +1,5 @@
 <!dOCtYPE hTMl>
-<html>
+<html lang="en">
     <head>
         <title>Very important information</title>
         <script src="/js/navbar.js"></script>

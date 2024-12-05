@@ -1,5 +1,5 @@
 <!dOCtYPE hTMl>
-<html>
+<html lang="en">
 	<head>
 		<title>Log in to our bad site</title>
 		<script src="/js/login.js"></script>

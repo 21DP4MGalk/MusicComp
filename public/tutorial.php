@@ -1,5 +1,5 @@
 <!dOCtYPE hTMl>
-<html>
+<html lang="en">
     <head>
         <title>Tutorial</title>
         <script src="/js/navbar.js"></script>

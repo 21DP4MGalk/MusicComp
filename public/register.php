@@ -1,5 +1,5 @@
 <!dOCtYPE hTMl>
-<html>
+<html lang="en">
 	<head>
 		<title>Register to our bad site</title>
 		<script src="/js/register.js"></script>

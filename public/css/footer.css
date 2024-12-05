@@ -1,0 +1,41 @@
+#footer{
+    display: flex;
+    background-color: oldlace;
+    border-top: solid black 2px;
+    height: 10%;
+    margin-top: 35px;
+    width: 100%;
+    position: sticky;
+    top: 100%;
+}
+#footer div{
+    display: block;
+    width: 33%;
+    text-align: left;
+}
+#footer a{
+    color: #545454;
+    text-align: left;
+    float: left;
+    margin: 0px;
+    padding-left: 10px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+#footer pre{
+    margin-top: 0;
+}
+.footerHeader{
+    font-size: 17px;
+    margin: 5px 0 5px 10%;
+    font-weight:bold;
+}
+.footerContent{
+    color: #545454;
+    margin: 0 0 0 10%;
+    font-family:'Times New Roman', Times, serif;
+    font-size: 15px; 
+}
+#footer hr{
+    width: initial;
+}

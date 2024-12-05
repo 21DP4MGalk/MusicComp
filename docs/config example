@@ -1,0 +1,12 @@
+<?php
+ini_set('display_errors', '1');                 // ALL THREE 
+ini_set('display_startup_errors', '1');         // LINES ARE
+error_reporting(E_ALL);                         // DEV ONLY
+
+define("DB_HOST", "127.0.0.1");
+define("DB_USER", "user");
+define("DB_PSWD", "password");
+define("DB_NAME", "database");
+
+$connection = new mysqli(DB_HOST, DB_USER, DB_PSWD, DB_NAME);
+?>

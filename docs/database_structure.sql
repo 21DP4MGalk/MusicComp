@@ -1,5 +1,6 @@
 CREATE TABLE `users` (
   `ID` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) NOT NULL,
   `username` varchar(20) NOT NULL,
   `password` char(60) NOT NULL,
   `token` char(128) DEFAULT NULL,

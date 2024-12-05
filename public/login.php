@@ -2,6 +2,9 @@
 <html lang="en">
 	<head>
 		<title>Log in to our bad site</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 		<script src="/js/login.js"></script>
 		<script src="/js/navbar.js"></script>
 		<link rel="stylesheet" href="/css/global.css">

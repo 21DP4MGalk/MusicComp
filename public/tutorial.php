@@ -2,6 +2,9 @@
 <html lang="en">
     <head>
         <title>Tutorial</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <script src="/js/navbar.js"></script>
         <script src="/js/tutorial.js"></script>
         <link rel="stylesheet" href="/css/global.css"/>

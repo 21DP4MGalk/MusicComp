@@ -1,9 +1,11 @@
 html{
     height: 100%;
 }
+*{
+    font-family: 'Times New Roman', Times, serif
+}
 body{
     background-color: ivory;
-    font-family: 'Times New Roman', Times, serif;
     text-align: center;
     padding: 0;
     margin: 0;

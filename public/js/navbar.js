@@ -3,11 +3,13 @@ function navInit(){
         document.getElementById("navRegister").style.display = "none";
         document.getElementById("navLogin").style.display = "none";
         document.getElementById("navLogout").style.display = "block";
+        document.getElementById("navMusic").style.display = "block";
     }
     else{
         document.getElementById("navRegister").style.display = "block";
         document.getElementById("navLogin").style.display = "block";
         document.getElementById("navLogout").style.display = "none";
+        document.getElementById("navMusic").style.display = "none";
     }
 }
 

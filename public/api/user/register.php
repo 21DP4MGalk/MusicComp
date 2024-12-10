@@ -1,13 +1,12 @@
 <?php
-include 'config.php';
-include 'global.php';
+include '../config.php';
+include '../global.php';
 
-
+//$_POST['username'] = "testo";
+//$_post['PASSWORD'] = "fucl";
 $user = $_POST['username'];
 $pass = $_POST['password'];
 
-//$user = "testbioy";
-//$pass = "passwordmang";
 
 if(verifyData($user, 20)){
 	http_response_code(400);
@@ -26,12 +25,12 @@ if($result->num_rows == 0){ // if there are no users with the same username, go 
 	$pass = password_hash($pass, PASSWORD_BCRYPT, ["cost" => 14]);	// always outputs 60 character string
 	$token = bin2hex(random_bytes(16));
 
-	$query = "INSERT INTO users VALUES(NULL, ?, ?, ?, 'registered')";
+	$query = "INSERT INTO users VALUES(NULL, ?, ?, 'registered', ?, 'yes@yes.lv', true)";
 	$stmnt = $connection->prepare($query);
 	$stmnt->bind_param('sss', $user, $pass, $token);
 	$stmnt->execute();
 	$result = $stmnt->get_result();
-
+	
 	unset($_COOKIE["token"]);
 	unset($_COOKIE["username"]);
 	setcookie("token", $token, time() + (86400), "/");
@@ -39,6 +38,7 @@ if($result->num_rows == 0){ // if there are no users with the same username, go 
 	echo($user);
 }
 else{
+	http_response_code(400);
 	echo "USERNAME TAKEN, try again";
 }
 $connection->close();

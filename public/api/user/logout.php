@@ -1,5 +1,5 @@
 <?php
-include 'config.php';
+include '../config.php';
 
 $query = "UPDATE users set token = '' where token = ?";
 $stmnt = $connection->prepare($query);

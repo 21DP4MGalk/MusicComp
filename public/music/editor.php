@@ -12,7 +12,7 @@
 	<body onload="init()">
 
 		<div id="nav"> 
-			<a id="navHome" href="index.php">Home</a>
+			<a id="navHome" href="/index.php">Home</a>
 			<a id="navProjects" href="/music/projects.php">Projects</a> 
 			<a id="navEditor" href="/music/editor.php">Music editor</a>
 			<a id="navInstruments" href="/music/instruments.php">Instrument manager</a>

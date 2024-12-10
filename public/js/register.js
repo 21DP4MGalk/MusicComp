@@ -30,7 +30,7 @@ async function submitRegistrationForm(){
 	data.append("username", usernameField.value);
 	data.append("password", passwordField.value);
 	
-	var response = await fetch("/api/addUser.php", {
+	var response = await fetch("/api/user/register.php", {
 		method: "POST",
 		body: data,
 	});

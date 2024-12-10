@@ -29,17 +29,17 @@ if($result->num_rows == 0){ // if there are no users with the same username, go 
 	$stmnt = $connection->prepare($query);
 	$stmnt->bind_param('sss', $user, $pass, $token);
 	$stmnt->execute();
-	$result = $stmnt->get_result();
-	
 	unset($_COOKIE["token"]);
-	unset($_COOKIE["username"]);
 	setcookie("token", $token, time() + (86400), "/");
 
 	echo($user);
+	http_response_code(201);
 }
 else{
 	http_response_code(400);
 	echo "USERNAME TAKEN, try again";
+	http_response_code(400);
+	exit();
 }
 $connection->close();
 ?>

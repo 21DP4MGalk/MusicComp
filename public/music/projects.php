@@ -18,7 +18,7 @@
 		</div>
 		<div id="toolBar">
 			<button id="filters" onclick="filteringPopup()">Filtering</button>
-			<input id="search"/>
+			<input id="search" placeholder="Search your pieces" />
 			<button id="search" onclick="search()">Search</button>
 			<button id="newPiece" onclick="newPiecePopup()">New piece</button>
 		</div>

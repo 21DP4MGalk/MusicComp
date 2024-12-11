@@ -25,17 +25,23 @@ async function getPieces(){
     for(var i = 0; i < pieces.length; i++){
         pieceLink = document.createElement("a");
         pieceLink.id = "link" + i;
-        pieceLink.href = "/music/editor.php?piece=" + pieces[i];
-        pieceLink.innerText = pieces[i];
-        
+        pieceLink.href = "/music/editor.php?piece=" + pieces[i][0];
+        pieceLink.innerText = pieces[i][0];
+
         deleteButton = document.createElement("button");
         deleteButton.id = "delete" + i;
-        deleteButton.onclick = (i) => {deletePiece(i)};
+	deleteButton.setAttribute('onclick', "deletePiece(this)");
+ //       deleteButton.onclick = () => {deletePiece(this)};
+	deleteButton.innerText = "Delete";
         
         publishButton = document.createElement("button");
         publishButton.id = "publish" + i;
-        publishButton.onclick = (i) => {publishPiece(i)};
-        
+	publishButton.setAttribute('onclick', "togglePublishPiece(this)");
+        publishButton.innerText = "Publish";
+	if(pieces[i][1]){
+		publishButton.innerText = "Unpublish";
+	}
+
         containerDiv.appendChild(pieceLink);
         containerDiv.appendChild(deleteButton);
         containerDiv.appendChild(publishButton);
@@ -50,14 +56,29 @@ async function init(){
 
 }
 
-function deletePiece(id){
-    var piecesElement = document.getElementById("pieces");
-    var linkBtn = document.getElementById("link" + id);
-    var publishBtn = document.getElementById("pieces");
-    var deleteBtn = document.getElementById("pieces");
-    piecesElement.removeChild(linkBtn);
-    piecesElement.removeChild(publishBtn);
-    piecesElement.removeChild(deleteBtn);
+async function deletePiece(deleteBtn){
+	
+	if(!confirm("Are you sure you wish to delete this piece? This is irreversible.")){
+		return;
+	}
+
+	var id = deleteBtn.id.substr(6)
+	var pieceName = document.getElementById("link" + id).innerText;
+	console.log(id);
+
+	var requestData = new FormData;
+	requestData.append("pieceName", pieceName);
+
+	var response = await fetch("/api/removePiece.php", {
+		method: "POST",
+		body: requestData,
+	})
+
+	if(response.ok){
+		document.getElementById("link" + id).remove();
+		document.getElementById("publish" + id).remove();
+		deleteBtn.remove();
+	}
 }
 
 function newPiecePopup(){
@@ -98,4 +119,22 @@ async function createNewProject(){
 	else{
 		document.getElementById("errorDialog").innerText = "Error " + response.status + ", " + await response.text();
 	}
+}
+
+async function togglePublishPiece(publishBtn){
+	var id = publishBtn.id.substr(7);
+	var pieceName = document.getElementById("link" + id).innerText;
+	console.log(pieceName)
+	
+	var requestData = new FormData;
+	requestData.append("pieceName", pieceName);
+	
+	var response = await fetch("/api/togglePublic.php", {
+		method: "POST",
+		body: requestData,
+	})
+
+	if(response.ok)
+
+	return;
 }

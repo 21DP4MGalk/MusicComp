@@ -1,0 +1,3 @@
+Y - number representing pitch, essentially rank on the staff
+
+X - 1 beat is 1 unit. Saved within the note class. Has to be updated when changing time signature.

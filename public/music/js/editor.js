@@ -46,96 +46,33 @@ function initCtx(){
 	notationCtx.fillText(String.fromCharCode(parseInt('E0A2', 16)), -100, -100);
 }
 
-function interpretClick(){
-	
-	var rect = notationCan.getBoundingClientRect();
-	var mouseX = event.clientX - rect.left;
-	var mouseY = event.clientY - rect.top;
-	var rest = false;
-
-	var symbol = document.getElementById('noteSelect');
-	symbol = symbol.options[symbol.selectedIndex].value;
-	if(symbol.charAt(1) == '4'){
-		rest = true;;
-		switch(symbol.charAt(3)){
-			case('3'):
-				duration = 1;
-				break;
-			case('4'):
-				duration = 0.5;
-				break;
-			case('5'):
-				duration = 0.25;
-				break;
-			case('6'):
-				duration = 0.125;
-				break;
-			case('7'):
-				duration = 0.0625;
-				break;
-			case('8'):
-				duration = 0.3125;
-				break;
-		}
-	}
-	else{
-		switch(symbol.charAt(3)){
-			case('2'):
-				duration = 1;
-				break;
-			case('3'):
-				duration = 0.5;
-				break;
-			case('5'):
-				duration = 0.25;
-				break;
-			case('7'):
-				duration = 0.125;
-				break;
-			case('9'):
-				duration = 0.0625;
-				break;
-			case('8'):
-				duration = 0.3125;
-				break;
-
-		}
-	}
-
-
-
-	mouseY = mouseY - ((mouseY-2) % 7.5);
-	if(duration < 1/this.topTime){
-		mouseX = mouseX - ((mouseX-7) % ( 50 / (duration / (1/this.topTime)) ) );
-	}
-	else{
-		mouseX = mouseX - ((mouseX-7) % 50); 	// first writable position is 107
-	}
-	
-	if(mouseY < 80 || mouseY > 264.5){
-		return;
-	}
-	
-	console.log(mouseX);
-	var lineFromTop = Math.floor((mouseY-80)/7.5);
-	
-
-	mainStaff.addNote(lineFromTop, mouseX, duration, rest);
-
-	/*if(mainStaff.checkAvailable(lineFromTop, mouseX) != -1){
-		
-	}
-	else{
-		console.log("UNAVAILABLE");
-	}*/
-}
-
 function getPointedElement(){ 
 	var q = document.querySelectorAll(":hover"); 
 	return q[q.length-1]; 
 }
 
+function getPieceName(){
+	var url = window.location.href;
+	for(var i = 0; i < url.length; i++){
+		if(url.substr(i,1) == "?"){
+			sessionStorage.setItem("piece_name", url.substr(i+7));
+			return;
+		}
+	}
+}
 
-function init(){
+async function fetchPieceFile(){
+	var requestData = new FormData
+	requestData.append("pieceName", sessionStorage.getItem("piece_name"));
+
+	var response = await fetch("/api/getPiece.php", {
+	method: "POST",
+	body: requestData});
+	
+}
+
+async function init(){
+	getPieceName();
+	fetchPieceFile;
 	initCtx();
 }

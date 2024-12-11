@@ -38,10 +38,10 @@
 	margin: 5px 0 15px 0;
 }
 #topTime{
-	width: 25px;
+	width: 20px;
 }
 #bottomTime{
-	width: 25px;
+	width: 20px;
 }
 #bpm{
 	width: 35px;
@@ -52,4 +52,7 @@
 }
 #pieces button{
 	margin: 0 5px 0 5px;
+}
+#key{
+	width: 20px;
 }

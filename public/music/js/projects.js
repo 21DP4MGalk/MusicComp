@@ -22,6 +22,8 @@ async function getPieces(){
     var deleteButton;
     var publishButton;
 
+    containerDiv.innerHTML = "";
+
     for(var i = 0; i < pieces.length; i++){
         pieceLink = document.createElement("a");
         pieceLink.id = "link" + i;
@@ -40,12 +42,21 @@ async function getPieces(){
         publishButton.innerText = "Publish";
 	if(pieces[i][1]){
 		publishButton.innerText = "Unpublish";
+		
+		var shareLink = document.createElement("a");
+		shareLink.id = "share" + i;
+		shareLink.href = "/share.php?piece=" + pieces[i][2];
+		shareLink.innerText = "Sharing link";
 	}
 
         containerDiv.appendChild(pieceLink);
         containerDiv.appendChild(deleteButton);
         containerDiv.appendChild(publishButton);
  	
+	if(pieces[i][1]){
+		containerDiv.appendChild(shareLink);
+	}
+
 	containerDiv.appendChild(document.createElement("br"));
 
     }
@@ -100,7 +111,7 @@ async function createNewProject(){
 	var bpm = document.getElementById("bpm");
 	var topTime = document.getElementById("topTime");
 	var bottomTime = document.getElementById("bottomTime");
-	
+	var key = document.getElementById("key");
 	var requestData = new FormData;
 		requestData.append("pieceName", pieceName.value);
 	
@@ -109,11 +120,13 @@ async function createNewProject(){
 	body: requestData});
 
 	if(response.ok){
-		sessionStorage.setItem("piece_name", pieceName.value);
-		sessionStorage.setItem("piece_bpm", bpm.value);
-		sessionStorage.setItem("piece_topTIme", topTime.value);
-		sessionStorage.setItem("piece.bottomTime", bottomTime.value);
+		sessionStorage.setItem("pieceName", pieceName.value);
+		sessionStorage.setItem("pieceBpm", bpm.value);
+		sessionStorage.setItem("pieceTopTIme", topTime.value);
+		sessionStorage.setItem("pieceBottomTime", bottomTime.value);
+		sessionStorage.setItem("pieceKey", key.value);
 
+	
 		window.location.href = "/music/editor.php?piece=" + pieceName.value;
 	}	
 	else{
@@ -124,7 +137,6 @@ async function createNewProject(){
 async function togglePublishPiece(publishBtn){
 	var id = publishBtn.id.substr(7);
 	var pieceName = document.getElementById("link" + id).innerText;
-	console.log(pieceName)
 	
 	var requestData = new FormData;
 	requestData.append("pieceName", pieceName);
@@ -134,7 +146,12 @@ async function togglePublishPiece(publishBtn){
 		body: requestData,
 	})
 
-	if(response.ok)
-
+	if(response.ok){
+		getPieces();
+		return;
+	}
+	else{
+		alert(await response.text());
+	}
 	return;
 }

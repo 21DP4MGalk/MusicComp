@@ -22,8 +22,10 @@
 			<button id="search" onclick="search()">Search</button>
 			<button id="newPiece" onclick="newPiecePopup()">New piece</button>
 		</div>
+		
+		<p id="error"></p>
+
 		<div id="pieces">
-			<p id="error"></p>
 		</div>
 
 
@@ -34,6 +36,9 @@
 				<p id="errorDialog"></p>
 				<input id="pieceName" placeholder="Name your project"/>
 				<input id="bpm" placeholder="BPM"/>
+				<br/>
+				Key:
+				<input id="key" placeholder="C" title="Also accepts int values from 0-11, 0 being C">
 				<br/>
 				Time signature:
 				<input id="topTime" placeholder="4"> / <input id="bottomTime" placeholder="4">

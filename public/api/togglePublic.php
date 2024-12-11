@@ -32,8 +32,23 @@ if($result->num_rows == 0){
 $result = $result->fetch_object();
 $id = $result->ID;
 
-$stmnt = $connection->prepare("UPDATE pieces SET isPublic = true WHERE userID = ? AND title = ?");
-$stmnt->bind_params("is", $id, $pieceName);
+$stmnt = $connection->prepare("UPDATE pieces SET isPublic = 1 - isPublic WHERE userID = ? AND title = ?");
+$stmnt->bind_param("is", $id, $pieceName);
 $stmnt->execute();
+
+$stmnt = $connection->prepare("SELECT isPublic FROM pieces WHERE userID = ? AND title = ?");
+$stmnt->bind_param("is", $id, $pieceName);
+$stmnt->execute();
+$result = $stmnt->get_result();
+$result = $result->fetch_object();
+
+if($result->isPublic == 1){
+	$link = substr(bin2hex(random_bytes(10)), 0, 20);
+	$stmnt = $connection->prepare("UPDATE pieces SET link = ? WHERE userID = ? AND title = ?");
+	$stmnt->bind_param("sis", $link, $id, $pieceName);
+	$stmnt->execute();
+	echo $link;
+
+}
 
 ?>

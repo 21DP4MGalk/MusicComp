@@ -1,13 +1,19 @@
 -# title (20chars)
+-# Key (0-11, 0 being C, 11 being B)
 -# BPM (3 digits)
 -# top time (2 digits)
 -# bottom time (2 digits)
+
 $ - start json, seperate line
+
+[] - grand staff array instrument 1
+[] - grand staff array instrument 2
+
 /$ - end json, seperate line
 % - instrument list begin
 
-^instrument name  |  volume  |
-^instrument name  |  volume  | other params
+^instrument name  |  json_object_num  |  volume  |
+^instrument name  |  json_object_num  |  volume  | 
 
 /%
 

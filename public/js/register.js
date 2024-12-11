@@ -28,6 +28,7 @@ async function submitRegistrationForm(){
 
 	data = new FormData;
 	data.append("username", usernameField.value);
+	data.append("email", emailField.value);
 	data.append("password", passwordField.value);
 	
 	var response = await fetch("/api/user/register.php", {

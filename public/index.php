@@ -65,10 +65,10 @@
 			<p> I AM SCREWED </p>
 			<div class="goals">
 				<h3> Goals:</h3>
-				<p> Rewrite the backend </p> <input type="checkbox"> <br>
+				<p> Rewrite the backend </p> <input type="checkbox"> Kinda <br>
 				<p> Rewrite the music page: </p> <input type="checkbox"> <br>
-				<p> Login system: </p> <input type="checkbox"> <br>
-				<p> Better UI: </p> <input type="checkbox"> <br>
+				<p> Login system: </p> <input type="checkbox" checked> <br>
+				<p> Better UI: </p> <input type="checkbox" checked> <br>
 			</div>
 		
 			<br>

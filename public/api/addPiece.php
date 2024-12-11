@@ -26,9 +26,9 @@ if($result->num_rows == 0){
 $result = $result->fetch_object();
 $userID = $result->ID;
 
-$query = "SELECT ID FROM pieces WHERE title = ?";
+$query = "SELECT ID FROM pieces WHERE title = ? AND userID = ?";
 $stmnt = $connection->prepare($query);
-$stmnt->bind_param('s', $pieceName);
+$stmnt->bind_param('si', $pieceName, $userID);
 $stmnt->execute();
 $result = $stmnt->get_result();
 
@@ -38,7 +38,7 @@ if($result->num_rows > 0){
 	exit();
 }
 
-$query = "INSERT INTO pieces VALUES(NULL, ?, NULL, ?)";
+$query = "INSERT INTO pieces VALUES(NULL, ?, NULL, ?, false, NULL)";
 $stmnt = $connection->prepare($query);
 $stmnt->bind_param('si', $pieceName, $userID);
 $stmnt->execute();

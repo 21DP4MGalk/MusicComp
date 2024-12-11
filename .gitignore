@@ -1,4 +1,5 @@
-api/config.php
+public/api/config.php
 public/waves
 start_project
 public/media/keycat.mp4
+config.php

@@ -38,7 +38,7 @@ async function submitRegistrationForm(){
 
 	if(result.ok){
 		result = result.body;
-		sessionStorage.setItem("username", result.username);
+		sessionStorage.setItem("username", usernameField.value);
 
 		var success = document.getElementById("success");
 		success.style.visibility = "visible";

@@ -26,6 +26,22 @@
 			<p id="error"></p>
 		</div>
 
+
+		<div id="newProject">
+			<div id="creationDialog">
+				<h1>New project</h1>
+				<hr/>
+				<p id="errorDialog"></p>
+				<input id="pieceName" placeholder="Name your project"/>
+				<input id="bpm" placeholder="BPM"/>
+				<br/>
+				Time signature:
+				<input id="topTime" placeholder="4"> / <input id="bottomTime" placeholder="4">
+				<br/>
+				<button onclick="cancelNewProject()">Cancel</button> <button onclick="createNewProject()">Submit</button>
+			</div>
+		</div>
+
 		<div id="footer">
 			<div id="footerPages">
 				<p class="footerHeader">Main links:</p>
@@ -58,6 +74,7 @@ Address: Aiz maķīša
 Your IP: <?php echo($_SERVER['REMOTE_ADDR'])?></p></pre>
 			</div>
 		</div>
+	
 
     </body>
 </html>

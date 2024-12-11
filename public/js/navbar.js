@@ -15,9 +15,9 @@ function navInit(){
 
 async function logout(){
     if(confirm("Are you sure you wish to log out?")){
-        var response = await fetch("/api/logout.php");
+        var response = await fetch("/api/user/logout.php");
         if(!response.ok){
-            alert(response.body);
+            alert(response.text());
             return
         }
         sessionStorage.setItem("username", "");

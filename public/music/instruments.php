@@ -9,8 +9,8 @@
 		<link rel="stylesheet" href="/music/css/instruments.css">
 		<meta charset="utf-8">
 	</head>
-	<body>
-	<div id="nav"> 
+	<body onload="init()">
+		<div id="nav"> 
 			<a id="navHome" href="index.php">Home</a>
 			<a id="navProjects" href="/music/projects.php">Projects</a> 
 			<a id="navEditor" href="/music/editor.php">Music editor</a>

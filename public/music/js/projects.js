@@ -30,15 +30,18 @@ async function getPieces(){
         
         deleteButton = document.createElement("button");
         deleteButton.id = "delete" + i;
-        deleteButton.onclick = (i) => {deletePiece(i)};
+        deleteButton.onclick = (i) => {deletePiece("delete" + i)};
+        deleteButton.innerText = "Delete";
         
         publishButton = document.createElement("button");
         publishButton.id = "publish" + i;
-        publishButton.onclick = (i) => {publishPiece(i)};
-        
+        publishButton.onclick = (i) => {publishPiece("publish" + i)};
+        publishButton.innerText = "Publish";
+
         containerDiv.appendChild(pieceLink);
         containerDiv.appendChild(deleteButton);
         containerDiv.appendChild(publishButton);
+        containerDiv.appendChild(document.createElement("br"));
         
     }
 }
@@ -48,13 +51,16 @@ async function init(){
 
 }
 
-function deletePiece(id){
-    var piecesElement = document.getElementById("pieces");
-    var linkBtn = document.getElementById("link" + id);
-    var publishBtn = document.getElementById("pieces");
-    var deleteBtn = document.getElementById("pieces");
-    piecesElement.removeChild(linkBtn);
-    piecesElement.removeChild(publishBtn);
-    piecesElement.removeChild(deleteBtn);
-    
+async function deletePiece(id){
+    if(!confirm("Are you sure about that?")){
+        console.log("Ok");
+        return;
+    }
+    var requestData = new FormData;
+    requestData.append("ID", id);
+    var response = await fetch("/api/deletePiece.php", {
+        method: "POST",
+        body: requestData,
+    });
+    console.log(response.text());
 }

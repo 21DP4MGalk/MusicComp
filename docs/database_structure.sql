@@ -4,9 +4,13 @@ CREATE TABLE `users` (
   `username` varchar(20) NOT NULL,
   `password` char(60) NOT NULL,
   `token` char(128) DEFAULT NULL,
-  `type` enum('registered','admin') DEFAULT 'registered',
+  `status` enum('registered','admin', 'banned') DEFAULT 'registered',
+-- `last_login` int NOT NULL,
+-- `last_timeout_action` int NOT NULL,
+-- `incorrect_login_attempts` unsigned tinyint,
   PRIMARY KEY (`ID`)
 );
+
 
 
 CREATE TABLE `pieces` (

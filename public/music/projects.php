@@ -18,12 +18,33 @@
 		</div>
 		<div id="toolBar">
 			<button id="filters" onclick="filteringPopup()">Filtering</button>
-			<input id="search"/>
+			<input id="search" placeholder="Search your pieces" />
 			<button id="search" onclick="search()">Search</button>
 			<button id="newPiece" onclick="newPiecePopup()">New piece</button>
 		</div>
+		
+		<p id="error"></p>
+
 		<div id="pieces">
-			<p id="error"></p>
+		</div>
+
+
+		<div id="newProject">
+			<div id="creationDialog">
+				<h1>New project</h1>
+				<hr/>
+				<p id="errorDialog"></p>
+				<input id="pieceName" placeholder="Name your project"/>
+				<input id="bpm" placeholder="BPM"/>
+				<br/>
+				Key:
+				<input id="key" placeholder="C" title="Also accepts int values from 0-11, 0 being C">
+				<br/>
+				Time signature:
+				<input id="topTime" placeholder="4"> / <input id="bottomTime" placeholder="4">
+				<br/>
+				<button onclick="cancelNewProject()">Cancel</button> <button onclick="createNewProject()">Submit</button>
+			</div>
 		</div>
 
 		<div id="footer">
@@ -58,6 +79,7 @@ Address: Aiz maķīša
 Your IP: <?php echo($_SERVER['REMOTE_ADDR'])?></p></pre>
 			</div>
 		</div>
+	
 
     </body>
 </html>

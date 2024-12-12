@@ -28,9 +28,10 @@ async function submitRegistrationForm(){
 
 	data = new FormData;
 	data.append("username", usernameField.value);
+	data.append("email", emailField.value);
 	data.append("password", passwordField.value);
 	
-	var response = await fetch("/api/addUser.php", {
+	var response = await fetch("/api/user/register.php", {
 		method: "POST",
 		body: data,
 	});
@@ -38,7 +39,7 @@ async function submitRegistrationForm(){
 
 	if(result.ok){
 		result = result.body;
-		sessionStorage.setItem("username", result.username);
+		sessionStorage.setItem("username", usernameField.value);
 
 		var success = document.getElementById("success");
 		success.style.visibility = "visible";

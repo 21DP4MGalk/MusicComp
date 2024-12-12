@@ -1,31 +1,47 @@
 <?php
 include 'config.php';
+include "global.php";
 
-$data = json_decode(file_get_contents('php://input'), false);
 
-//BLAH BLAH ADD VALIDITY CHECK TO PREVENT SPAMMING;
-$title = $data->title;
-$file = $data->file;
+$pieceName = $_POST["pieceName"];
+$token = $_COOKIE["token"];
 
-if(verifyData($title, 20)){
-	echo "Nice try dude";
+if(verifyData($pieceName, 20)){
+	echo "Please make it shorter";
+	http_response_code(400);
 	exit();
 }
 
-$query = "SELECT userID FROM users WHERE token = ?";
+$query = "SELECT ID FROM users WHERE token = ?";
 $stmnt = $connection->prepare($query);
-$stmnt->bind_param('s', $_COOKIE["token"]);
-$result = $stmnt->get_restult();
+$stmnt->bind_param('s', $token);
+$stmnt->execute();
+$result = $stmnt->get_result();
 
 if($result->num_rows == 0){
-	echo "BOGUS!";
+	echo "BOGUS token! Try logging out and back in";
+	http_response_code(400);
 	exit();
 }
-$userID = $result["userID"];
+$result = $result->fetch_object();
+$userID = $result->ID;
 
-$query = "INSERT INTO pieces VALUES(NULL, ?, ?, ?)";
+$query = "SELECT ID FROM pieces WHERE title = ? AND userID = ?";
 $stmnt = $connection->prepare($query);
-$stmnt->bind_param('sbi', $title, $file, $userID);
+$stmnt->bind_param('si', $pieceName, $userID);
 $stmnt->execute();
+$result = $stmnt->get_result();
 
+if($result->num_rows > 0){
+	echo "Piece with this name already exists, choose a different name!";
+	http_response_code(400);
+	exit();
+}
+
+$query = "INSERT INTO pieces VALUES(NULL, ?, NULL, ?, false, NULL)";
+$stmnt = $connection->prepare($query);
+$stmnt->bind_param('si', $pieceName, $userID);
+$stmnt->execute();
+http_response_code(201);
+echo "Created successfully!";
 ?>

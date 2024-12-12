@@ -30,7 +30,7 @@ if(!$id){
     exit();
 }
 
-$stmnt = $connection->prepare("SELECT pieces.title FROM pieces WHERE userID = ?");
+$stmnt = $connection->prepare("SELECT pieces.title, pieces.isPublic, pieces.link FROM pieces WHERE userID = ?");
 $stmnt->bind_param("s", $id);
 $stmnt->execute();
 $result = $stmnt->get_result();
@@ -38,7 +38,7 @@ $result = $stmnt->get_result();
 if($result->num_rows != 0){
     for($i = 0; $i<$result->num_rows; $i++){
         $title = $result->fetch_object();
-        $outputArray[] = $title->title;
+        $outputArray[] = [$title->title, $title->isPublic, $title->link];
     }
 
     echo(json_encode($outputArray));

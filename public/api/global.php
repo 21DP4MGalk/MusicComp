@@ -1,6 +1,6 @@
 <?php
-function verifyData($str, $len){
-	if(strlen($str) > $len){
+function verifyData($str, $len, $optional = false){
+	if(strlen($str) > $len || (strlen($str) == 0 || $optional)){
 		return 1;
 	}
 	for($i = 0; $i < strlen($str); $i++){

@@ -32,22 +32,13 @@ async function getPieces(){
 
         deleteButton = document.createElement("button");
         deleteButton.id = "delete" + i;
-<<<<<<< HEAD
-        deleteButton.onclick = (i) => {deletePiece("delete" + i)};
-        deleteButton.innerText = "Delete";
-        
-        publishButton = document.createElement("button");
-        publishButton.id = "publish" + i;
-        publishButton.onclick = (i) => {publishPiece("publish" + i)};
-        publishButton.innerText = "Publish";
-=======
-	deleteButton.setAttribute('onclick', "deletePiece(this)");
+		deleteButton.setAttribute('onclick', "deletePiece(this)");
  //       deleteButton.onclick = () => {deletePiece(this)};
-	deleteButton.innerText = "Delete";
+		deleteButton.innerText = "Delete";
         
         publishButton = document.createElement("button");
         publishButton.id = "publish" + i;
-	publishButton.setAttribute('onclick', "togglePublishPiece(this)");
+		publishButton.setAttribute('onclick', "togglePublishPiece(this)");
         publishButton.innerText = "Publish";
 	if(pieces[i][1]){
 		publishButton.innerText = "Unpublish";
@@ -57,15 +48,10 @@ async function getPieces(){
 		shareLink.href = "/share.php?piece=" + pieces[i][2];
 		shareLink.innerText = "Sharing link";
 	}
->>>>>>> c063c92eb6dde396022c2f585ad62f8763498cb7
 
         containerDiv.appendChild(pieceLink);
         containerDiv.appendChild(deleteButton);
         containerDiv.appendChild(publishButton);
-<<<<<<< HEAD
-        containerDiv.appendChild(document.createElement("br"));
-        
-=======
  	
 	if(pieces[i][1]){
 		containerDiv.appendChild(shareLink);
@@ -73,7 +59,6 @@ async function getPieces(){
 
 	containerDiv.appendChild(document.createElement("br"));
 
->>>>>>> c063c92eb6dde396022c2f585ad62f8763498cb7
     }
 }
 
@@ -82,20 +67,6 @@ async function init(){
 
 }
 
-<<<<<<< HEAD
-async function deletePiece(id){
-    if(!confirm("Are you sure about that?")){
-        console.log("Ok");
-        return;
-    }
-    var requestData = new FormData;
-    requestData.append("ID", id);
-    var response = await fetch("/api/deletePiece.php", {
-        method: "POST",
-        body: requestData,
-    });
-    console.log(response.text());
-=======
 async function deletePiece(deleteBtn){
 	
 	if(!confirm("Are you sure you wish to delete this piece? This is irreversible.")){
@@ -183,5 +154,4 @@ async function togglePublishPiece(publishBtn){
 		alert(await response.text());
 	}
 	return;
->>>>>>> c063c92eb6dde396022c2f585ad62f8763498cb7
 }

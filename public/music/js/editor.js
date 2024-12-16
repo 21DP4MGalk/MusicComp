@@ -76,3 +76,13 @@ async function init(){
 	fetchPieceFile;
 	initCtx();
 }
+
+function thanksFourier(){
+	var N;
+	var n;
+	var k;
+	var Xk;
+	var xn;
+	var e = Math.E;
+	
+}

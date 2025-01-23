@@ -2,15 +2,15 @@
 <html>
 	<head>
 		<title> Musical experiments </title>
+
 		<script src="/music/js/editor.js"></script>
 		<link rel="stylesheet" href="/css/global.css">
 		<link rel="stylesheet" href="/css/navbar.css">
 		<link rel="stylesheet" href="/css/footer.css">
 		<link rel="stylesheet" href="/music/css/editor.css">
 		<meta charset="utf-8">
-	</head>
+			</head>
 	<body onload="init()">
-
 		<div id="nav"> 
 			<a id="navHome" href="/index.php">Home</a>
 			<a id="navProjects" href="/music/projects.php">Projects</a> 
@@ -34,7 +34,7 @@
 
 			<input id="bpmtext" placeholder="BPM: 120"/>
 			<button onclick="mainStaff.updateBPM()">Update BPM</button>
-			<canvas id="notation" onclick="interpretClick()" width="1800px" height="1080px"> </canvas>
+			<canvas id="notation" onclick="interpretClick()"> </canvas>
 
 		</center>
 	</body>

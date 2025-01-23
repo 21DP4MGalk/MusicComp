@@ -1,8 +1,7 @@
-var pieces = [];
+var allPieces = [];
+var filteredPieces = [];
 
 async function getPieces(){
-    var containerDiv = document.getElementById("pieces");
-    var error = document.getElementById("error");
     var result = await fetch("/api/getPieceList.php");
     
     if(!result.ok){
@@ -16,8 +15,13 @@ async function getPieces(){
         return;
     }
 
-    pieces = await JSON.parse(await result.text());
+    allPieces = await JSON.parse(await result.text());
+}
 
+function updatePieces(pieces = allPieces){
+    var containerDiv = document.getElementById("pieces");
+    var error = document.getElementById("error");
+    
     var pieceLink;
     var deleteButton;
     var publishButton;
@@ -60,10 +64,12 @@ async function getPieces(){
 	containerDiv.appendChild(document.createElement("br"));
 
     }
+
 }
 
 async function init(){
     await getPieces();
+    updatePieces();
 
 }
 
@@ -148,10 +154,22 @@ async function togglePublishPiece(publishBtn){
 
 	if(response.ok){
 		getPieces();
+		updatePieces();
 		return;
 	}
 	else{
 		alert(await response.text());
 	}
 	return;
+}
+
+function search(){
+	var query = document.getElementById("search").value;
+	filteredPieces = [];
+	for(var i = 0; i < allPieces.length; i++){
+		if(allPieces[i][0].includes(query)){
+			filteredPieces.push(allPieces[i]);
+		}
+	}
+	updatePieces(filteredPieces);
 }

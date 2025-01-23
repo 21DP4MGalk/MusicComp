@@ -44,7 +44,7 @@ async function submitRegistrationForm(){
 		var success = document.getElementById("success");
 		success.style.visibility = "visible";
 		success.style.opacity = "1";
-		//setTimeout(() => {window.location.href = "tutorial.php";}, 2500);
+		setTimeout(() => {window.location.href = "tutorial.php";}, 2500);
 	}
 	else{
 		errorMsg.innerText = result.status + result.body;
@@ -58,7 +58,7 @@ function debugRegister(){
 	var passConfirmField = document.getElementById("passConfirm");	
 	var submit = document.getElementById("submit");
 	usernameField.value = Math.random() * 10;
-	emailField.value = "asdasd@asd.asd";
+	emailField.value = Math.random() * 10 + "@asd.asd";
 	passwordField.value = "asdasdasdqweqwe"
 	passConfirmField.value = "asdasdasdqweqwe"
 	submit.click()

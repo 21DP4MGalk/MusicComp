@@ -18,6 +18,9 @@
 	margin: 5px 0 5px 0;
 	font-family: "LelandMusic";
 }
+#noteSelect button p{
+	font-family: "LelandMusic";
+}
 #whole{
 	margin: 2px;
 }

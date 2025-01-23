@@ -36,13 +36,13 @@ function updatePieces(pieces = allPieces){
 
         deleteButton = document.createElement("button");
         deleteButton.id = "delete" + i;
-	deleteButton.setAttribute('onclick', "deletePiece(this)");
+		deleteButton.setAttribute('onclick', "deletePiece(this)");
  //       deleteButton.onclick = () => {deletePiece(this)};
-	deleteButton.innerText = "Delete";
+		deleteButton.innerText = "Delete";
         
         publishButton = document.createElement("button");
         publishButton.id = "publish" + i;
-	publishButton.setAttribute('onclick', "togglePublishPiece(this)");
+		publishButton.setAttribute('onclick', "togglePublishPiece(this)");
         publishButton.innerText = "Publish";
 	if(pieces[i][1]){
 		publishButton.innerText = "Unpublish";

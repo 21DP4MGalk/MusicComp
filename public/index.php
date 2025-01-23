@@ -18,7 +18,7 @@
 			<div id="noscript">
 				<h1> Hey man </h1>
 				<h3> I get it, I don't like JS either, not one bit, but ya gotta turn it on to view this page, sadly. </h3>
-				<h5> If you don't trust us, there's always the option of checking the source code <a href="https://github.com/21DP4MGalk/MusicComp">here</a></h5>
+				<h5> If you don't trust me, there's always the option of checking the source code <a href="https://github.com/21DP4MGalk/MusicComp">here</a></h5>
 			</div>
 		</noscript>
 
@@ -146,7 +146,7 @@
 					<a id="footLicense" href="license.php">License</a> <br>
 					<a id="footRealLicense" href="LICENSE.txt">Actual license</a>
 					<a id="footTutorial" href="tutorial.php">Tutorial</a> <br>
-				</p>	
+				</p>
 			</div>
 			<hr>
 			<div id="footerContact">

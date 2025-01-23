@@ -26,7 +26,7 @@ if($result->num_rows == 0){ // if there are no users with the same username, go 
 	$pass = password_hash($pass, PASSWORD_BCRYPT, ["cost" => 14]);	// always outputs 60 character string
 	$token = bin2hex(random_bytes(16));
 
-	$query = "INSERT INTO users VALUES(NULL, ?, ?, 'registered', ?, ?, true)";
+	$query = "INSERT INTO users (username, password, status, token, email, verified) VALUES(?, ?, 'registered', ?, ?, true)";
 	$stmnt = $connection->prepare($query);
 	$stmnt->bind_param('ssss', $user, $pass, $token, $email);
 	$stmnt->execute();

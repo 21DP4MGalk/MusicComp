@@ -1,21 +1,24 @@
 CREATE TABLE `users` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `email` varchar(40) NOT NULL,
+  `verified` bool DEFAULT false,
   `username` varchar(20) NOT NULL,
   `password` char(60) NOT NULL,
   `token` char(128) DEFAULT NULL,
-  `verified` bool DEFAULT false,
-  `type` enum('registered','admin') DEFAULT 'registered',
+  `status` enum('registered','admin', 'banned') DEFAULT 'registered',
+--`lastTimeoutAction` int NOT NULL,
+--`failedLoginAttempts` tinyint DEFAULT NULL,  
   PRIMARY KEY (`ID`)
 );
 
 
+
 CREATE TABLE `pieces` (
   `ID` int NOT NULL AUTO_INCREMENT,
-  `isPublic` bool DEFAULT false,
-  `link` varchar(20) DEFAULT NULL,
   `title` varchar(20) NOT NULL,
   `file` mediumblob,
+  `isPublic` bool DEFAULT false,
+  `link` varchar(20) DEFAULT NULL,
   `userID` int NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `userID` (`userID`),

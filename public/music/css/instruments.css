@@ -1,0 +1,7 @@
+#curveEditor{
+    display: flex;
+}
+#curveDisplay{
+    width: 50%;
+    height: 80%;
+}

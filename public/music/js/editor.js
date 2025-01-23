@@ -39,11 +39,13 @@ function initCtx(){
 	
 	notationCan = document.getElementById("notation");
 	notationCtx = notationCan.getContext("2d");
-	notationCtx.font = "50px LelandMusic";
+	notationCtx.font = "10px Leland";
 	
 	//notationCan.width = window.screen.width * 0.95;
 	//notationCan.height = window.screen.height;
-	notationCtx.fillText(String.fromCharCode(parseInt('E0A2', 16)), -100, -100);
+	notationCtx.fillText(String.fromCharCode(parseInt('E0A2', 16)), 150, 150);
+	notationCtx.fillText(String.fromCharCode(parseInt('E014', 16)), 100, 100);
+	notationCtx.fillText("AAA", 100, 100)
 }
 
 function getPointedElement(){ 

@@ -1,6 +1,6 @@
 @font-face {
-	font-family: 'LelandMusic';
-	src: url("/font/Leland.otf") format("opentype");
+	font-family: "Leland";
+	src: url('/font/Leland.otf') format("opentype");
 }
 
 #noteSelect{
@@ -16,7 +16,9 @@
 	line-height: 25px;
 	font-size: 25px;
 	margin: 5px 0 5px 0;
-	font-family: "LelandMusic";
+	font-family: "Leland";
+	font-weight: normal;
+	font-style: normal;
 }
 #noteSelect button p{
 	font-family: "LelandMusic";

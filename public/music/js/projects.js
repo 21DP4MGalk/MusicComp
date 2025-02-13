@@ -31,7 +31,7 @@ function updatePieces(pieces = allPieces){
     for(var i = 0; i < pieces.length; i++){
         pieceLink = document.createElement("a");
         pieceLink.id = "link" + i;
-        pieceLink.href = "/music/editor.php?piece=" + pieces[i][0];
+        pieceLink.href = "/music/editor.php?piece=" + pieces[i][3];
         pieceLink.innerText = pieces[i][0];
 
         deleteButton = document.createElement("button");
@@ -119,24 +119,27 @@ async function createNewProject(){
 	var bottomTime = document.getElementById("bottomTime");
 	var key = document.getElementById("key");
 	var requestData = new FormData;
-		requestData.append("pieceName", pieceName.value);
+
+	if(!pieceName.value || !bpm.value){
+		document.getElementById("errorDialog").innerText = "Please fill out all fields before trying to create a project.";
+		return;
+	}
+
+	requestData.append("pieceName", pieceName.value);
+	requestData.append("bpm", bpm.value);
+	requestData.append("topTime", topTime.value);
+	requestData.append("bottomTime", bottomTime.value);
+	requestData.append("key", key.value);
 	
 	var response = await fetch("/api/addPiece.php", {
 	method: "POST",
 	body: requestData});
 
 	if(response.ok){
-		sessionStorage.setItem("pieceName", pieceName.value);
-		sessionStorage.setItem("pieceBpm", bpm.value);
-		sessionStorage.setItem("pieceTopTIme", topTime.value);
-		sessionStorage.setItem("pieceBottomTime", bottomTime.value);
-		sessionStorage.setItem("pieceKey", key.value);
-
-	
-		window.location.href = "/music/editor.php?piece=" + pieceName.value;
+		//window.location.href = "/music/editor.php?piece=" + pieceName.value;
 	}	
 	else{
-		document.getElementById("errorDialog").innerText = "Error " + response.status + ", " + await response.text();
+		document.getElementById("errorDialog").innerHTML = "Error " + response.status + ", " + await response.text();
 	}
 }
 

@@ -1,21 +1,12 @@
--# title (20chars)
--# Key (0-11, 0 being C, 11 being B)
--# BPM (3 digits)
--# top time (2 digits)
--# bottom time (2 digits)
+ALL STORED IN JSON IN HEX FORM IN DATABASE
 
-$ - start json, seperate line
+pieceFile{
 
-[] - grand staff array instrument 1
-[] - grand staff array instrument 2
-
-/$ - end json, seperate line
-% - instrument list begin
-
-^instrument name  |  json_object_num  |  volume  |
-^instrument name  |  json_object_num  |  volume  | 
-
-/%
-
-#everything beginning with # is a comment
-; means end of line
+	pieceName: title;
+	key: 0-11;
+	bpm: bpm;
+	topTime: default 4;
+	bottomTime: default 4;
+	notes: json string of instrument parts, in same order as instruments array;
+	instruments: json string of instrument info;
+}

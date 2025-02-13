@@ -4,10 +4,71 @@ include "global.php";
 
 
 $pieceName = $_POST["pieceName"];
+$bpm = (int) $_POST["bpm"];
+$topTime = (int) $_POST["topTime"];
+$bottomTime = (int) $_POST["bottomTime"];
+
 $token = $_COOKIE["token"];
 
+if(!$topTime){
+	$topTime = 4;
+}
+if(!$bottomTime){
+	$bottomTime = 4;
+}
+
+if(!$bpm){
+	echo "No valid BPM! Please enter BPM.";
+	http_response_code(400);
+	exit();
+}
+
+for($i = 1; $i <= 32; $i = $i*2){
+	if($bottomTime == $i){
+		break;
+	}
+	else if($i == 32){
+		http_response_code(400);
+		echo "Invalid bottom time, only numbers that are 2^x are allowed, and only up to 32";
+		exit();
+	}
+}
+
+#Key conversion from letters (ABCDEFG) to numbers
+switch(strtolower($_POST["key"][0])){
+	case 'c':
+		$key = 0;
+		break;
+	case 'd':
+		$key = 2;
+		break;
+	case 'e':
+		$key = 4;
+		break;
+	case 'f':
+		$key = 5;
+		break;
+	case 'g':
+		$key = 7;
+		break;
+	case 'a':
+		$key = 9; 
+		break;
+	case 'b':
+		$key = 11;
+		break;
+}
+if(strlen($_POST["key"]) == 2){
+	$key = $key + (($_POST["key"][1] == "#") * 1);
+}
+
 if(verifyData($pieceName, 20)){
-	echo "Please make it shorter";
+	echo "Invalid name, max length is 20";
+	http_response_code(400);
+	exit();
+}
+if(!is_int($key) || $key > 11 || $key < 0){
+	echo "Invalid key, check if you wrote it right, # for sharps, b for flats";
 	http_response_code(400);
 	exit();
 }
@@ -37,11 +98,29 @@ if($result->num_rows > 0){
 	http_response_code(400);
 	exit();
 }
+$pieceFile = new stdClass();
+$pieceFile->pieceName = $pieceName;
+$pieceFile->key = $key;
+$pieceFile->bpm = $bpm;
+$pieceFile->topTime = $topTime;
+$pieceFile->bottomTime = $bottomTime;
+$pieceFile->notes = [""];
+$pieceFile->instruments = [""];
 
-$query = "INSERT INTO pieces VALUES(NULL, ?, NULL, ?, false, NULL)";
+$pieceFile = json_encode($pieceFile);
+echo $pieceFile;
+
+$query = "INSERT INTO pieces(ID, title, file, userID, isPublic, link) VALUES(NULL, ?, ?, ?, false, NULL)";
 $stmnt = $connection->prepare($query);
-$stmnt->bind_param('si', $pieceName, $userID);
-$stmnt->execute();
+$stmnt->bind_param('ssi', $pieceName, $pieceFile, $userID);
+$cute = $stmnt->execute();
+
+if($connection->error){
+	echo $connection->error;
+	http_response_code(400);
+	exit();
+}
+
 http_response_code(201);
 echo "Created successfully!";
 ?>

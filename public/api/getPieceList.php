@@ -30,8 +30,8 @@ if(!$id){
     exit();
 }
 
-$stmnt = $connection->prepare("SELECT pieces.ID pieces.title, pieces.isPublic, pieces.link FROM pieces WHERE userID = ?");
-$stmnt->bind_param("s", $id);
+$stmnt = $connection->prepare("SELECT pieces.ID, pieces.title, pieces.isPublic, pieces.link FROM pieces WHERE pieces.userID = ?");
+$stmnt->bind_param("i", $id);
 $stmnt->execute();
 $result = $stmnt->get_result();
 

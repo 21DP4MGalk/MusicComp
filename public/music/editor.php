@@ -4,7 +4,6 @@
 		<title> Musical experiments </title>
 
 		<script src="/music/js/editor.js"></script>
-		<link rel="stylesheet" href="/css/global.css">
 		<link rel="stylesheet" href="/css/navbar.css">
 		<link rel="stylesheet" href="/css/footer.css">
 		<link rel="stylesheet" href="/music/css/editor.css">
@@ -21,7 +20,9 @@
 		<div id="contentStart"></div>
 
 		<center>
+			<button id="prevPage" onclick="pageBack()"> &#x003C; </button>
 			<button onclick="audioCtx.resume()">Turn on audio</button>
+			<button id="nextPage" onclick="pageForward()"> &#x003E; </button>
 
 			<div id="noteSelect" onclick="selectNote();">
 				<button class="noteButton"> <p class="noclick" id="whole"> &#xE0A2; </p></button>
@@ -32,10 +33,8 @@
 				<button class="noteButton"> <p class="noclick"> &#xE1DB; </p></button>
 			</div>
 
-			<input id="bpmtext" placeholder="BPM: 120"/>
-			<button onclick="mainStaff.updateBPM()">Update BPM</button>
-			<canvas id="notation" onclick="interpretClick()"> </canvas>
-
 		</center>
+			<canvas id="notation" onclick="interpretClick()" onmousemove="moveGhost()"> </canvas>
+
 	</body>
 </html>

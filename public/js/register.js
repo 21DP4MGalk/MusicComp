@@ -38,13 +38,12 @@ async function submitRegistrationForm(){
 	var result = await response;
 
 	if(result.ok){
-		result = result.body;
 		sessionStorage.setItem("username", usernameField.value);
 
 		var success = document.getElementById("success");
 		success.style.visibility = "visible";
 		success.style.opacity = "1";
-		setTimeout(() => {window.location.href = "tutorial.php";}, 2500);
+		//setTimeout(() => {window.location.href = "tutorial.php";}, 2500);
 	}
 	else{
 		errorMsg.innerText = result.status + result.body;

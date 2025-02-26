@@ -1,0 +1,7 @@
+Fundamental measurement: canX/100 and canY/100 - 1% of width or height of the canvas
+
+Beginning of first staff = canY/10;
+Staff sides: canX/10 - canX/10 * 9;
+
+spacing between staves - i*14 * canY/100
+height of staff = canY/10

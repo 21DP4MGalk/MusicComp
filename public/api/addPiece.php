@@ -62,8 +62,8 @@ if(strlen($_POST["key"]) == 2){
 	$key = $key + (($_POST["key"][1] == "#") * 1);
 }
 
-if(verifyData($pieceName, 20)){
-	echo "Invalid name, max length is 20";
+if(verifyData($pieceName, 50)){
+	echo "Invalid name, max length is 50";
 	http_response_code(400);
 	exit();
 }

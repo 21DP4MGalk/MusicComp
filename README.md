@@ -10,10 +10,10 @@ The goal of MusicComp is to make a sequencer using classical notation and custom
 
 ## TODO
 
-- [ ] Grand staff
+- [x] Grand staff
 - [ ] Multiple pages of the grand staff
 - [ ] Note placement
-- [ ] Custom notation format
+- [x] Custom notation format
 - [ ] Bar expansion for notes under the beat notes
 - [ ] Playback with fundamental waves
 - [ ] Playback with custom wave files
@@ -21,4 +21,4 @@ The goal of MusicComp is to make a sequencer using classical notation and custom
 - [ ] Bezier curve editor
 - [ ] Bezier curve to fourier series
 - [ ] Additional symbols (ties, forte, piano)
-- [ ] Auxiliary pages
+- [x] Auxiliary pages

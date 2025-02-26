@@ -31,6 +31,15 @@
 				<button class="noteButton"> <p class="noclick"> &#xE1D7; </p></button>
 				<button class="noteButton"> <p class="noclick"> &#xE1D9; </p></button>
 				<button class="noteButton"> <p class="noclick"> &#xE1DB; </p></button>
+				
+				<button class="noteButton"> <p class="noclick" id="whole"> &#xE4E3; </p></button>
+				<button class="noteButton"> <p class="noclick"> &#xE4E4; </p></button>
+				<button class="noteButton"> <p class="noclick rest"> &#xE4E5; </p></button>
+				<button class="noteButton"> <p class="noclick rest"> &#xE4E6; </p></button>
+				<button class="noteButton"> <p class="noclick rest"> &#xE4E7; </p></button>
+				<button class="noteButton"> <p class="noclick rest"> &#xE4E8; </p></button>
+
+
 			</div>
 
 		</center>

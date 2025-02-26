@@ -1,6 +1,7 @@
 public/api/config.php
 public/waves
 start_project
+public/font/
 public/media/
 public/media/keycat.mp4
 *.swp

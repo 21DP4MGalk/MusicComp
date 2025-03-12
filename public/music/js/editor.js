@@ -88,10 +88,6 @@ async function init(){
 	canY = notationCan.height;
 
 	var pieceFile = JSON.parse(sessionStorage.getItem("pieceFile"));
-		if(!sessionStorage.getItem("noteArr")){
-		var notearr = [];
-		sessionStorage.setItem("noteArr", JSON.stringify(notearr));
-	}
 
 	initCtx();
 	redrawCanvas();
@@ -109,8 +105,6 @@ function staffToMeasureY(staff, canY){
 	var notationCan = document.getElementById("notation");
 	var notationCtx = notationCan.getContext("2d");
 	
-	console.log(staff);
-
 	y = canY/10;
 	y += Math.floor(staff) * (canY/100*14)
 	
@@ -123,6 +117,9 @@ function staffToMeasureY(staff, canY){
 }
 
 function drawMeasure(x, y, canY){
+	var notationCan = document.getElementById("notation");
+	var notationCtx = notationCan.getContext("2d");
+
 	y = staffToMeasureY(getStaffFromY(y/ (canY/200), canY), canY);
 	notationCtx.moveTo(x, y);
 	notationCtx.lineTo(x, y+ (canY/10));
@@ -152,11 +149,11 @@ function placementCheck(note, x_pos, y_pos, staffBounds_x){
 	var staff = getStaffFromY(y, canY);
 	var note_dur;
 
-	if(noteCode > 58594 && noteCode < 58601){
+	/*if(noteCode > 58594 && noteCode < 58601){
 		staff = Math.floor(staff) + 0.149;
 		switch(noteCode){
 			case 58595:
-				staff -= 0.07
+				staff -= 0.07;
 				note_dur = 4;
 				break;
 			case 58596:
@@ -198,6 +195,13 @@ function placementCheck(note, x_pos, y_pos, staffBounds_x){
 		case 57819:
 			note_dur = 0.125;
 			break;
+	}*/
+
+	var charInfo = charToDuration(sessionStorage.getItem("note"));
+
+	if(charInfo[1] > 0){
+		y = ( Math.floor(staff) + charInfo[1] ) * (canY/100 * 14) + (canY/10);
+		y = y/ (canY/200);
 	}
 	
 	// determine which staff it's in;
@@ -209,7 +213,61 @@ function placementCheck(note, x_pos, y_pos, staffBounds_x){
 		note = String.fromCharCode(note.charCodeAt(0) + 1)
 	}
 	
-	return [note, x * canX/100, y/2 * canY/100, note_dur];
+	return [note, x * canX/100, y/2 * canY/100, charInfo[0]];
+}
+
+function charToDuration(character){
+	var charCode = character.charCodeAt(0);
+	var noteDuration = 0;
+	var staffOffset = 0;
+	
+	if(charCode > 58594 && charCode < 58601){
+		staffOffset += 0.149;
+		switch(charCode){
+			case 58595:
+				staffOffset -= 0.07;
+				noteDuration = 4;
+				break;
+			case 58596:
+				noteDuration = 2;
+				break;
+			case 58597:
+				noteDuration = 1;
+				break;
+			case 58598:
+				noteDuration = 0.5;
+				break;
+			case 58599:
+				noteDuration = 0.25;
+				break;
+			case 58600:
+				noteDuration = 0.125;
+				break;
+		}
+	}
+	else{
+		switch(charCode){
+			case 57506:
+				noteDuration = 4;
+				break;
+			case 57811:
+				noteDuration = 2;
+				break;
+			case 57813:
+				noteDuration = 1;
+				break;
+			case 57815:
+				noteDuration = 0.5;
+				break;
+			case 57817:
+				noteDuration = 0.25;
+				break;
+			case 57819:
+				noteDuration = 0.125;
+				break;
+		}
+	}
+	return [noteDuration, staffOffset];
 }
 
 function sortNotes(){ //needs to sort the notes array to go up by Y and X, according to the order of everything. Might be unnecessary with good data insertion
@@ -217,12 +275,12 @@ function sortNotes(){ //needs to sort the notes array to go up by Y and X, accor
 }
 
 function insertNote(note, x_pos, y, x, canY){
-	var notes = JSOM.parse(sessionStorage.getItem("noteArr"));
+	var pieceFile = JSOM.parse(sessionStorage.getItem("pieceFile"));
 	var staff = Math.floor( getStaffFromY(y, canY) );
-	if(notes.length == 0){
-		notes.push( {x: x, x_pos: x_pos, y: y, note: note} );
+	if(pieceFile.notes.length == 0){
+		pieceFile.notes.push( {x: x, x_pos: x_pos, y: y, note: note} );
 	}
-	for(var i = 0; i < notes.length; i++){
+	for(var i = 0; i < pieceFile.notes.length; i++){
 		if( Math.floor( getStaffFromY(notes[i].y, canY) ) == staff){
 			if(x <= notes[i].x_pos){
 				notes.splice(i, 0, {x: x, x_pos: x_pos, y: y, note: note});
@@ -236,22 +294,10 @@ function insertNote(note, x_pos, y, x, canY){
 	}
 }
 
-function setMeasures(){
-	var pieceFile = JSON.parse(sessionStorage.getItem("pieceFile"));
-	var topTime = pieceFile.topTime;
-	var bottomTime = pieceFile.bottomTime;
-}
-
 function interpretClick(){
 	var notationCan = document.getElementById("notation");
 	var notationCtx = notationCan.getContext("2d");
-
-	if(!sessionStorage.getItem("noteArr")){
-		var notearr = [];
-		sessionStorage.setItem("noteArr", JSON.stringify(notearr));
-	}
-	var notes = JSON.parse(sessionStorage.getItem("noteArr"));
-
+	var pieceFile = JSON.parse(sessionStorage.getItem("pieceFile"));
 	notationCtx.font = "40px LelandMusic";
 
 	var rect = notationCan.getBoundingClientRect();
@@ -262,36 +308,54 @@ function interpretClick(){
 	var y = (event.clientY - rect.top) * scaleY;
 	
 	var info = placementCheck(sessionStorage.getItem("note"), x, y, JSON.parse(sessionStorage.getItem("staffBounds")) );
-	console.log(info);
-	if(notes.length != 0){
-		info[3] += notes[notes.length-1].x;
+
+	if(pieceFile.notes.length != 0){
+		info[3] += pieceFile.notes[pieceFile.notes.length-1].x;
 	}
 	var note = {x: info[3], x_pos: info[1], y: info[2], note: info[0]};
-	notes.push(note);
+	
+	console.log(note.x)
 
 	staffToMeasureY(getStaffFromY(info[2] / (notationCan.height/200), notationCan.height), notationCan.height);
 
 	//var requestData = new FormData();
-	sessionStorage.setItem("noteArr", JSON.stringify(notes));
-	notationCtx.fillText(info[0], info[1], info[2]);
+	pieceFile.notes.push(note);
+	sessionStorage.setItem("pieceFile", JSON.stringify(pieceFile));
+	redrawCanvas();
+	//notationCtx.fillText(info[0], info[1], info[2]);
 }
 
 function drawMeasures(){
 	var notationCan = document.getElementById("notation");
 	var notationCtx = notationCan.getContext("2d");
-
+	
+	var pieceFile = JSON.parse(sessionStorage.getItem("pieceFile"));
+	var topTime = pieceFile.topTime;
+	var bottomTime = pieceFile.bottomTime;
+	var quarterNotesPerMeasure = 1/bottomTime * 4 * topTime;
+	
 	const canX = notationCan.width
 	const canY = notationCan.height
 
-	var measureHeight = canY/10
-	for(var i = 0; i < 1; i++){
-		
+	var measureHeight = canY/10;
+	var currentMeasure = 0;
+	var cursor = 0;
+	console.log(pieceFile.notes[0].x);
+	for(var i = 0; i < pieceFile.notes.length; i++){
+		currentMeasure = pieceFile.notes[i].x / quarterNotesPerMeasure
+		console.log(quarterNotesPerMeasure, pieceFile.notes[i].x);
+		console.log(currentMeasure);
+		if( cursor < Math.floor(currentMeasure) && currentMeasure == Math.floor(currentMeasure) ){
+			console.log("asd");
+			drawMeasure( pieceFile.notes[i].x_pos + canX/100*2, pieceFile.notes[i].y, canY );
+			cursor = Math.floor(currentMeasure);
+		}
 	}
 
 	for(var i = 0; i < 5; i++){
 		for(var j = 0; j<4; j++){
-			notationCtx.moveTo(canX/10, canY/100 * (10+offset));
-			notationCtx.lineTo(canX/10, canY/100 * (20+offset));
+			notationCtx.moveTo(canX/10, canY/100 * (10));
+			notationCtx.lineTo(canX/10, canY/100 * (20));
 			notationCtx.stroke();	
 		}
 	}
@@ -519,7 +583,7 @@ function drawStaff(offset = 0){
 function redrawCanvas(){
 	var notationCan = document.getElementById("notation");
 	var notationCtx = notationCan.getContext("2d");
-	var notes = JSON.parse(sessionStorage.getItem("noteArr"));
+	var pieceFile = JSON.parse(sessionStorage.getItem("pieceFile"));
 
 	notationCan.width = window.screen.width * 0.95;
 	notationCan.height = window.screen.height;
@@ -532,12 +596,13 @@ function redrawCanvas(){
 		drawStaff(i*14);
 	}
 	notationCtx.font = "40px LelandMusic";
-	for(var i = 0; i<notes.length; i++){
-		notationCtx.fillText(notes[i].note, notes[i].x_pos, notes[i].y);
-		if(i == notes.length-1){
-			sessionStorage.setItem("cursor", JSON.stringify([notes[i].x, notes[i].y]) )
-		}
+	for(var i = 0; i< pieceFile.notes.length; i++){
+		notationCtx.fillText(pieceFile.notes[i].note, pieceFile.notes[i].x_pos, pieceFile.notes[i].y);
+		//if(i == notes.length-1){
+		//	sessionStorage.setItem("cursor", JSON.stringify([notes[i].x, notes[i].y]) )
+		//}
 	}
+	drawMeasures();
 	drawSymbols();
 	
 }

@@ -6,7 +6,7 @@ async function getPieces(){
     
     if(!result.ok){
         error.style.color = "#FF0000";
-        error.innerText = await result.text();
+        error.innerHTML = await result.text();
     }
 
     if(result.status == 204){

@@ -2,13 +2,12 @@
 include 'config.php';
 include "global.php";
 
-
-$pieceName = $_POST["pieceName"];
-$bpm = (int) $_POST["bpm"];
-$topTime = (int) $_POST["topTime"];
+$pieceName  = $_POST["pieceName"];
+$bpm        = (int) $_POST["bpm"];
+$topTime    = (int) $_POST["topTime"];
 $bottomTime = (int) $_POST["bottomTime"];
 
-$token = $_COOKIE["token"];
+$token      = $_COOKIE["token"];
 
 if(!$topTime){
 	$topTime = 4;

@@ -5,3 +5,14 @@ Staff sides: canX/10 - canX/10 * 9;
 
 spacing between staves - i*14 * canY/100
 height of staff = canY/10
+
+x = x_pos/ (canX/100);
+Math.round(X)
+x = x * canX/100
+
+y = y_pos / (canY/200);
+Math.round(y);
+y = y * canY/200;
+
+
+first available x note position: 15%

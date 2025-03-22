@@ -61,7 +61,7 @@
 					Time signature:
 					<input id="topTime" placeholder="4"> / <input id="bottomTime" placeholder="4">
 					<br/>
-					<button onclick="closeBaseInfo()">Cancel</button> <button onclick="resetBaseInfo()">Reset</button> <button onclick="editBaseInfo()">Submit</button>
+					<button onclick="closeBaseInfo()">Cancel</button> <button onclick="openBaseInfo()">Reset</button> <button onclick="editBaseInfo()">Submit</button>
 
 				</div>
 			</center>
@@ -77,5 +77,6 @@
 				</div>
 			</center>
 		</div>
+
 	</body>
 </html>

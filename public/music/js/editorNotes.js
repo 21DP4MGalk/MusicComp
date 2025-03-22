@@ -25,10 +25,11 @@ function getChromatic12TET(referenceA){
 }
 
 class Note{
-	constructor(pitch, duration, X = 0, volume = 1){ //all must be numeric
+	constructor(x, y, duration, volume = 1){ //all must be numeric
 		this.pitch = pitch;
 		this.duration = duration;
-		this.X = X;
+		this.x = x;
+		this.y = y;
 		this.volume = volume;
 	}
 }
@@ -92,7 +93,11 @@ async function init(){
 	redrawCanvas();
 }
 
-function getStaffFromY(y, canY){
+function getStaffFromY(y, canY, norm = false){
+	
+	if(norm){
+		y = y/ (canY/200);
+	}
 
 	var staff = (y/2*canY/100) - canY/10;
 	staff = staff / (canY/100 * 14);
@@ -135,7 +140,7 @@ function placementCheck(note, x_pos, y_pos, staffBounds_x){
 	const canY = notationCan.height
 	
 	if(noteCode == 32 || x_pos < staffBounds_x[0] || x_pos > staffBounds_x[1] || y_pos < canY/100 * 9){
-		drawMeasure(x_pos, y_pos, canY);
+		//drawMeasure(x_pos, y_pos, canY);
 		return [" ", 0, 0, 0];
 	}
 
@@ -164,7 +169,9 @@ function placementCheck(note, x_pos, y_pos, staffBounds_x){
 		note = String.fromCharCode(note.charCodeAt(0) + 1)
 	}
 	
-	return [note, x * canX/100, y/2 * canY/100, charInfo[0]];
+	var coords = getNextNotePos(x_pos, y_pos);
+	return [note, coords[0], coords[1], charInfo[0]];
+//	return [note, x * canX/100, y/2 * canY/100, charInfo[0]];
 }
 
 function durationToChar(duration, isRest){
@@ -294,13 +301,12 @@ function interpretClick(){
 	var y = (event.clientY - rect.top) * scaleY;
 	
 	var info = placementCheck(sessionStorage.getItem("note"), x, y, JSON.parse(sessionStorage.getItem("staffBounds")) );
-
+	
 	if(pieceFile.notes.length != 0){
 		info[3] += pieceFile.notes[pieceFile.notes.length-1].x;
 	}
 	var note = {x: info[3], x_pos: info[1], y: info[2], note: info[0]};
 	
-	console.log(note.x)
 
 	staffToMeasureY(getStaffFromY(info[2] / (notationCan.height/200), notationCan.height), notationCan.height);
 
@@ -311,8 +317,63 @@ function interpretClick(){
 	//notationCtx.fillText(info[0], info[1], info[2]);
 }
 
-function getNextNotePos(x, y){
+function roundCoords(x, y, canX, canY){
+	y = y/ (canY/200);
+	x = x/ (canX/100);
+	y = Math.round(y);
+	x = Math.round(x);
+	y = y * canY/200;
+	x = x * canX/100;
 
+	return [x, y];
+}
+
+function getNextNotePos(x, y){
+	var notationCan = document.getElementById("notation");
+	var notationCtx = notationCan.getContext("2d");
+	var pieceFile   = JSON.parse(sessionStorage.getItem("pieceFile"));
+	var staffBounds = JSON.parse(sessionStorage.getItem("staffBounds"));
+
+	const canX = notationCan.width;
+	const canY = notationCan.height;
+
+	var coords = roundCoords(x, y, canX, canY);
+	var yStaff = Math.floor(getStaffFromY(coords[1], canY, true));
+	//console.log(getStaffFromY(coords[1], canY, true));
+	
+	var yIndex = coords[1] - canY/10;
+	yIndex = yIndex / (canY/200);
+	yIndex += 2
+	console.log(yIndex);
+
+	if(!pieceFile.notes.length){
+	// if it's the first note
+		x = canX/100 * 15;
+		y = coords[1];
+		if(yStaff){
+			y -= (yStaff * 14 * canY/100)
+		}
+		return [x, y];
+	}
+
+	var previousNote = pieceFile.notes[ pieceFile.notes.length - 1 ];
+
+	if(x > previousNote.x_pos && Math.floor( getStaffFromY(coords[1], canY, true) ) >= Math.floor(getStaffFromY(previousNote.y, canY, true) ) ){
+	// if it's in front of the previous note and on the same or the next staff
+		if( Math.floor( getStaffFromY(coords[1], canY, true) ) > Math.floor(getStaffFromY(previousNote.y, canY, true) ) ){
+			//if it's on the next staff
+			x = canX/100 * 15;
+			return [x, coords[1]];
+		}
+
+		if(previousNote.x_pos + (canX/50 * 2) < staffBounds[1]){
+		// if it doesn't extend past the limits of the staff
+			x = previousNote.x_pos + canX/50;
+			return [x, coords[1]];
+		}
+	}
+
+	return [coords[0], coords[1]]
 }
 
 function drawMeasures(){
@@ -337,7 +398,7 @@ function drawMeasures(){
 		currentMeasure = pieceFile.notes[i].x / quarterNotesPerMeasure
 		if( cursor < Math.floor(currentMeasure)){
 			if( currentMeasure == Math.floor(currentMeasure) ){
-				drawMeasure( pieceFile.notes[i].x_pos + canX/100*2, pieceFile.notes[i].y, canY );
+				drawMeasure( pieceFile.notes[i].x_pos + (canX/75), pieceFile.notes[i].y, canY );
 				cursor = Math.floor(currentMeasure);
 			}
 			else{
@@ -348,8 +409,7 @@ function drawMeasures(){
 				}
 				pieceFile.notes[i].x -= note2
 				pieceFile.notes[i].note = durationToChar(note1-note2);
-				note2 = {x: pieceFile.notes[i].x+note2, x_pos: pieceFile.notes[i].x_pos+50, y: pieceFile.notes[i].y, note: durationToChar(note2)};
-				console.log(pieceFile.notes.length, i+1);
+				note2 = {x: pieceFile.notes[i].x+note2, x_pos: pieceFile.notes[i].x_pos + canX/50, y: pieceFile.notes[i].y, note: durationToChar(note2)};
 
 				for(var j = i+1; j < pieceFile.notes.length; j++){
 					pieceFile.notes[j].x += note2;
@@ -597,10 +657,14 @@ function drawStaff(offset = 0){
 function redrawCanvas(){
 	var notationCan = document.getElementById("notation");
 	var notationCtx = notationCan.getContext("2d");
-	var pieceFile = JSON.parse(sessionStorage.getItem("pieceFile"));
+	var pieceFile   = JSON.parse(sessionStorage.getItem("pieceFile"));
+	var staffBounds = JSON.parse(sessionStorage.getItem("staffBounds"));
 
 	notationCan.width = window.screen.width * 0.95;
 	notationCan.height = window.screen.height;
+
+	const canY = notationCan.height;
+	const canX = notationCan.width;
 
 	notationCtx.clearRect(0, 0, notationCan.width, notationCan.height);
 
@@ -611,7 +675,11 @@ function redrawCanvas(){
 	}
 	notationCtx.font = "40px LelandMusic";
 	for(var i = 0; i< pieceFile.notes.length; i++){
-		notationCtx.fillText(pieceFile.notes[i].note, pieceFile.notes[i].x_pos, pieceFile.notes[i].y);
+		var staffLength = staffBounds[1] - staffBounds[0];
+		var x_pos = pieceFile.notes[i].x * canX/100 + (canX/100 * 13);
+		var staff = Math.floor(x_pos / staffLength);
+		x_pos = x_pos % staffLength;
+		notationCtx.fillText(pieceFile.notes[i].note, x_pos, pieceFile.notes[i].y);
 	}
 	drawMeasures();
 	drawSymbols();

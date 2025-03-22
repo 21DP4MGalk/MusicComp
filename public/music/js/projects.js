@@ -95,6 +95,7 @@ async function deletePiece(deleteBtn){
 		document.getElementById("link" + id).remove();
 		document.getElementById("publish" + id).remove();
 		deleteBtn.remove();
+		init();
 	}
 }
 
@@ -156,14 +157,12 @@ async function togglePublishPiece(publishBtn){
 	})
 
 	if(response.ok){
-		getPieces();
-		updatePieces();
+		init();
 		return;
 	}
 	else{
 		alert(await response.text());
 	}
-	return;
 }
 
 function search(){

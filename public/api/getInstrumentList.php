@@ -20,9 +20,9 @@ $stmnt = $connection->prepare("SELECT users.ID FROM users WHERE token = ?");
 $stmnt->bind_param("s", $token);
 $stmnt->execute();
 $result = $stmnt->get_result();
-$result = $result->fetch_object;
+$result = $result->fetch_object();
 
-if($result->ID){
+if(!$result->ID){
     echo("Ivalid token, try logging out and then back in");
     http_response_code(400);
     exit();

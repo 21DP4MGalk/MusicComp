@@ -20,8 +20,29 @@
 
 		<div id="contentStart"></div>
 		
+		<h1>Choose the instrument to edit</h1>
+		<hr/>
+		<p id="listError"></p>
+		<div id="instrumentList">
+		</div>
+		
 		<div id="curveEditor">
-			<canvas id="curveDisplay"></canvas>
+			<div id="editorWindow">
+				<canvas id="curveDisplay"></canvas>
+				<div id="coordinates">
+					<input type="range" id="sx"/>
+					<input type="range" id="sy"/>
+					<hr>
+					<input type="range" id="c1x"/>
+					<input type="range" id="c1y"/>
+					<hr>
+					<input type="range" id="c2x"/>
+					<input type="range" id="c2y"/>
+					<hr>
+					<input type="range" id="ex"/>
+					<input type="range" id="ey"/>
+				</div>
+			</div>
 		</div>
 
 		<div id="footer">

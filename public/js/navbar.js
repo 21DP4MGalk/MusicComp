@@ -1,5 +1,5 @@
 function navInit(){
-    if(document.cookie)){
+    if(document.cookie){
         document.getElementById("navRegister").style.display = "none";
         document.getElementById("navLogin").style.display = "none";
         document.getElementById("navLogout").style.display = "block";

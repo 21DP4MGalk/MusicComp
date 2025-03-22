@@ -104,8 +104,8 @@ $pieceFile->key = $key;
 $pieceFile->bpm = $bpm;
 $pieceFile->topTime = $topTime;
 $pieceFile->bottomTime = $bottomTime;
-$pieceFile->notes = [""];
-$pieceFile->instruments = [""];
+$pieceFile->notes = [];
+$pieceFile->instruments = [];
 
 $pieceFile = json_encode($pieceFile);
 echo $pieceFile;

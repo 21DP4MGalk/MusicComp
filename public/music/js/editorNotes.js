@@ -73,7 +73,6 @@ async function getPieceFile(){
 		var pieceFile = response.text();
 		pieceFile = JSON.parse( await pieceFile);
 		sessionStorage.setItem("pieceFile", pieceFile);
-		sessionStorage.setItem("noteArr", JSON.parse(pieceFile).notes);
 	}
 	
 }
@@ -149,54 +148,6 @@ function placementCheck(note, x_pos, y_pos, staffBounds_x){
 	var staff = getStaffFromY(y, canY);
 	var note_dur;
 
-	/*if(noteCode > 58594 && noteCode < 58601){
-		staff = Math.floor(staff) + 0.149;
-		switch(noteCode){
-			case 58595:
-				staff -= 0.07;
-				note_dur = 4;
-				break;
-			case 58596:
-				note_dur = 2;
-				break;
-			case 58597:
-				note_dur = 1;
-				break;
-			case 58598:
-				note_dur = 0.5;
-				break;
-			case 58599:
-				note_dur = 0.25;
-				break;
-			case 58600:
-				note_dur = 0.125;
-				break;
-		}
-		y = staff * (canY/100 * 14) + (canY/10);
-		y = y/ (canY/200);
-	}
-
-	switch(sessionStorage.getItem("note").charCodeAt(0)){
-		case 57506:
-			note_dur = 4;
-			break;
-		case 57811:
-			note_dur = 2;
-			break;
-		case 57813:
-			note_dur = 1;
-			break;
-		case 57815:
-			note_dur = 0.5;
-			break;
-		case 57817:
-			note_dur = 0.25;
-			break;
-		case 57819:
-			note_dur = 0.125;
-			break;
-	}*/
-
 	var charInfo = charToDuration(sessionStorage.getItem("note"));
 
 	if(charInfo[1] > 0){
@@ -214,6 +165,41 @@ function placementCheck(note, x_pos, y_pos, staffBounds_x){
 	}
 	
 	return [note, x * canX/100, y/2 * canY/100, charInfo[0]];
+}
+
+function durationToChar(duration, isRest){
+
+	if(isRest){
+		var firstRest;
+		var secondRest;
+		return [firestRest, secondRest];
+	}
+
+	var charCode = 0;
+	switch(duration){
+		case 4:
+			charCode = 57506;
+			break;
+		case 2:
+			charCode = 57811;
+			break;
+		case 1:
+			charCode = 57813;
+			break;
+		case 0.5:
+			charCode = 57815;
+			break;
+		case 0.25:
+			charCode = 57817;
+			break;
+		case 0.125:
+			charCode = 57819;
+			break;
+
+	}
+
+	return String.fromCharCode(charCode);
+
 }
 
 function charToDuration(character){
@@ -325,6 +311,10 @@ function interpretClick(){
 	//notationCtx.fillText(info[0], info[1], info[2]);
 }
 
+function getNextNotePos(x, y){
+
+}
+
 function drawMeasures(){
 	var notationCan = document.getElementById("notation");
 	var notationCtx = notationCan.getContext("2d");
@@ -339,16 +329,40 @@ function drawMeasures(){
 
 	var measureHeight = canY/10;
 	var currentMeasure = 0;
-	var cursor = 0;
-	console.log(pieceFile.notes[0].x);
+	if(pieceFile.notes.length == 0){
+		return;
+	}
+	cursor = 0;
 	for(var i = 0; i < pieceFile.notes.length; i++){
 		currentMeasure = pieceFile.notes[i].x / quarterNotesPerMeasure
-		console.log(quarterNotesPerMeasure, pieceFile.notes[i].x);
-		console.log(currentMeasure);
-		if( cursor < Math.floor(currentMeasure) && currentMeasure == Math.floor(currentMeasure) ){
-			console.log("asd");
-			drawMeasure( pieceFile.notes[i].x_pos + canX/100*2, pieceFile.notes[i].y, canY );
-			cursor = Math.floor(currentMeasure);
+		if( cursor < Math.floor(currentMeasure)){
+			if( currentMeasure == Math.floor(currentMeasure) ){
+				drawMeasure( pieceFile.notes[i].x_pos + canX/100*2, pieceFile.notes[i].y, canY );
+				cursor = Math.floor(currentMeasure);
+			}
+			else{
+				var note1 = charToDuration(pieceFile.notes[i].note)[0]
+				var note2 = (currentMeasure - Math.floor(currentMeasure)) * quarterNotesPerMeasure;
+				if(note2 > 0.99){
+					note2 = Math.round(note2);
+				}
+				pieceFile.notes[i].x -= note2
+				pieceFile.notes[i].note = durationToChar(note1-note2);
+				note2 = {x: pieceFile.notes[i].x+note2, x_pos: pieceFile.notes[i].x_pos+50, y: pieceFile.notes[i].y, note: durationToChar(note2)};
+				console.log(pieceFile.notes.length, i+1);
+
+				for(var j = i+1; j < pieceFile.notes.length; j++){
+					pieceFile.notes[j].x += note2;
+				}
+				if(pieceFile.notes.length - i > 0){
+					pieceFile.notes.splice(i+1, 0, note2);
+				}
+				else{
+					pieceFile.notes.push(note2);
+				}
+				sessionStorage.setItem("pieceFile", JSON.stringify(pieceFile));
+				cursor = Math.floor(currentMeasure);
+			}
 		}
 	}
 
@@ -598,9 +612,6 @@ function redrawCanvas(){
 	notationCtx.font = "40px LelandMusic";
 	for(var i = 0; i< pieceFile.notes.length; i++){
 		notationCtx.fillText(pieceFile.notes[i].note, pieceFile.notes[i].x_pos, pieceFile.notes[i].y);
-		//if(i == notes.length-1){
-		//	sessionStorage.setItem("cursor", JSON.stringify([notes[i].x, notes[i].y]) )
-		//}
 	}
 	drawMeasures();
 	drawSymbols();
@@ -649,14 +660,4 @@ function selectNote(){
 	sessionStorage.setItem("note", getPointedElement().childNodes[1].innerText);
 	getPointedElement().classList.add("selectedNote");
 	return;
-}
-
-class InstrumentPart{
-	constructor(id, name, instrumentID, maxvolume = 1){
-		this.name = name;
-		this.maxvolume = maxvolume;
-		this.part;
-		this.instrumentID = instrumentID;
-		this.waveform;
-	}
 }

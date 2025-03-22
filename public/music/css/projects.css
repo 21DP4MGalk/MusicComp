@@ -48,7 +48,9 @@
 }
 #pieces a{
 	font-size: 20px;
-	color: #232323
+	color: #232323;
+	white-space: pre;
+
 }
 #pieces button{
 	margin: 0 5px 0 5px;

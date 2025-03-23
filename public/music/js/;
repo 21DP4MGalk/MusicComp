@@ -321,7 +321,7 @@ function drawMeasures(){
 		currentMeasure += pieceFile.notes[i].duration / quarterNotesPerMeasure
 		if( cursor < Math.floor(currentMeasure)){
 			if( currentMeasure == Math.floor(currentMeasure) ){
-				var coords = getCoordinates(i, pieceFile.notes[i].y, canX, canY);
+				var coords = getCoordinates(i, pieceFile.notes[i].y, canX, canY)
 				drawMeasure( coords[0] + (canX/75), coords[1], canY);
 				cursor = Math.floor(currentMeasure);
 			}

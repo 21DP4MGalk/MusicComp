@@ -30,18 +30,20 @@
 			<div id="editorWindow">
 				<canvas id="curveDisplay"></canvas>
 				<div id="coordinates">
-					<input type="range" id="sx"/>
-					<input type="range" id="sy"/>
+					<input type="range" id="sx" max="300" oninput="redrawCurve()"/>
+					<input type="range" id="sy" max="300" oninput="redrawCurve()"/>
 					<hr>
-					<input type="range" id="c1x"/>
-					<input type="range" id="c1y"/>
+					<input type="range" id="c1x" max="300" oninput="redrawCurve()"/>
+					<input type="range" id="c1y" max="300" oninput="redrawCurve()"/>
 					<hr>
-					<input type="range" id="c2x"/>
-					<input type="range" id="c2y"/>
+					<input type="range" id="c2x" max="300" oninput="redrawCurve()"/>
+					<input type="range" id="c2y" max="300" oninput="redrawCurve()"/>
 					<hr>
-					<input type="range" id="ex"/>
-					<input type="range" id="ey"/>
+					<input type="range" id="ex" max="300" oninput="redrawCurve()"/>
+					<input type="range" id="ey" max="300" oninput="redrawCurve()"/>
 				</div>
+				<br>
+				<button onclick="closeEditor()">Close</button>
 			</div>
 		</div>
 

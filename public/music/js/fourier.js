@@ -1,4 +1,4 @@
-function fourierForward(funky, samples = 44000, max = 1, min = 0){
+function fourierForward(funky, samples = 5000, max = 440*Math.PI*2, min = 0){
     var frequencies = [[]]; // array of k
     var k;
     var n;
@@ -21,71 +21,29 @@ function fourierForward(funky, samples = 44000, max = 1, min = 0){
         real = 0;
         imag = 0;
         for(var n = 0; n < samples; n++){
-            real += sampleData[k] * Math.cos( -1 * (2 * Math.PI) * k * (n / samples) );
-            imag += sampleData[k] * Math.sin( -1 * (2 * Math.PI) * k * (n / samples) );
+            real += sampleData[n] * Math.cos( -1 * (2 * Math.PI) * k * (n / samples) );
+            imag += sampleData[n] * Math.sin( -1 * (2 * Math.PI) * k * (n / samples) );
         }
         real = real / samples;
         imag = imag / samples;
-        frequencies.push([real, imag]);
+		if(Math.abs(real) < 1e-5){ real = 0}
+		if(Math.abs(imag) < 1e-5){ imag = 0}
+        frequencies.push([real, imag, real*real+imag*imag]);
     }
-    console.log(frequencies);
+	return frequencies;
 }
 
-function sampleStolen(samples){
-    sampleData = [];
-    for(var i = 0; i < 6.283; i += 6.283/samples){
-        sampleData.push(Math.sin(i));
-    }
-    console.log(sampleData);
-    console.log(fourierStolen(sampleData));
-    
-    console.log("done");
-}
+function bezier(t, p0, p1, p2, p3){
+  var cX = 3 * (p1.x - p0.x),
+      bX = 3 * (p2.x - p1.x) - cX,
+      aX = p3.x - p0.x - cX - bX;
 
-function fourierStolen(data){
-    var N = data.length;
-    var frequencies = [];
+  var cY = 3 * (p1.y - p0.y),
+      bY = 3 * (p2.y - p1.y) - cY,
+      aY = p3.y - p0.y - cY - bY;
 
-    // for every frequency...
-    for (var freq = 0; freq < N; freq++) {     
-        var re = 0;
-        var im = 0;
+  var x = (aX * Math.pow(t, 3)) + (bX * Math.pow(t, 2)) + (cX * t) + p0.x;
+  var y = (aY * Math.pow(t, 3)) + (bY * Math.pow(t, 2)) + (cY * t) + p0.y;
 
-        // for every point in time...
-        for (var t = 0; t < N; t++) {
-
-            // Spin the signal _backwards_ at each frequency (as radians/s, not Hertz)
-            var rate = -1 * (2 * Math.PI) * freq;
-
-            // How far around the circle have we gone at time=t?
-            var time = t / N;
-            var distance = rate * time;
-
-            // datapoint * e^(-i*2*pi*f) is complex, store each part
-            var re_part = data[t] * Math.cos(distance);
-            var im_part = data[t] * Math.sin(distance);
-
-            // add this data point's contribution
-            re += re_part;
-            im += im_part;
-        }
-
-        // Close to zero? You're zero.
-        if (Math.abs(re) < 1e-10) { re = 0; }
-        if (Math.abs(im) < 1e-10) { im = 0; }
-
-        // Average contribution at this frequency
-        re = re / N;
-        im = im / N;
-
-        frequencies[freq] = {
-            re: re,
-            im: im,
-            freq: freq,
-            amp: Math.sqrt(re*re + im*im),
-            phase: Math.atan2(im, re) * 180 / Math.PI     // in degrees
-        };
-    }
-
-    return frequencies;
-}
+  return {x: x, y: y};
+},

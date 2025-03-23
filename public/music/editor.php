@@ -73,7 +73,9 @@
 					<h1>Instruments</h1>
 					<hr/>
 					<p id="instrumentError"></p>
-					<div id="instrumentList"></div>
+					<div id="listElement"></div>
+					<hr/>
+					<button onclick="closeInstrumentList()">Cancel</button> <button onclick="window.location.href = '/music/instruments.php'">Go to instrument editor</button>
 				</div>
 			</center>
 		</div>

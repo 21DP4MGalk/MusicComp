@@ -256,6 +256,7 @@ function findValidNote(x, y){
 	var yIndex = coords[1] - canY/10;
 	yIndex /= (canY/200);
 	yIndex += 2;
+	yIndex %= 28;
 
 	for(var i = 0; i < pf.notes.length; i++){
 		break;
@@ -612,12 +613,14 @@ function redrawCanvas(){
 
 function getCoordinates(xIndex, yIndex, canX, canY){
 	var staffBounds = JSON.parse(sessionStorage.getItem("staffBounds"));
-	var staffLength = staffBounds[1] - staffBounds[0];
+	var staffLength = staffBounds[1] - staffBounds[0] - canX/25;
 
-	var x_pos = xIndex * canX/50 + ((canX/100) * 15);
+	var x_pos = xIndex * canX/50;
 	var staff = Math.floor(x_pos / staffLength);
 	x_pos = x_pos % staffLength;
-	
+	//x_pos += ((canX/100) * 15);
+	x_pos += staffBounds[0];
+
 	var y_pos = canY/10 + ((yIndex - 2) * (canY/200));
 	y_pos += staff*14*(canY/100);
 	

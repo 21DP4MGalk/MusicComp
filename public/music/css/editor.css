@@ -89,6 +89,17 @@
 #key{
         width: 20px;
 }
+#instrumentWindow{
+	display: block;
+	position: fixed;
+	background-color: ivory;
+	margin: 5% 25% 5% 25%;
+	width: 50%;
+	height: 50%;
+}
+#listElement{
+	height: 60%;
+}
 
 
 /*THE REST OF THIS IS JUST A MODIFIED GLOBAL CSS SINCE IT'S FUCKY WITH THIS ONE*/

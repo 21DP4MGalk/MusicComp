@@ -8,5 +8,5 @@ pieceFile{
 	topTime: default 4;
 	bottomTime: default 4;
 	notes: json string of instrument parts, in same order as instruments array;
-	instruments: json string of instrument info;
+	instruments: json string of instrument info. Each instrument is an array consisting of coordinates for start, cp1, cp2 and end.
 }

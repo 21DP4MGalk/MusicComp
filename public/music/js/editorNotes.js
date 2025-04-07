@@ -222,6 +222,10 @@ function interpretClick(){
 	var notationCtx = notationCan.getContext("2d");
 	var pieceFile = JSON.parse(sessionStorage.getItem("pieceFile"));
 	var noteChar = sessionStorage.getItem("note");
+	
+	if(noteChar == "" || noteChar == " "){
+		return;
+	}
 
 	notationCtx.font = "40px LelandMusic";
 	
@@ -231,8 +235,7 @@ function interpretClick(){
 
 	var x = (event.clientX - rect.left) * scaleX;
 	var y = (event.clientY - rect.top) * scaleY;
-	
-	
+
 	var note = findValidNote(x, y);
 	note.duration = charToDuration(noteChar)[0];
 
@@ -253,6 +256,7 @@ function findValidNote(x, y){
 	var coords = roundCoords(x, y, canX, canY);
 
 	var xIndex = pf.notes.length;
+
 	var yIndex = coords[1] - canY/10;
 	yIndex /= (canY/200);
 	yIndex += 2;
@@ -260,13 +264,10 @@ function findValidNote(x, y){
 
 	for(var i = 0; i < pf.notes.length; i++){
 		break;
+		//if(pf.notes[i].x < )
 	}
 
 	return {xIndex: xIndex, y: y, yIndex: yIndex};
-}
-
-function splitNote(note, targetDuration){
-	return;
 }
 
 function addNote(note){
@@ -313,25 +314,56 @@ function drawMeasures(){
 	const canY = notationCan.height
 
 	var measureHeight = canY/10;
-	var currentMeasure = 0;
+	var currentNote = 0;
 	if(pieceFile.notes.length == 0){
 		return;
 	}
 	cursor = 0;
 	for(var i = 0; i < pieceFile.notes.length; i++){
-		currentMeasure += pieceFile.notes[i].duration / quarterNotesPerMeasure
-		if( cursor < Math.floor(currentMeasure)){
-			if( currentMeasure == Math.floor(currentMeasure) ){
+		currentNote += pieceFile.notes[i].duration;
+		currentMeasure = Math.floor(currentNote/quarterNotesPerMeasure)
+		if( cursor < currentMeasure){
+	
+			if( currentNote/quarterNotesPerMeasure == currentMeasure && currentMeasure-cursor == 1){
 				var coords = getCoordinates(i, pieceFile.notes[i].y, canX, canY);
 				drawMeasure( coords[0] + (canX/75), coords[1], canY);
-				cursor = Math.floor(currentMeasure);
+				cursor = currentMeasure;
 			}
 			else{
 				var note1 = pieceFile.notes[i].duration
-				var note2 = (currentMeasure - Math.floor(currentMeasure)) * quarterNotesPerMeasure;
-				if(note2 > 0.99){
-					note2 = Math.round(note2);
+				var leftOver = (currentNote - currentMeasure * quarterNotesPerMeasure)
+				var result = splitNote(note1, quarterNotesPerMeasure, leftOver, pieceFile.topTime);
+				console.log(currentNote, leftOver, result);
+				var newNote;
+
+				pieceFile.notes[i].duration = result[0][0];
+				var j = 1;
+				for(; j < result[0].length; j++){
+					newNote = new Note(i+j, pieceFile.notes[i].y, result[0][j])
+					console.log(newNote)
+					pieceFile.notes.splice(i+j, 0, newNote);
+					console.log(pieceFile.notes[i+j])
 				}
+				//draw measure yeah
+				for(var k = 0; k < result[1].length; k++){
+					newNote = new Note(i+j+k, pieceFile.notes[i].y, result[1][k])
+					console.log(newNote)
+			
+					pieceFile.notes.splice(i+j+k+1, 0, newNote);
+					console.log(pieceFile.notes[i+j+k])
+
+				}
+				
+				for(var k = i+result[1].length+result[0].length; k < pieceFile.notes.length; k++){
+					pieceFile.notes[k].x += result[1].length + result[0].length ;
+				}
+				
+				sessionStorage.setItem("pieceFile", JSON.stringify(pieceFile));
+				cursor = currentMeasure;
+	
+				/*if(note2 > 0.99){
+					note2 = Math.round(note2);
+				} 
 				pieceFile.notes[i].duration -= note2
 				note2 = new Note(pieceFile.notes[i].x+1, pieceFile.notes[i].y, note2);
 
@@ -345,7 +377,9 @@ function drawMeasures(){
 					pieceFile.notes.push(note2);
 				}
 				sessionStorage.setItem("pieceFile", JSON.stringify(pieceFile));
-				cursor = Math.floor(currentMeasure);
+				cursor = Math.floor(currentMeasure); */
+				
+
 			}
 		}
 	}
@@ -358,6 +392,37 @@ function drawMeasures(){
 		}
 	}
 	
+}
+
+function splitNote(duration, quarterNotesPerMeasure, leftOver, topTime){
+//	return[[1], [2, 1]];
+	var result = [[],[]];
+	var part1 = duration - leftOver;
+	part1 *=8;		//multiplied so the smallest note possible is 1 unit, allows rounding
+	duration *=8;
+	leftOver *=8;
+
+	quarterNotesPerMeasure -= quarterNotesPerMeasure%2 //ensures this function produces valid durations, as all durations must be powers of 2
+	var maxDuration = Math.round(quarterNotesPerMeasure*8 - ((quarterNotesPerMeasure*8) %2));
+	console.log(maxDuration);
+
+	var sum = 0
+	for(var i = maxDuration; i>=1; i/=2){
+		if(sum+i <= part1){
+			result[0].push(i/8);
+			sum+=i
+		}
+	}
+	sum = 0
+	for(var i = maxDuration; i>=1; i/=2){
+		if(sum+i <= leftOver){
+			result[1].push(i/8);
+			sum+=i
+		}
+	}
+	
+
+	return result;
 }
 
 function drawSymbols(){
@@ -598,16 +663,16 @@ function redrawCanvas(){
 		drawStaff(i*14);
 	}
 	notationCtx.font = "40px LelandMusic";
+
+	drawSymbols();
+
 	for(var i = 0; i< pieceFile.notes.length; i++){
 
 		var coords = getCoordinates(i, pieceFile.notes[i].y, canX, canY);
-		console.log(coords);
 		var noteChar = durationToChar(pieceFile.notes[i].duration);
-		console.log(noteChar, pieceFile.notes[i].duration);
 		notationCtx.fillText(noteChar, coords[0], coords[1]);
 	}
 	drawMeasures();
-	drawSymbols();
 	
 }
 

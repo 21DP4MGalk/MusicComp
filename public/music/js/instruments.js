@@ -95,6 +95,6 @@ function closeEditor(){
 }
 
 async function init(){
-	getInstruments();
+	await getInstruments();
 	updateList();
 };

@@ -5,20 +5,25 @@ Disclaimer:
 
 ## What is this?
 
-MusicComp is a website, nay, something greater, a website that I am forced to develop so I don't get kicked out of school.
-The goal of MusicComp is to make a sequencer using classical notation and custom synth waveform modification.
+MusicComp is a website for simple compositions and experimentation with Bezier-curve based synthesis of sound. The goals of this project are as follows:
+- Basic classical notation
+- Song playback
+- Custom instruments based on wavetables
+- Custom instruments based on Bezier curves of the waveform
+
+Made for the qualification work of RVT 4th course.
 
 ## TODO
 
 - [x] Grand staff
 - [ ] Multiple pages of the grand staff
-- [ ] Note placement
+- [x] Note placement
 - [x] Custom notation format
 - [ ] Bar expansion for notes under the beat notes
 - [ ] Playback with fundamental waves
 - [ ] Playback with custom wave files
-- [ ] Instrument beizer curve display
-- [ ] Bezier curve editor
+- [x] Instrument beizer curve display
+- [x] Bezier curve editor
 - [ ] Bezier curve to fourier series
 - [ ] Additional symbols (ties, forte, piano)
 - [x] Auxiliary pages

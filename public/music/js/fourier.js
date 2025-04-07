@@ -33,7 +33,7 @@ function fourierForward(funky, samples = 5000, max = 440*Math.PI*2, min = 0){
 	return frequencies;
 }
 
-function bezier(t, p0, p1, p2, p3){
+function stolenBezier(t, p0, p1, p2, p3){
   var cX = 3 * (p1.x - p0.x),
       bX = 3 * (p2.x - p1.x) - cX,
       aX = p3.x - p0.x - cX - bX;
@@ -46,4 +46,45 @@ function bezier(t, p0, p1, p2, p3){
   var y = (aY * Math.pow(t, 3)) + (bY * Math.pow(t, 2)) + (cY * t) + p0.y;
 
   return {x: x, y: y};
-},
+}
+
+function cubicBezier(t, sx, sy, c1x, c1y, c2x, c2y, ex, ey){
+	
+	return {x, y}
+}
+function quadraticBezierDumb(t, sx, sy, cpx, cpy, ex, ey){
+	y = 0;
+	x = 0;
+	u = 1-t
+	y = (ey*t + cpy*u)*t + (cpy*t + sy*u)*u;
+	x = (ex*t + cpx*u)*t + (cpx*t + sx*u)*u;
+
+	return {x, y}
+}
+
+function drawQuadraticBezierDumb(sx, sy, cx, cy, ex, ey){
+	const canvas = document.getElementById("canvas");
+	const context = canvas.getContext("2d");
+	canvas.height = 1080;
+	canvas.width = 1920;
+
+	var coords;
+	context.lineWidth = 1;
+
+	context.beginPath();
+
+	for(var i = 0; i<1; i+=0.01){
+		console.log(i)
+		coords = quadraticBezierDumb(i, sx, sy, cx, cy, ex, ey);
+		
+		console.log(coords);
+
+		context.moveTo(coords.x, coords.y);
+		coords = quadraticBezierDumb(i+0.01, sx, sy, cx, cy, ex, ey);
+		context.lineTo(coords.x, coords.y);
+		context.lineWidth = 1;
+		context.stroke();
+	}
+
+	return;
+}

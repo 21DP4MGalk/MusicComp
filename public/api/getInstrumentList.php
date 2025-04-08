@@ -28,14 +28,14 @@ if(!$result->ID){
     exit();
 }
 
-$stmnt = $connection->prepare("SELECT title, name, description FROM pieces LEFT JOIN instruments ON pieces.ID = instruments.pieceID WHERE userID = ? ORDER BY title;");
+$stmnt = $connection->prepare("SELECT title, name, description, waveform FROM pieces LEFT JOIN instruments ON pieces.ID = instruments.pieceID WHERE userID = ? ORDER BY title;");
 $stmnt->bind_param("s", $result->ID);
 $stmnt->execute();
 $result = $stmnt->get_result();
 if($result->num_rows){
     for($i = 0; $i<$result->num_rows; $i++){
         $row = $result->fetch_object();
-        $outputArray[] = [$row->title, $row->name, $row->description];
+        $outputArray[] = [$row->title, $row->name, $row->description, $row->waveform];
     }
     echo(json_encode($outputArray));
     http_response_code(200);

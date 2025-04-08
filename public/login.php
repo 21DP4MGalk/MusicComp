@@ -27,8 +27,8 @@
 		<div id="registrationForm">
 			<h1 align="center"> Log in to our ranks </h1>
 			<div id="inputFields">
-				<p class="fieldNames">Username: </p><input id="username" placeholder="Enter your username or email"/> <br><br>
-				<p class="fieldNames">Password:</p><input id="password" type="password" placeholder="Enter a password, at least 12 characters"/> <br><br>
+				<p class="fieldNames">Username: </p><input id="username" placeholder="Enter your username or email" onkeydown="keyPressUsername(event)"/> <br><br>
+				<p class="fieldNames">Password:</p><input id="password" type="password" placeholder="Enter a password, at least 12 characters" onkeydown="keyPressPassword(event)"/> <br><br>
 				<p id="error"></p>
 			</div>
 			<button id="submit" onclick="submitLoginForm()">Login</button>

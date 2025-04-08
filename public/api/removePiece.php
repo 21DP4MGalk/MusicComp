@@ -25,6 +25,24 @@ if($result->num_rows == 0){
 $result = $result->fetch_object();
 $id = $result->ID;
 
+$stmnt = $connection->prepare("SELECT id FROM pieces WHERE userID = ? AND title = ?");
+$stmnt->bind_param("is", $id, $pieceName);
+$stmnt->execute();
+$result = $stmnt->get_result();
+
+if(!$result->num_rows){
+	echo "Invalid piece name!";
+	http_response_code(400);
+	exit();
+}
+
+$result = $result->fetch_object();
+$pieceID = $result->id;
+
+$stmnt = $connection->prepare("DELETE FROM instruments WHERE pieceID = ?");
+$stmnt->bind_param("i", $pieceID);
+$stmnt->execute();
+
 $stmnt = $connection->prepare("DELETE FROM pieces WHERE userID = ? AND title = ?");
 $stmnt->bind_param("is", $id, $pieceName);
 $stmnt->execute();

@@ -16,3 +16,16 @@ async function submitLoginForm(){
 		window.location.href = "tutorial.php";
 	}
 }
+
+function keyPressPassword(event){
+	if(event.keyCode == 13){
+		submitLoginForm();
+	}
+}
+
+function keyPressUsername(event){
+	var passElem = document.getElementById("password");
+	if(event.keyCode == 13){
+		passElem.focus();
+	}
+}

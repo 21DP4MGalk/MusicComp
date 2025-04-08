@@ -72,14 +72,30 @@ function redrawCurve(){
 async function openEditor(id){
 	var instrumentList = JSON.parse(sessionStorage.getItem("instrumentList"));
 	var requestData = new FormData();
-	
+	var instrumentFile = JSON.parse(instrumentList[id][3]).bezier;
+
 	var curveEditor = document.getElementById("curveEditor");
 	var curveDisplay = document.getElementById("curveDisplay");
 
-	
+	sessionStorage.setItem("activeInstrument", id);
+
+	var scale = 120;
+	var xOff = 75;
+	var yOff = 75;
+
+	document.getElementById("sx").value  = xOff + instrumentFile[0][0]*scale;
+	document.getElementById("sy").value  = yOff + instrumentFile[0][1]*scale;
+	document.getElementById("c1x").value = xOff + instrumentFile[0][2]*scale;
+	document.getElementById("c1y").value = yOff + instrumentFile[0][3]*scale;
+	document.getElementById("c2x").value = xOff + instrumentFile[0][4]*scale;
+	document.getElementById("c2y").value = yOff + instrumentFile[0][5]*scale;
+	document.getElementById("ex").value  = xOff + instrumentFile[0][6]*scale;
+	document.getElementById("ey").value  = yOff + instrumentFile[0][7]*scale;
+
+
 
 	curveEditor.style.display = "block";
-
+	redrawCurve();
 	/*requestData.append("pieceName", instrumentList[0]);
 	requestData.append("instrumentName", instrumentList[1]);
 	var request = await fetch("/api/getInstrument.php", {

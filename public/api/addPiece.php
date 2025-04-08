@@ -119,7 +119,7 @@ $pieceID = $connection->insert_id;
 $sineWave = new stdClass();
 #$sineWave->real = array(0, 0);
 #$sineWave->imag = array(0, 1);
-$sineWave->bezier = array([0,0, 0.2974,0.5513, 0.7026,-0.5513, 1,0]);
+$sineWave->bezier = array([0,0, 0.35,0.55, 0.65,-0.5513, 1,0]);
 $text = array("Default sine", "Default instrument generated automatically");
 $sineWave = json_encode($sineWave);
 

@@ -30,20 +30,29 @@
 			<div id="editorWindow">
 				<canvas id="curveDisplay"></canvas>
 				<div id="coordinates">
-					<input type="range" id="sx" max="300" oninput="redrawCurve()"/>
+					<label>Start point</label>
+					<input type="range" id="sx" min="75" max="195" oninput="redrawCurve()"/>
 					<input type="range" id="sy" max="300" oninput="redrawCurve()"/>
 					<hr>
-					<input type="range" id="c1x" max="300" oninput="redrawCurve()"/>
+					<label>Control point 1</label>
+					<input type="range" id="c1x" min="75" max="195" oninput="redrawCurve()"/>
 					<input type="range" id="c1y" max="300" oninput="redrawCurve()"/>
 					<hr>
-					<input type="range" id="c2x" max="300" oninput="redrawCurve()"/>
+					<label>Control point 2</label>
+					<input type="range" id="c2x" min="75" max="195" oninput="redrawCurve()"/>
 					<input type="range" id="c2y" max="300" oninput="redrawCurve()"/>
 					<hr>
-					<input type="range" id="ex" max="300" oninput="redrawCurve()"/>
+					<label>End point</label>
+					<input type="range" id="ex" min="75" max="195" oninput="redrawCurve()"/>
 					<input type="range" id="ey" max="300" oninput="redrawCurve()"/>
 				</div>
 				<br>
+				<button onclick="prevSegment()"> &#x003C; </button>
 				<button onclick="closeEditor()">Close</button>
+				<button onclick="saveWave()">Save waveform</button>
+				<button onclick="nextSegment()"> &#x003C; </button>
+				<br>
+				<canvas id="fourierDisplay"></canvas>
 			</div>
 		</div>
 

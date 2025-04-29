@@ -43,11 +43,16 @@ async function submitRegistrationForm(){
 		var success = document.getElementById("success");
 		success.style.visibility = "visible";
 		success.style.opacity = "1";
-		//setTimeout(() => {window.location.href = "tutorial.php";}, 2500);
+		setTimeout(() => {window.location.href = "tutorial.php";}, 2500);
 	}
 	else{
 		errorMsg.innerText = result.status + result.body;
 	}
+}
+
+function init(){
+	navInit();
+	document.getElementById("username").focus();
 }
 
 function debugRegister(){
@@ -62,3 +67,32 @@ function debugRegister(){
 	passConfirmField.value = "asdasdasdqweqwe"
 	submit.click()
 }
+
+
+function keyPressConfirm(event){
+    if(event.keyCode == 13){
+        submitRegistrationForm();
+    }
+}
+
+function keyPressUsername(event){
+    var mailElem = document.getElementById("email");
+    if(event.keyCode == 13){
+        mailElem.focus();
+    }
+}
+
+function keyPressPass(event){
+	var confirmElem = document.getElementById("passConfirm");
+    if(event.keyCode == 13){
+		confirmElem.focus();
+    }
+}
+
+function keyPressEmail(event){
+    var passElem = document.getElementById("password");
+    if(event.keyCode == 13){
+        passElem.focus();
+    }
+}
+

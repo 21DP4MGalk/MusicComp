@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title> Musical experiments </title>
-
+		<script src="/music/js/editorPlayback.js"></script>
 		<script src="/music/js/editorNotes.js"></script>
 		<script src="/music/js/editorTools.js"></script>
 		<link rel="stylesheet" href="/css/navbar.css">
@@ -14,7 +14,6 @@
 		<div id="nav"> 
 			<a id="navHome" href="/index.php">Home</a>
 			<a id="navProjects" href="/music/projects.php">Projects</a> 
-			<a id="navEditor" href="/music/editor.php">Music editor</a>
 			<a id="navInstruments" href="/music/instruments.php">Instrument manager</a>
 		</div>
 

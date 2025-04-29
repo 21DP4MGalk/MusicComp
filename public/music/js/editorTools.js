@@ -63,10 +63,12 @@ function closeBaseInfo(){
 	return;
 }
 
-function openInstrumentList(){
-	var instrumentList = document.getElementById("instrumentList");
+async function openInstrumentList(){
+	var instrumentListElement = document.getElementById("instrumentList");
+	
+	getInstrumentList();
 
-	instrumentList.style.display = "block";
+	instrumentListElement.style.display = "block";
 	return;
 }
 

@@ -12,7 +12,7 @@
 		<link rel="stylesheet" href="/css/navbar.css">
 		<link rel="stylesheet" href="/css/footer.css"/>
 	</head>
-	<body onload="navInit();">
+	<body onload="init()">
 
 		<div id="nav"> 
 			<a id="navHome" href="index.php">Home</a>
@@ -27,10 +27,10 @@
 		<div id="registrationForm">
 			<h1 align="center"> Join our ranks </h1>
 			<div id="inputFields">
-				<p class="fieldNames">Username: </p><input id="username" placeholder="Enter your username"/> <br><br>
-				<p class="fieldNames">Email:</p><input id="email" placeholder="Enter your email"/> <br><br>
-				<p class="fieldNames">Password:</p><input id="password" type="password" placeholder="Enter a password, at least 12 characters"/> <br><br>
-				<p class="fieldNames">Confirm password:</p><input id="passConfirm" type="password" placeholder="Enter the password again to confirm it"/> <br><br>
+				<p class="fieldNames">Username: </p><input id="username" placeholder="Enter your username" onkeydown="keyPressUsername(event)"/> <br><br>
+				<p class="fieldNames">Email:</p><input id="email" placeholder="Enter your email" onkeydown="keyPressEmail(event)" /> <br><br>
+				<p class="fieldNames">Password:</p><input id="password" type="password" placeholder="Enter a password, at least 12 characters" onkeydown="keyPressPass(event)"/> <br><br>
+				<p class="fieldNames">Confirm password:</p><input id="passConfirm" type="password" placeholder="Enter the password again to confirm it" onkeydown="keyPressConfirm(event)"/> <br><br>
 				<p id="error"></p>
 			</div>
 			<button id="submit" onclick="submitRegistrationForm()">Register</button>

@@ -113,6 +113,15 @@ async function openEditor(id){
 	*/
 }
 
+async function saveWave(){
+	
+	return;
+}
+
+function drawFourier(){
+	return;
+}
+
 function closeEditor(){
 	var instrumentList = JSON.parse(sessionStorage.getItem("instrumentList"));
 	sessionStorage.removeItem("activeInstrument");

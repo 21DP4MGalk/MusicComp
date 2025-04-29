@@ -1,4 +1,4 @@
-function fourierForward(funky, samples = 5000, max = 440*Math.PI*2, min = 0){
+function fourierForward(sampleData, minf = 0){
     var frequencies = [[]]; // array of k
     var k;
     var n;
@@ -8,7 +8,7 @@ function fourierForward(funky, samples = 5000, max = 440*Math.PI*2, min = 0){
     var real;
     var imag;
 
-    var sampleData = [];
+    /*var sampleData = [];
     var sampleStep = (max - min)/samples;
     
     for(var i = min; i < max; i += sampleStep){
@@ -16,8 +16,11 @@ function fourierForward(funky, samples = 5000, max = 440*Math.PI*2, min = 0){
     }
     
     console.log(sampleData);
+	*/
 
-    for(var k = 0; k < samples/2; k++){
+	var samples = sampleData.length;
+
+    for(var k = minf; k < samples/2; k++){
         real = 0;
         imag = 0;
         for(var n = 0; n < samples; n++){
@@ -143,5 +146,12 @@ function sampleBezier(curves){
 	console.log(samples);
 	samples.sort();
 	console.log(samples);
+	return samples;
+}
 
+function analyzeCurve(samples){
+	instrument = JSON.parse(sessionStorage.getItem("instrumentList"));
+	instrument = instrument[sessionStorage.getItem("activeInstrument")];
+	instrument = 
+	return result;
 }

@@ -103,7 +103,7 @@ $pieceFile->key = $key;
 $pieceFile->bpm = $bpm;
 $pieceFile->topTime = $topTime;
 $pieceFile->bottomTime = $bottomTime;
-$pieceFile->notes = [];
+$pieceFile->notes = [[]];
 $pieceFile->instruments = [];
 
 $pieceFile = json_encode($pieceFile);
@@ -117,8 +117,8 @@ $stmnt->execute();
 $pieceID = $connection->insert_id;
 
 $sineWave = new stdClass();
-#$sineWave->real = array(0, 0);
-#$sineWave->imag = array(0, 1);
+$sineWave->real = array(0, 0);
+$sineWave->imag = array(0, 1);
 $sineWave->bezier = array([0,0, 0.35,0.55, 0.65,-0.5513, 1,0]);
 $text = array("Default sine", "Default instrument generated automatically");
 $sineWave = json_encode($sineWave);

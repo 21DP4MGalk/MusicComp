@@ -1,4 +1,3 @@
-const audioCtx = new AudioContext();
 var staffBounds = [[]];
 
 function getPitchGivenA(desiredPitchNum, referenceANum = 69, referenceA = 440){		
@@ -53,12 +52,17 @@ function getPointedElement(){
 }
 
 async function getPieceFile(){
-	var pieceID;
+	var pieceID = -1;
 	for(var i = 0; i < window.location.href.length; i++){
 		if(window.location.href[i] == "?"){
 			pieceID = window.location.href.substring(i+7);
 			break;
 		}
+	}
+
+	if(pieceID == -1){
+		window,location.href = "/music/projects.php"
+		return;
 	}
 
 	var requestData = new FormData
@@ -79,7 +83,8 @@ async function getPieceFile(){
 
 async function init(){
 	await getPieceFile();
-	
+	audioInit();
+
 	notationCan = document.getElementById("notation");
 	notationCtx = notationCan.getContext("2d");
 
@@ -90,7 +95,7 @@ async function init(){
 
 	initCtx();
 	redrawCanvas();
-}
+	}
 
 function getStaffFromY(y, canY, norm = false){
 	
@@ -248,14 +253,15 @@ function findValidNote(x, y){
 	
 	var notationCan = document.getElementById("notation");
 	var notationCtx = notationCan.getContext("2d");
-	
+	var ai = sessionStorage.getItem("activeInstrument");
+
 	const canX = notationCan.width
 	const canY = notationCan.height
 
 	var pf     = JSON.parse(sessionStorage.getItem("pieceFile"));
 	var coords = roundCoords(x, y, canX, canY);
 
-	var xIndex = pf.notes.length;
+	var xIndex = pf.notes[ai].length;
 
 	var yIndex = coords[1] - canY/10;
 	yIndex /= (canY/200);
@@ -273,15 +279,16 @@ function findValidNote(x, y){
 function addNote(note){
 	var pieceFile = JSON.parse(sessionStorage.getItem("pieceFile"));
 	var finalNote = new Note(note.xIndex, note.yIndex, note.duration);
+	var ai = sessionStorage.getItem("activeInstrument");
 
-	if(!pieceFile.notes.length || note.xIndex > pieceFile.notes[ pieceFile.notes.length-1 ].x ){
+	if(!pieceFile.notes[ai].length || note.xIndex > pieceFile.notes[ai][ pieceFile.notes[ai].length-1 ].x ){
 	//if this is the first note or if the note's position is to the right of the furthest one
-		pieceFile.notes.push(finalNote);
+		pieceFile.notes[ai].push(finalNote);
 	}
 	else{
-		for(var i = 0; i < pieceFile.notes.length-1; i++){
-			if(pieceFile.notes[i].x < note.x && pieceFile.notes[i+1].x >= note.x){
-				pieceFile.notes.splice(i, 0, note);
+		for(var i = 0; i < pieceFile.notes[ai].length-1; i++){
+			if(pieceFile.notes[ai][i].x < note.x && pieceFile.notes[ai][i+1].x >= note.x){
+				pieceFile.notes[ai].splice(i, 0, note);
 			}
 		}
 	}
@@ -309,53 +316,54 @@ function drawMeasures(){
 	var topTime = pieceFile.topTime;
 	var bottomTime = pieceFile.bottomTime;
 	var quarterNotesPerMeasure = 1/bottomTime * 4 * topTime;
-	
+	var ai = sessionStorage.getItem("activeInstrument");
+
 	const canX = notationCan.width
 	const canY = notationCan.height
 
 	var measureHeight = canY/10;
 	var currentNote = 0;
-	if(pieceFile.notes.length == 0){
+	if(pieceFile.notes[ai].length == 0){
 		return;
 	}
 	cursor = 0;
-	for(var i = 0; i < pieceFile.notes.length; i++){
-		currentNote += pieceFile.notes[i].duration;
+	for(var i = 0; i < pieceFile.notes[ai].length; i++){
+		currentNote += pieceFile.notes[ai][i].duration;
 		currentMeasure = Math.floor(currentNote/quarterNotesPerMeasure)
 		if( cursor < currentMeasure){
 	
 			if( currentNote/quarterNotesPerMeasure == currentMeasure && currentMeasure-cursor == 1){
-				var coords = getCoordinates(i, pieceFile.notes[i].y, canX, canY);
+				var coords = getCoordinates(i, pieceFile.notes[ai][i].y, canX, canY);
 				drawMeasure( coords[0] + (canX/75), coords[1], canY);
 				cursor = currentMeasure;
 			}
 			else{
-				var note1 = pieceFile.notes[i].duration
+				var note1 = pieceFile.notes[ai][i].duration
 				var leftOver = (currentNote - currentMeasure * quarterNotesPerMeasure)
 				var result = splitNote(note1, quarterNotesPerMeasure, leftOver, pieceFile.topTime);
 				console.log(currentNote, leftOver, result);
 				var newNote;
 
-				pieceFile.notes[i].duration = result[0][0];
+				pieceFile.notes[ai][i].duration = result[0][0];
 				var j = 1;
 				for(; j < result[0].length; j++){
-					newNote = new Note(i+j, pieceFile.notes[i].y, result[0][j])
+					newNote = new Note(i+j, pieceFile.notes[ai][i].y, result[0][j])
 					console.log(newNote)
-					pieceFile.notes.splice(i+j, 0, newNote);
-					console.log(pieceFile.notes[i+j])
+					pieceFile.notes[ai].splice(i+j, 0, newNote);
+					console.log(pieceFile.notes[ai][i+j])
 				}
 				//draw measure yeah
 				for(var k = 0; k < result[1].length; k++){
-					newNote = new Note(i+j+k, pieceFile.notes[i].y, result[1][k])
+					newNote = new Note(i+j+k, pieceFile.notes[ai][i].y, result[1][k])
 					console.log(newNote)
 			
-					pieceFile.notes.splice(i+j+k+1, 0, newNote);
-					console.log(pieceFile.notes[i+j+k])
+					pieceFile.notes[ai].splice(i+j+k+1, 0, newNote);
+					console.log(pieceFile.notes[ai][i+j+k])
 
 				}
 				
-				for(var k = i+result[1].length+result[0].length; k < pieceFile.notes.length; k++){
-					pieceFile.notes[k].x += result[1].length + result[0].length ;
+				for(var k = i+result[1].length+result[0].length; k < pieceFile.notes[ai].length; k++){
+					pieceFile.notes[ai][k].x += result[1].length + result[0].length ;
 				}
 				
 				sessionStorage.setItem("pieceFile", JSON.stringify(pieceFile));
@@ -648,6 +656,7 @@ function redrawCanvas(){
 	var notationCtx = notationCan.getContext("2d");
 	var pieceFile   = JSON.parse(sessionStorage.getItem("pieceFile"));
 	var staffBounds = JSON.parse(sessionStorage.getItem("staffBounds"));
+	var ai = sessionStorage.getItem("activeInstrument");
 
 	notationCan.width = window.screen.width * 0.95;
 	notationCan.height = window.screen.height;
@@ -666,10 +675,10 @@ function redrawCanvas(){
 
 	drawSymbols();
 
-	for(var i = 0; i< pieceFile.notes.length; i++){
+	for(var i = 0; i< pieceFile.notes[ai].length; i++){
 
-		var coords = getCoordinates(i, pieceFile.notes[i].y, canX, canY);
-		var noteChar = durationToChar(pieceFile.notes[i].duration);
+		var coords = getCoordinates(i, pieceFile.notes[ai][i].y, canX, canY);
+		var noteChar = durationToChar(pieceFile.notes[ai][i].duration);
 		notationCtx.fillText(noteChar, coords[0], coords[1]);
 	}
 	drawMeasures();

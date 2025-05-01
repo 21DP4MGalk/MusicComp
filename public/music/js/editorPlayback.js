@@ -1,10 +1,12 @@
 var audioCtx;
 
 
-function audioInit(){
+async function audioInit(){
 	audioCtx = new AudioContext();
-	sessionStorage.setItem("activeInstrument", 0);
-	setInstrument(0);
+	var instruments = await getInstrumentList();
+	sessionStorage.setItem("instrumentList", JSON.stringify(instruments));
+	setInstrument(instruments, 0);
+	drawInstrumentElements(instruments, 0);
 	return;
 }
 
@@ -17,9 +19,28 @@ async function playInstrumentPart(startMeasure = 0, endMeasure = -1){
 	return;
 }
 
-async function setInstrument(instrument){
-	var instruments = await getInstrumentList()
-	sessionStorage.setItem("activeInstrument", instrument);
+async function setInstrument(instruments, ai){
+	sessionStorage.setItem("activeInstrument", ai);
+	instruments[ai][3] = JSON.parse(instruments[ai][3]);
+	sessionStorage.setItem("real", instruments[ai][3].real);
+	sessionStorage.setItem("imag", instruments[ai][3].imag);
+	return;
+}
+
+function drawInstrumentElements(instruments, ai){
+	var listElement = document.getElementById("listElement");
+	listElement.innerHTML = "";
+	for(var i = 0; i<instruments.length; i++){
+		injection = "";
+		injection += "<button";
+		if(i == ai){
+			injection += " class='ai'";
+
+		}
+		injection += " onclick='setInstrument(JSON.parse(sessionStorage.getItem(\"instrumentList\")), " + i + ")'>" + instruments[i][1] + "</button> <br> <p>" + instruments[i][2] + "</p>"
+		listElement.innerHTML += injection;
+	}
+	return;
 }
 
 async function getInstrumentList(){
@@ -31,7 +52,7 @@ async function getInstrumentList(){
 	for(var i = 0; i < window.location.href.length; i++){
 		if(window.location.href[i] == "?"){
 			pieceID = window.location.href.substring(i+7);
-			break;
+			break;1
 		}   
 	}   
 	

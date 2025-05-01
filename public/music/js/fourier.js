@@ -24,8 +24,8 @@ function fourierForward(sampleData, minf = 0){
         real = 0;
         imag = 0;
         for(var n = 0; n < samples; n++){
-            real += sampleData[n] * Math.cos( -1 * (2 * Math.PI) * k * (n / samples) );
-            imag += sampleData[n] * Math.sin( -1 * (2 * Math.PI) * k * (n / samples) );
+            real += sampleData[n].y * Math.cos( -1 * (2 * Math.PI) * k * (n / samples) );
+            imag += sampleData[n].y * Math.sin( -1 * (2 * Math.PI) * k * (n / samples) );
         }
         real = real / samples;
         imag = imag / samples;
@@ -86,11 +86,7 @@ function drawCubicBezierDumb(){
 //	context.beginPath();
 
 	for(var i = 0; i<1; i+=0.01){
-		console.log(i)
-         coords = cubicBezier(i, sx, sy, c1x, c1y, c2x, c2y, ex, ey);
-
-         console.log(coords);
-
+		coords = cubicBezier(i, sx, sy, c1x, c1y, c2x, c2y, ex, ey);
 		context.fillRect(coords.x, coords.y, 1, 6);
 /*
          context.moveTo(coords.x, coords.y);
@@ -115,10 +111,8 @@ function drawQuadraticBezierDumb(sx, sy, cx, cy, ex, ey){
 	context.beginPath();
 
 	for(var i = 0; i<1; i+=0.01){
-		console.log(i)
 		coords = quadraticBezierDumb(i, sx, sy, cx, cy, ex, ey);
 		
-		console.log(coords);
 
 		context.moveTo(coords.x, coords.y);
 		coords = quadraticBezierDumb(i+0.01, sx, sy, cx, cy, ex, ey);
@@ -140,18 +134,8 @@ function sampleBezier(curves){
 	for(var i = 0; i < curves.length; i++){
 		for(var j = 0; j < samplesPerCurve; j++){
 			samples.push(cubicBezier((i*samplesPerCurve + j)/2000, curves[i][0], curves[i][1], curves[i][2], curves[i][3], curves[i][4], curves[i][5], curves[i][6], curves[i][7]));
-			console.log((i*samplesPerCurve + j)/2000)
 		}
 	}
-	console.log(samples);
 	samples.sort();
-	console.log(samples);
 	return samples;
-}
-
-function analyzeCurve(samples){
-	instrument = JSON.parse(sessionStorage.getItem("instrumentList"));
-	instrument = instrument[sessionStorage.getItem("activeInstrument")];
-	instrument = 
-	return result;
 }

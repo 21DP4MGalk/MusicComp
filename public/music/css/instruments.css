@@ -23,6 +23,10 @@
 	width: 600px;
 	height: 300px;
 }
+#fourierDisplay{
+	width: 600px;
+	height: 200px;
+}
 #instrumentList hr{
 	width: 25%;
 }

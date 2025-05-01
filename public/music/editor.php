@@ -27,24 +27,38 @@
 			<button id="nextPage" onclick="pageForward()"> &#x003E; </button>
 
 			<div id="noteSelect" onclick="selectNote();">
-				<button class="noteButton"> <p class="noclick" id="whole"> &#xE0A2; </p></button>
-				<button class="noteButton"> <p class="noclick"> &#xE1D3; </p></button>
-				<button class="noteButton"> <p class="noclick"> &#xE1D5; </p></button>
-				<button class="noteButton"> <p class="noclick"> &#xE1D7; </p></button>
-				<button class="noteButton"> <p class="noclick"> &#xE1D9; </p></button>
-				<button class="noteButton"> <p class="noclick"> &#xE1DB; </p></button>
+				<button> <p class="noclick" id="whole"> &#xE0A2; </p></button>
+				<button> <p class="noclick"> &#xE1D3; </p></button>
+				<button> <p class="noclick"> &#xE1D5; </p></button>
+				<button> <p class="noclick"> &#xE1D7; </p></button>
+				<button> <p class="noclick"> &#xE1D9; </p></button>
+				<button> <p class="noclick"> &#xE1DB; </p></button>
 				
-				<button class="noteButton"> <p class="noclick" id="whole"> &#xE4E3; </p></button>
-				<button class="noteButton"> <p class="noclick"> &#xE4E4; </p></button>
-				<button class="noteButton"> <p class="noclick rest"> &#xE4E5; </p></button>
-				<button class="noteButton"> <p class="noclick rest"> &#xE4E6; </p></button>
-				<button class="noteButton"> <p class="noclick rest"> &#xE4E7; </p></button>
-				<button class="noteButton"> <p class="noclick rest"> &#xE4E8; </p></button>
+				<button> <p class="noclick" id="whole"> &#xE4E3; </p></button>
+				<button> <p class="noclick"> &#xE4E4; </p></button>
+				<button> <p class="noclick rest"> &#xE4E5; </p></button>
+				<button> <p class="noclick rest"> &#xE4E6; </p></button>
+				<button> <p class="noclick rest"> &#xE4E7; </p></button>
+				<button> <p class="noclick rest"> &#xE4E8; </p></button>
+			</div>
+			<div id="noteFunctions">
+				<button onclick="" title="Delete note"> <p class="noclick rest"> &#x2715; </p></button>
 			</div>
 
 		</center>
-		<canvas id="notation" onclick="interpretClick()" onmousemove="moveGhost()"> </canvas>
-		
+		<div id="mainTools">
+			<div id="instrumentList">
+				<h1>Instruments</h1>
+				<button onclick="window.location.href = '/music/instruments.php'">Go to instrument editor</button>
+				<p id="instrumentError"></p>
+				<hr/>
+				<div id="listElement"></div>
+			</div>
+
+
+			<canvas id="notation" onclick="interpretClick()" onmousemove="moveGhost()"> </canvas>
+		</div>
+
 		<div id="baseInfo">
 			<center style="height: 100%">
 				<div id="infoWindow">
@@ -62,19 +76,6 @@
 					<br/>
 					<button onclick="closeBaseInfo()">Cancel</button> <button onclick="openBaseInfo()">Reset</button> <button onclick="editBaseInfo()">Submit</button>
 
-				</div>
-			</center>
-		</div>
-
-		<div id="instrumentList">
-			<center style="height: 100%">
-				<div id="instrumentWindow">
-					<h1>Instruments</h1>
-					<hr/>
-					<p id="instrumentError"></p>
-					<div id="listElement"></div>
-					<hr/>
-					<button onclick="closeInstrumentList()">Cancel</button> <button onclick="window.location.href = '/music/instruments.php'">Go to instrument editor</button>
 				</div>
 			</center>
 		</div>

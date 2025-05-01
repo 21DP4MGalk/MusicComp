@@ -674,7 +674,7 @@ function redrawCanvas(){
 	notationCtx.font = "40px LelandMusic";
 
 	drawSymbols();
-
+	console.log(pieceFile.notes[ai])
 	for(var i = 0; i< pieceFile.notes[ai].length; i++){
 
 		var coords = getCoordinates(i, pieceFile.notes[ai][i].y, canX, canY);
@@ -738,4 +738,13 @@ function selectNote(){
 	sessionStorage.setItem("note", getPointedElement().childNodes[1].innerText);
 	getPointedElement().classList.add("selectedNote");
 	return;
+}
+
+function highLightNote(){
+	var notationCan = document.getElementById("notation");
+	var notationCtx = notationCan.getContext("2d");
+	var noteChar = sessionStorage.getItem("note");
+	notationCtx.font = "40px LelandMusic";
+
+
 }

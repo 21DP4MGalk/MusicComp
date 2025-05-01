@@ -49,9 +49,10 @@
 				<button onclick="prevSegment()"> &#x003C; </button>
 				<button onclick="closeEditor()">Close</button>
 				<button onclick="saveWave()">Save waveform</button>
+				<button onclick="drawFourier()">Render waveform</button>
 				<button onclick="nextSegment()"> &#x003C; </button>
 				<br>
-				<canvas id="fourierDisplay"></canvas>
+				<canvas id="fourierDisplay" height="200px", width="600px"></canvas>
 			</div>
 		</div>
 

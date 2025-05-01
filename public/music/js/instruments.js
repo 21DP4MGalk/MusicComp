@@ -115,10 +115,62 @@ async function openEditor(id){
 
 async function saveWave(){
 	
+	var scale = 120;
+	var xOff = 75;
+	var yOff = 75;
+	
+	var sx  = document.getElementById("sx").value;
+	var sy  = document.getElementById("sy").value;
+	var c1x = document.getElementById("c1x").value;
+	var c1y = document.getElementById("c1y").value;
+	var c2x = document.getElementById("c2x").value;
+	var c2y = document.getElementById("c2y").value;
+	var ex  = document.getElementById("ex").value;
+	var ey  = document.getElementById("ey").value;
+	
 	return;
 }
 
-function drawFourier(){
+function drawFourier(fromEditor = true){
+	var ai = sessionStorage.getItem("activeInstrument");
+	var instruments = JSON.parse(sessionStorage.getItem("instrumentList"));
+	var curves = JSON.parse(instruments[ai][3]).bezier;
+
+	if(fromEditor){
+		var sx  = document.getElementById("sx").value - 75;
+		var sy  = document.getElementById("sy").value -75;
+		var c1x = document.getElementById("c1x").value -75;
+		var c1y = document.getElementById("c1y").value -75;
+		var c2x = document.getElementById("c2x").value -75;
+		var c2y = document.getElementById("c2y").value -75;
+		var ex  = document.getElementById("ex").value -75;
+		var ey  = document.getElementById("ey").value -75;
+	
+		curves = [[sx/120, sy/120, c1x/120, c1y/120, c2x/120, c2y/120, ex/120, ey/120]];
+	}
+
+	var samples = sampleBezier(curves);
+	var transform = fourierForward(samples);
+	var display = document.getElementById("fourierDisplay");
+	var context = display.getContext("2d");
+	
+	context.clearRect(0,0,display.width,display.height)
+
+	context.lineWidth = 1;
+
+	for(var i = 1; i < samples.length; i++){
+		context.moveTo( (300/samples.length) * i-1, 100-(samples[i-1].y * 120) )
+		context.lineTo( (300/samples.length) * i, 100-(samples[i].y * 120) )
+		context.stroke();
+	}
+
+	for(var i = 0; i < transform.length; i++){
+		context.moveTo( 350+(200/100) * i, 150)
+		context.lineTo( 350+(200/100) * i, 150-(transform[i][2] * 10000)) 
+		context.stroke();
+	
+	}
+
 	return;
 }
 
@@ -131,4 +183,9 @@ function closeEditor(){
 async function init(){
 	await getInstruments();
 	updateList();
-};
+}
+
+function addInstrument(){
+	
+	return;
+}

@@ -42,6 +42,7 @@ function cubicBezier(t, sx, sy, c1x, c1y, c2x, c2y, ex, ey){
 	var part2 = quadraticBezierDumb(t, c1x, c1y, c2x, c2y, ex, ey);
 	var x = u * part1.x + t * part2.x;
 	var y = u * part1.y + t * part2.y;
+
 	return {x, y}
 }
 
@@ -129,13 +130,23 @@ function addCurve(){
 }
 
 function sampleBezier(curves){
-	var samplesPerCurve = 2000/curves.length;
+	var samplesPerCurve = 4000/curves.length;
 	var samples = [];
 	for(var i = 0; i < curves.length; i++){
 		for(var j = 0; j < samplesPerCurve; j++){
-			samples.push(cubicBezier((i*samplesPerCurve + j)/2000, curves[i][0], curves[i][1], curves[i][2], curves[i][3], curves[i][4], curves[i][5], curves[i][6], curves[i][7]));
+			samples.push(cubicBezier((i*samplesPerCurve + j)/4000, curves[i][0], curves[i][1], curves[i][2], curves[i][3], curves[i][4], curves[i][5], curves[i][6], curves[i][7]));
 		}
 	}
 	samples.sort();
-	return samples;
+	properSamples = [];
+	
+	for(var i = 0; i < samples.length/10; i++ ){
+		for(var j = 0; j<4000; j++){
+			if( Math.abs(samples[j].x - i*10/samples.length) <( 3/samples.length ) ){
+				properSamples.push(samples[j]);
+				break;
+			}
+		}
+	}
+	return properSamples;
 }

@@ -1,5 +1,5 @@
 <!dOCtYPE hTMl>
-<html>
+<etml>
 	<head>
 		<title> Musical experiments </title>
 		<script src="/music/js/instruments.js"></script>
@@ -48,6 +48,7 @@
 				<br>
 				<button onclick="prevSegment()"> &#x003C; </button>
 				<button onclick="closeEditor()">Close</button>
+				<button onclick="saveCurve()">Save curve</button>
 				<button onclick="saveWave()">Save waveform</button>
 				<button onclick="drawFourier()">Render waveform</button>
 				<button onclick="nextSegment()"> &#x003C; </button>

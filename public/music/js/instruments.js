@@ -1,7 +1,13 @@
 async function getInstruments(){
 	var response = await fetch("/api/getInstrumentList.php");
 	if(response.ok){
-		sessionStorage.setItem("instrumentList", await response.text());
+		var instrumentList = JSON.parse( await response.text());
+		console.log(instrumentList);
+		for(var i = 0; i<instrumentList.length; i++){
+			instrumentList[i][3] = JSON.parse(instrumentList[i][3])
+		}
+		sessionStorage.setItem("instrumentList", JSON.stringify(instrumentList));
+
 		return;
 	}
 	document.getElementById("listError").innerHTML = await response.text();
@@ -42,13 +48,13 @@ function redrawCurve(){
 	
 
 	var sx  = document.getElementById("sx").value;
-	var sy  = document.getElementById("sy").value;
+	var sy  = 150-document.getElementById("sy").value;
 	var c1x = document.getElementById("c1x").value;
-	var c1y = document.getElementById("c1y").value;
+	var c1y = 150-document.getElementById("c1y").value;
 	var c2x = document.getElementById("c2x").value;
-	var c2y = document.getElementById("c2y").value;
+	var c2y = 150-document.getElementById("c2y").value;
 	var ex  = document.getElementById("ex").value;
-	var ey  = document.getElementById("ey").value;
+	var ey  = 150-document.getElementById("ey").value;
 
 	curveCtx.beginPath();
 	curveCtx.moveTo(sx, sy);
@@ -72,12 +78,13 @@ function redrawCurve(){
 async function openEditor(id){
 	var instrumentList = JSON.parse(sessionStorage.getItem("instrumentList"));
 	var requestData = new FormData();
-	var instrumentFile = JSON.parse(instrumentList[id][3]).bezier;
+	var instrumentFile = instrumentList[id][3].bezier;
 
 	var curveEditor = document.getElementById("curveEditor");
 	var curveDisplay = document.getElementById("curveDisplay");
 
 	sessionStorage.setItem("activeInstrument", id);
+	sessionStorage.setItem("activeCurve", 0);
 
 	var scale = 120;
 	var xOff = 75;
@@ -113,29 +120,72 @@ async function openEditor(id){
 	*/
 }
 
-async function saveWave(){
+function saveCurve(){
 	
 	var scale = 120;
 	var xOff = 75;
 	var yOff = 75;
 	
-	var sx  = document.getElementById("sx").value;
-	var sy  = document.getElementById("sy").value;
-	var c1x = document.getElementById("c1x").value;
-	var c1y = document.getElementById("c1y").value;
-	var c2x = document.getElementById("c2x").value;
-	var c2y = document.getElementById("c2y").value;
-	var ex  = document.getElementById("ex").value;
-	var ey  = document.getElementById("ey").value;
+	var sx  = document.getElementById("sx").value  - xOff;
+	var sy  = document.getElementById("sy").value  - yOff;
+	var c1x = document.getElementById("c1x").value - xOff;
+	var c1y = document.getElementById("c1y").value - yOff;
+	var c2x = document.getElementById("c2x").value - xOff;
+	var c2y = document.getElementById("c2y").value - yOff;
+	var ex  = document.getElementById("ex").value  - xOff;
+	var ey  = document.getElementById("ey").value  - yOff;
+
+	sx  /= 120;
+	sy  /= 120;
+	c1x /= 120;
+	c1y /= 120;
+	c2x /= 120;
+	c2y /= 120;
+	ex  /= 120;
+	ey  /= 120;
+
+
+	var instrumentList = JSON.parse(sessionStorage.getItem("instrumentList"));
+	var ai = sessionStorage.getItem("activeInstrument");
+	var activeCurve = sessionStorage.getItem("activeCurve");
 	
+	instrumentList[ai][3].bezier[activeCurve] = [sx, sy, c1x, c1y, c2x, c2y, ex, ey];
+
+	sessionStorage.setItem("instrumentList", JSON.stringify(instrumentList));
+	return;
+}
+
+async function saveWave(){
+	var instrumentList = JSON.parse(sessionStorage.getItem("instrumentList"));
+	var ai = sessionStorage.getItem("activeInstrument");
+	var activeCurve = sessionStorage.getItem("activeCurve");
+	
+	var instrument = instrumentList[ai];
+	
+	saveCurve();
+
+	samples = sampleBezier(instrument[3].bezier);
+	transform = fourierForward(samples);
+	transform.splice(0, 1);
+	for(var i = transform.length-1; i >= 0; i--){
+		if(transform[i][2]){
+			break;
+		}
+		transform.splice(i, 1);
+	}
+
+	var requestData = new FormData();
+	requestData.add("instrument", JSON.stringify(instrument));
+	var request = await fetch("/api/saveWave.php");
+
 	return;
 }
 
 function drawFourier(fromEditor = true){
 	var ai = sessionStorage.getItem("activeInstrument");
 	var instruments = JSON.parse(sessionStorage.getItem("instrumentList"));
-	var curves = JSON.parse(instruments[ai][3]).bezier;
-
+	var curves = instruments[ai][3].bezier;
+	
 	if(fromEditor){
 		var sx  = document.getElementById("sx").value - 75;
 		var sy  = document.getElementById("sy").value -75;
@@ -154,10 +204,10 @@ function drawFourier(fromEditor = true){
 	var display = document.getElementById("fourierDisplay");
 	var context = display.getContext("2d");
 	
-	context.clearRect(0,0,display.width,display.height)
+	context.clearRect(0, 0, display.width*10, display.height*10)
 
 	context.lineWidth = 1;
-
+	context.beginPath()
 	for(var i = 1; i < samples.length; i++){
 		context.moveTo( (300/samples.length) * i-1, 100-(samples[i-1].y * 120) )
 		context.lineTo( (300/samples.length) * i, 100-(samples[i].y * 120) )

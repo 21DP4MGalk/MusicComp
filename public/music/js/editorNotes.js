@@ -88,8 +88,13 @@ async function init(){
 	notationCan = document.getElementById("notation");
 	notationCtx = notationCan.getContext("2d");
 
-	canX = notationCan.width;
-	canY = notationCan.height;
+	notationCan.width = window.screen.width * 0.95;
+	notationCan.height = window.screen.height;
+
+
+	sessionStorage.setItem("canX", notationCan.width);
+	sessionStorage.setItem("canY", notationCan.height);
+	
 
 	var pieceFile = JSON.parse(sessionStorage.getItem("pieceFile"));
 
@@ -250,16 +255,12 @@ function interpretClick(){
 }
 
 function findValidNote(x, y){
-	
-	var notationCan = document.getElementById("notation");
-	var notationCtx = notationCan.getContext("2d");
+	canX = sessionStorage.getItem("canX");
+	canY = sessionStorage.getItem("canY");
 	var ai = sessionStorage.getItem("activeInstrument");
 
-	const canX = notationCan.width
-	const canY = notationCan.height
-
 	var pf     = JSON.parse(sessionStorage.getItem("pieceFile"));
-	var coords = roundCoords(x, y, canX, canY);
+	var coords = roundCoords(x, y);
 
 	var xIndex = pf.notes[ai].length;
 
@@ -297,7 +298,8 @@ function addNote(note){
 	return;
 }
 
-function roundCoords(x, y, canX, canY){
+function roundCoords(x, y, canX = sessionStorage.getItem("canX"), canY = sessionStorage.getItem("canY")){
+
 	y = y/ (canY/200);
 	x = x/ (canX/100);
 	y = Math.round(y);
@@ -341,24 +343,19 @@ function drawMeasures(){
 				var note1 = pieceFile.notes[ai][i].duration
 				var leftOver = (currentNote - currentMeasure * quarterNotesPerMeasure)
 				var result = splitNote(note1, quarterNotesPerMeasure, leftOver, pieceFile.topTime);
-				console.log(currentNote, leftOver, result);
 				var newNote;
 
 				pieceFile.notes[ai][i].duration = result[0][0];
 				var j = 1;
 				for(; j < result[0].length; j++){
 					newNote = new Note(i+j, pieceFile.notes[ai][i].y, result[0][j])
-					console.log(newNote)
 					pieceFile.notes[ai].splice(i+j, 0, newNote);
-					console.log(pieceFile.notes[ai][i+j])
 				}
 				//draw measure yeah
 				for(var k = 0; k < result[1].length; k++){
 					newNote = new Note(i+j+k, pieceFile.notes[ai][i].y, result[1][k])
-					console.log(newNote)
 			
 					pieceFile.notes[ai].splice(i+j+k+1, 0, newNote);
-					console.log(pieceFile.notes[ai][i+j+k])
 
 				}
 				
@@ -412,7 +409,6 @@ function splitNote(duration, quarterNotesPerMeasure, leftOver, topTime){
 
 	quarterNotesPerMeasure -= quarterNotesPerMeasure%2 //ensures this function produces valid durations, as all durations must be powers of 2
 	var maxDuration = Math.round(quarterNotesPerMeasure*8 - ((quarterNotesPerMeasure*8) %2));
-	console.log(maxDuration);
 
 	var sum = 0
 	for(var i = maxDuration; i>=1; i/=2){
@@ -674,7 +670,6 @@ function redrawCanvas(){
 	notationCtx.font = "40px LelandMusic";
 
 	drawSymbols();
-	console.log(pieceFile.notes[ai])
 	for(var i = 0; i< pieceFile.notes[ai].length; i++){
 
 		var coords = getCoordinates(i, pieceFile.notes[ai][i].y, canX, canY);
@@ -718,8 +713,13 @@ function moveGhost(){
 
 	var x = (event.clientX - rect.left) * scaleX;
 	var y = (event.clientY - rect.top) * scaleY;
-	
-	noteInfo = findValidNote(x, y);
+
+	if(noteChar == "✕"){
+	notationCtx.fillStyle == "red";
+	}
+	else{
+		noteInfo = findValidNote(x, y);
+	}
 
 	notationCtx.globalAlpha = 0.5;
 	var coords = getCoordinates(noteInfo.xIndex, noteInfo.yIndex, canX, canY);
@@ -746,5 +746,18 @@ function highLightNote(){
 	var noteChar = sessionStorage.getItem("note");
 	notationCtx.font = "40px LelandMusic";
 
+
+}
+
+function rebuildDisplayArray(){
+	ai = sessionStorage.getItem("activeInstrument");
+	pieceFIle = sessionStorage.getItem("pieceFile");
+
+	for(var i = 0; i< pieceFile.notes[ai].length; i++){
+
+		var coords = getCoordinates(i, pieceFile.notes[ai][i].y, canX, canY);
+		var noteChar = durationToChar(pieceFile.notes[ai][i].duration);
+		displayArray.push( {char: noteChar, x: coords[0], y: coords[1]});
+	}
 
 }

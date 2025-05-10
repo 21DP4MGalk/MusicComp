@@ -42,7 +42,7 @@
 				<button> <p class="noclick rest"> &#xE4E8; </p></button>
 			</div>
 			<div id="noteFunctions">
-				<button onclick="" title="Delete note"> <p class="noclick rest"> &#x2715; </p></button>
+				<button onclick="selectNote()" title="Delete note"> <p class="noclick rest"> &#x2715; </p></button>
 			</div>
 
 		</center>

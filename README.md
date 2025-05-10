@@ -19,11 +19,11 @@ Made for the qualification work of RVT 4th course.
 - [ ] Multiple pages of the grand staff
 - [x] Note placement
 - [x] Custom notation format
-- [ ] Bar expansion for notes under the beat notes
+- [x] Bar expansion for notes under the beat notes
 - [ ] Playback with fundamental waves
 - [ ] Playback with custom wave files
 - [x] Instrument beizer curve display
 - [x] Bezier curve editor
-- [ ] Bezier curve to fourier series
+- [x] Bezier curve to fourier series
 - [ ] Additional symbols (ties, forte, piano)
 - [x] Auxiliary pages

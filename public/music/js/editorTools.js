@@ -17,26 +17,34 @@ function openBaseInfo(){
 	return;
 }
 
-async function editBaseInfo(){
-	var pieceName  = document.getElementById("pieceName");
-	var bpm        = document.getElementById("bpm");
-	var key        = keyToNumber(document.getElementById("key").value);
-	var topTime    = document.getElementById("topTime");
-	var bottomTime = document.getElementById("bottomTime");
-	var pieceFile  = JSON.parse( sessionStorage.getItem("pieceFile") );
-	var oldName    = pieceFile.pieceName;
-	var infoError  = document.getElementById("infoError");
+async function editBaseInfo(onlySave = false){
 	
-	if(key == -1){
-		infoError.innerText = "Invalid key! use '#' for sharps and 'b' for flats!";
-		return;
+	if(onlySave){
+		var pieceFile = JSON.parse(sessionStorage.getItem("pieceFile"));
+		var oldName = pieceFile.pieceName;
 	}
+	else{
 
-	pieceFile.pieceName  = pieceName.value;
-	pieceFile.bpm        = bpm.value;
-	pieceFile.key        = key;
-	pieceFile.topTime    = topTime.value;
-	pieceFile.bottomTime = bottomTime.value;
+		var pieceName  = document.getElementById("pieceName");
+		var bpm        = document.getElementById("bpm");
+		var key        = keyToNumber(document.getElementById("key").value);
+		var topTime    = document.getElementById("topTime");
+		var bottomTime = document.getElementById("bottomTime");
+		var pieceFile  = JSON.parse( sessionStorage.getItem("pieceFile") );
+		var oldName    = pieceFile.pieceName;
+		var infoError  = document.getElementById("infoError");
+		
+		if(key == -1){
+			infoError.innerText = "Invalid key! use '#' for sharps and 'b' for flats!";
+			return;
+		}
+
+		pieceFile.pieceName  = pieceName.value;
+		pieceFile.bpm        = bpm.value;
+		pieceFile.key        = key;
+		pieceFile.topTime    = topTime.value;
+		pieceFile.bottomTime = bottomTime.value;
+	}
 
 	var requestData = new FormData();
 	requestData.append("pieceFile", JSON.stringify(pieceFile) );

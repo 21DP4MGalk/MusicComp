@@ -23,7 +23,7 @@
 			<button id="prevPage" onclick="pageBack()"> &#x003C; </button>
 			<button onclick="audioCtx.resume()">Turn on audio</button>
 			<button onclick="openBaseInfo()">Edit piece info</button>
-			<button onclick="openInstrumentList()">Open Instrument List</button>
+			<button onclick="editBaseInfo(true)">Save work</button>
 			<button id="nextPage" onclick="pageForward()"> &#x003E; </button>
 
 			<div id="noteSelect" onclick="selectNote();">

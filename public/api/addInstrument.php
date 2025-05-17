@@ -6,11 +6,12 @@ $data = json_decode(file_get_contents('php://input'), false);
 
 //BLAH BLAH ADD VALIDITY CHECK TO PREVENT SPAMMING;
 $token = $_COOKIE["token"];
-$name = $_POST["name"];
-$description = $_POST["description"];
+$name = $_POST["instrumentName"];
+$description = $_POST["instrumentDescription"];
 $pieceID = $_POST["pieceID"];
 
 if(verifyData($token, 60) || verifyData($name, 20) || verifyData($description, 128)){
+	http_response_code(400);
 	echo "Shenanigans!";
 	exit();
 }
@@ -26,7 +27,7 @@ $sineWave = new stdClass();
 $sineWave->real = array(0, 0);
 $sineWave->imag = array(0, 1);
 $sineWave->bezier = array([0,0, 0.35,0.55, 0.65,-0.5513, 1,0]);
-$text = array("Default sine", "Default instrument generated automatically");
+$text = array($name, $description);
 $sineWave = json_encode($sineWave);
 
 $stmnt = $connection->prepare("INSERT INTO instruments(name, description, waveform, pieceID) VALUES(?, ?, ?, ?)");

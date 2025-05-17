@@ -13,8 +13,8 @@ async function getInstruments(){
 	document.getElementById("listError").innerHTML = await response.text();
 }
 
-function newPieceForList(element, pieceName){
-	element.innerHTML +=  "<br><br><br><h3>" + pieceName + "</h3> <button onclick='addInstrument(\"" + pieceName + "\")'>Add an instrument</button> <br/> <hr/>";
+function newPieceForList(element, pieceName, pieceID){
+	element.innerHTML +=  "<br><br><br><h3>" + pieceName + "</h3> <button onclick='addInstrumentWindowOpen(\"" + pieceID + "\")'>Add an instrument</button> <br/> <hr/>";
 }
 
 function newInstrumentRow(element, id, instrument, description){
@@ -31,7 +31,7 @@ function updateList(){
 	for(var i = 0; i < instrumentList.length; i++){
 		if(instrumentList[i][0] != currentPiece){
 			currentPiece = instrumentList[i][0];
-			newPieceForList(listElement, currentPiece);
+			newPieceForList(listElement, currentPiece, instrumentList[i][5]);
 		}
 		newInstrumentRow(listElement, i, instrumentList[i][1], instrumentList[i][2]);
 	}
@@ -175,7 +175,7 @@ async function saveWave(){
 	}
 
 	var requestData = new FormData();
-	requestData.add("instrument", JSON.stringify(instrument));
+	requestData.append("instrument", JSON.stringify(instrument));
 	var request = await fetch("/api/saveWave.php");
 
 	return;
@@ -235,7 +235,38 @@ async function init(){
 	updateList();
 }
 
-function addInstrument(){
-	
+function addInstrumentWindowOpen(pieceID){
+	instrumentAdd = document.getElementById("instrumentAdd");
+	instrumentAdd.style.display = "block";
+	sessionStorage.setItem("pieceID", pieceID);
 	return;
+}
+
+function addInstrumentWindowClose(){
+	document.getElementById("instrumentAdd").style.display = "none";
+	document.getElementById("instrumentName").value = "";
+	document.getElementById("instrumentDescription").value = "";
+
+
+}
+
+async function addInstrument(){
+	var pieceID = sessionStorage.getItem("pieceID");
+	var name = document.getElementById("instrumentName").value;
+	var description = document.getElementById("instrumentDescription").value;
+
+	var requestData = new FormData();
+	requestData.append("pieceID", pieceID);
+	requestData.append("instrumentName", name);
+	requestData.append("instrumentDescription", description);
+	var response = await fetch("/api/addInstrument.php", {
+		method: "POST",
+		body: requestData
+	});
+	if(response.ok){
+		addInstrumentWindowClose();
+		return;
+	}
+	document.getElementById("addError").innerHTML = await response.text();
+
 }

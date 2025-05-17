@@ -29,9 +29,14 @@
         
         <hr>
 
-        <h3>Congradulations on registering to our glorious website!</h3>
-        <h6>Now sit down and Imma explain how this shit works in the form of an FAQ page</h6>
-        
+        <h2>Piece composition</h2>
+        <p>
+			MusicComp has two primary functions, composition, and instrument creation, this section explains <br/>
+		 	how to create compositions and use the note editor.</p>
+        <hr/>
+		<h2>The main screen</h2>
+		<img src="/media/editor_window.png"/>
+		<hr/>
 
         <h2 class="section">"How do compose"</h2>
         <p class="explanation">I don't know, I'm not a composer</p>

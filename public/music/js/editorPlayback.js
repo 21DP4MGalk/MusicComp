@@ -24,6 +24,17 @@ async function setInstrument(instruments, ai){
 	instruments[ai][3] = JSON.parse(instruments[ai][3]);
 	sessionStorage.setItem("real", instruments[ai][3].real);
 	sessionStorage.setItem("imag", instruments[ai][3].imag);
+
+	var pieceFile = JSON.parse(sessionStorage.getItem("pieceFile"));
+	if(pieceFile.notes.length <= ai){
+		console.log("DINDONG");
+		for(var i = 0; i < ai-pieceFile.notes.length+1; i++){
+			console.log("DINGUSDONGUS");
+			pieceFile.notes.push([[]]);
+		}
+	}
+	sessionStorage.setItem("pieceFile", JSON.stringify(pieceFile));
+	rebuildDisplayArray();
 	return;
 }
 

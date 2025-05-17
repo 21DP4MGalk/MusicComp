@@ -39,3 +39,27 @@ h4{
 h6{
 	display: inline;
 }
+#instrumentAdd{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	background-color: rgb(0, 0, 0, 0.5);	
+	z-index: 3;
+	display: none;
+}
+#instrumentAddWindow{
+	display: block;
+	background-color: oldlace;
+	position: fixed;
+	width: 25%;
+	height: 25%;
+	margin: 25% 37.5% 50% 37.5%;
+}
+#instrumentAddWindow input{
+	margin: 5px;
+}
+#instrumentAddWindow button{
+	margin: 5px;
+}

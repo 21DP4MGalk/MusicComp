@@ -31,44 +31,36 @@
 			<a id="navLogout" onclick="logout()">Logout</a>
 		</div>
 		<div id="contentStart"></div>
-			<h1 align="center"> YOU ARE WELCOME!!!! </h1> 
-			<h6 id="userMessage" align="center"> JK you are 
-			<script>
-				var username = sessionStorage.getItem("username");
-				var userMessage = document.getElementById("userMessage");
-				if(!username){
-					userMessage.innerText += " an unregistered pleb";
-				}
-				else{
-					userMessage.innerText += username;
-				}
-			</script> </h6>
-			<p align="center"> Have you ever wondered, what it would be like, to bask <br>
-				in the glory of a really janky and bad sequencer that runs<br>
-				on the web, made by someone who does not know what he is<br>
-				doing? I bet you have not, but this is exactly what I offer<br>
-				to you, on my humble site. Feel free to register or attempt<br>
-				SQL injections. I will gladly rip my hair out trying to undo<br>
-				the damages, you scullywagger. Also I do not know what to put<br>
-				here for now so I will add faux news. <br></p>
+			<h1 align="center"> Welcome to MusicComp! </h1> 
+			<h6>Unaffiliated with <a href="https://music-comp.org/">Music-COMP</a></h6>
+
+			<p align="center"> 
+				MusicComp is a small-scale project build for personal satisfaction and out of necessity. <br>
+				The goal is a sequencer that supports basic classical notation, aswell as custom instruments <br>
+				created entirely by the user through a bezier curve editor. <br>
+				The project idea is heavily inspired by <a href="https://dinisnoise.org/">DIN Is Noise</a>. <br>
+				MusicComp admittedly is still quite rough around the edges, but the focus is on functionality and <br>
+				simplicity rather than aesthetics. <br>
+			</p>
 			<br>
 			<hr>
 			<br>
 		
 			<h2> CURRENT DEVELOPMENT STATUS </h2>
 
-			<p> Below you can observe all kinds of neat tidbits about the current
-			progress of the development of this inglorious website. <br> <br>
+			<p> As terms near the end, so does the development of this website, most of the major functions work, besides a few, but they're within soon workable status. <br>
+			As improvements keep piling on, so do unexpected changes and realisations of the ridiculous choices I had made prior.
+			<br> <br>
 			Current progress: </p>
 
-			<progress value=0.1>Hey at least it looks kind of pretty</progress> <br>
-			<p> I AM SCREWED </p>
+			<progress value=0.8>Hey at least it looks kind of pretty</progress> <br>
+			<p> I AM actually not too SCREWED </p>
 			<div class="goals">
 				<h3> Goals:</h3>
-				<p> Rewrite the backend </p> <input type="checkbox"> Kinda <br>
-				<p> Rewrite the music page: </p> <input type="checkbox"> <br>
+				<p> Rewrite the backend </p> <input type="checkbox" checked> <br>
+				<p> Rewrite the music page: </p> <input type="checkbox" checked> <br>
 				<p> Login system: </p> <input type="checkbox" checked> <br>
-				<p> Better UI: </p> <input type="checkbox" checked> <br>
+				<p> Better UI: </p> <input type="checkbox"> <br>
 			</div>
 		
 			<br>

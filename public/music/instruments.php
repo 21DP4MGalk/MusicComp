@@ -57,6 +57,18 @@
 			</div>
 		</div>
 
+		<div id="instrumentAdd">
+			<div id="instrumentAddWindow">
+				<h2> Create new instrument </h2>
+				<hr/>
+				<label>Name</label> <input id="instrumentName"/> <br/>
+
+				<label>Description</label> <input id="instrumentDescription"/> <br/>
+				<p id="addError"></p>
+				<button onclick="addInstrument()">Submit</button>
+			</div>
+		</div>
+
 		<div id="footer">
 			<div id="footerPages">
 				<p class="footerHeader">Main links:</p>

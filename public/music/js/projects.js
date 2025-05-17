@@ -137,7 +137,7 @@ async function createNewProject(){
 	body: requestData});
 
 	if(response.ok){
-		//window.location.href = "/music/editor.php?piece=" + pieceName.value;
+		window.location.href = "/music/editor.php?piece=" + pieceName.value;
 	}	
 	else{
 		document.getElementById("errorDialog").innerHTML = "Error " + response.status + ", " + await response.text();

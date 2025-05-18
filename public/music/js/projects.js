@@ -85,7 +85,7 @@ async function deletePiece(deleteBtn){
 
 	var requestData = new FormData;
 	requestData.append("pieceName", pieceName);
-
+	
 	var response = await fetch("/api/removePiece.php", {
 		method: "POST",
 		body: requestData,
@@ -95,6 +95,8 @@ async function deletePiece(deleteBtn){
 		document.getElementById("link" + id).remove();
 		document.getElementById("publish" + id).remove();
 		deleteBtn.remove();
+		allPieces.splice(id, 1);
+		updatePieces();
 		init();
 	}
 }
@@ -137,7 +139,7 @@ async function createNewProject(){
 	body: requestData});
 
 	if(response.ok){
-		window.location.href = "/music/editor.php?piece=" + pieceName.value;
+		window.location.href = "/music/projects.php"
 	}	
 	else{
 		document.getElementById("errorDialog").innerHTML = "Error " + response.status + ", " + await response.text();

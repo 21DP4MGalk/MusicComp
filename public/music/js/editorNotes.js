@@ -250,37 +250,132 @@ function interpretClick(){
 	
 	if(noteChar == "✕"){
 		noteInfo = findClosestNote(x, y);
-		pieceFile.notes[ai].splice(noteInfo.index, 1);
-		sessionStorage.setItem("pieceFile", JSON.stringify(pieceFile));
-		rebuildDisplayArray();
+		deleteNote(noteInfo.index);
 		return;
 	}
  
-	//if(toTrueX(x, y) > toTrueX(displayArray[lastNote].x, displayArray[lastNote].y))
-	
 	roundedCoords = roundCoords(x, y);
-	var note = findNewNoteIndex(roundedCoords.x, roundedCoords.y);
+	
+	if(getStaffFromY(roundedCoords.y, true) < 0){
+		console.log(getStaffFromY(roundedCoords.y, true))
+		return;
+	}
+
+	note = findNewNotePosition(roundedCoords.x, roundedCoords.y);
 	note.duration = charToDuration(noteChar)[0];
 	note.volume = 1;
-
+	
 	addNote(note);
 	rebuildDisplayArray();
+}
+
+function deleteNote(index){
+	var pieceFile = JSON.parse(sessionStorage.getItem("pieceFile"));
+	var ai = sessionStorage.getItem("activeInstrument");
+	var maxX = 0;
+	pieceFile.notes[ai].splice(index, 1);
+	
+	for(var i = 0; i < pieceFile.notes[ai].length; i++){
+		if(pieceFile.notes[ai][i].x > maxX){
+			maxX = pieceFile.notes[ai][i].x
+		}
+	}
+	var xFound;
+	for(var i = 0; i < maxX; i++){
+		xFound = false;
+
+		for(var j = 0; j < pieceFile.notes[ai].length; j++){
+			if(pieceFile.notes[ai][j].x == i){
+				xFound = true;
+				break;
+			}
+		}
+		if(!xFound){
+			maxX -= 1;	
+			for(var j = i; j< pieceFile.notes[ai].length; j++){
+				if(pieceFile.notes[ai][j].x > i){
+					pieceFile.notes[ai][j].x -= 1;
+				}
+			}
+		}
+	}
+	sessionStorage.setItem("pieceFile", JSON.stringify(pieceFile));
+	rebuildDisplayArray();
+	
+}
+
+function findNewNotePosition(x, y){
+	var displayArray = JSON.parse(sessionStorage.getItem("displayArray"));
+	var ai = sessionStorage.getItem("activeInstrument");
+	var pieceFile = JSON.parse(sessionStorage.getItem("pieceFile"));
+	var lastNote = sessionStorage.getItem("lastNote")
+	var canX = sessionStorage.getItem("canX");
+	var note = new Object();
+
+	if(displayArray[0].symbol != " "){
+		var closestNote = findClosestNoteInTime(roundedCoords.x, roundedCoords.y)
+		console.log(closestNote, roundedCoords);
+		if(toTrueX(roundedCoords.x, roundedCoords.y) > toTrueX(displayArray[lastNote].x, displayArray[lastNote].y)){
+			note.x = pieceFile.notes[ai][pieceFile.notes[ai].length-1].x + 1
+			note.y = yToYIndex(roundedCoords.y);
+			console.log("new farthest note");
+			console.log(note.y)
+		}
+		else if(Math.abs(closestNote.x - roundedCoords.x) < canX/200 && closestNote.y != roundedCoords.y){
+			note.x = pieceFile.notes[ai][closestNote.index].x
+			note.y = yToYIndex(roundedCoords.y)
+			console.log("same X, different Y");
+		}
+		else{
+			console.log("inbetween position");
+			newNote = findNewNoteIndex(roundedCoords.x, roundedCoords.y);
+			incrementX(newNote.x);
+			note.x = newNote.x;
+			note.y = newNote.y;
+		}
+	}
+	else{
+		note.x = 0;
+		note.y = yToYIndex(roundedCoords.y);
+		console.log("first note");
+
+	}
+	return note;
+}
+
+function incrementX(index){
+	var pieceFile = JSON.parse(sessionStorage.getItem("pieceFile"));
+	var ai = sessionStorage.getItem("activeInstrument");
+
+	console.log(index)
+
+	for(var i = index; i < pieceFile.notes[ai].length; i++){
+		pieceFile.notes[ai][i].x += 1;
+	}
+	sessionStorage.setItem("pieceFile", JSON.stringify(pieceFile));
+	return;
+}
+function yToYIndex(y){
+	canY = sessionStorage.getItem("canY");
+	yIndex = y - canY/10;
+	yIndex /= (canY/200);
+	yIndex += 2;
+	yIndex %= 28;
+	return yIndex;
 }
 
 function findNewNoteIndex(x, y){
 
 	var displayArray = JSON.parse(sessionStorage.getItem("displayArray"));
-	var trueX = toTrueX(x, y)
-	var index = -1
+	var trueX = toTrueX(x, y);
+	var index = -1;
 	for(var i = 0; i < displayArray.length; i++){
 		if((noteChar > 57820 || noteChar < 57810) && noteChar !== 57506){
 			continue;
 		}
 		currentTrueX = toTrueX( displayArray[i].x, displayArray[i].y);
-		console.log(trueX, currentTrueX);
 		if(trueX <= currentTrueX){
 			index = i;
-			console.log(i);
 			break;
 		}
 	}
@@ -331,20 +426,25 @@ function addNote(note){
 	var pieceFile = JSON.parse(sessionStorage.getItem("pieceFile"));
 	//var finalNote = new Note(note.xIndex, note.yIndex, note.duration);
 	var ai = sessionStorage.getItem("activeInstrument");
-
-	/*if(!pieceFile.notes[ai].length || note.index > pieceFile.notes[ai][ pieceFile.notes[ai].length-1 ].x ){
-	//if this is the first note or if the note's position is to the right of the furthest one
-		pieceFile.notes[ai].push(finalNote);
-	}
-	else{
-		for(var i = 0; i < pieceFile.notes[ai].length-1; i++){
-			if(pieceFile.notes[ai][i].x < note.x && pieceFile.notes[ai][i+1].x >= note.x){
-				pieceFile.notes[ai].splice(i, 0, note);
-			}
-		}
-	}
-*/
+	var t
+	
 	pieceFile.notes[ai].splice(note.x, 0, note);
+	
+	for(var i = 0; i < pieceFile.notes[ai].length; i++){
+		if(!i){  
+			t = 0;
+		}
+		else if(pieceFile.notes[ai][i-1].x == pieceFile.notes[ai][i].x){
+			t = pieceFile.notes[ai][i-1].t
+		}
+		else{
+			t = pieceFile.notes[ai][i-1].t + pieceFile.notes[ai][i-1].duration;
+		}
+
+		pieceFile.notes[ai][i].t = t;
+	}
+	
+	//pieceFile.notes[ai].splice(note.x, 0, note);
 	sessionStorage.setItem("pieceFile", JSON.stringify(pieceFile));
 	return;
 }
@@ -766,7 +866,7 @@ function getCoordinates(xIndex, yIndex, canX, canY){
 }
 
 function moveGhost(){
-	if(!sessionStorage.getItem("pieceFile") || Object.is(sessionStorage.getItem("activeInstrument"), null) ){
+	if(!sessionStorage.getItem("pieceFile") || !sessionStorage.getItem("activeInstrument") ){
 		return;
 	}
 	redrawCanvas();
@@ -775,6 +875,7 @@ function moveGhost(){
 	var noteChar = sessionStorage.getItem("note");
 	var lastNote = sessionStorage.getItem("lastNote");
 	var displayArray = JSON.parse(sessionStorage.getItem("displayArray"));
+	var staffBounds = JSON.parse(sessionStorage.getItem("staffBounds"));
 	
 	if(noteChar == " "){
 		return;
@@ -784,19 +885,15 @@ function moveGhost(){
 	const canY = notationCan.height
 
 	if(displayArray.length == 0){
-		staffBounds = JSON.parse(sessionStorage.getItem("staffBounds"));
 		empty = new Object();
 		empty.x = staffBounds[0];
 		empty.y = 14*canY/100;
 		displayArray.push(empty);
 	}
 
-	//notationCtx.font = "40px LelandMusic";
-
 	var rect = notationCan.getBoundingClientRect();
 	var scaleX = notationCan.width / rect.width;
 	var scaleY = notationCan.height / rect.height;
-
 
 	var x = (event.clientX - rect.left) * scaleX;
 	var y = (event.clientY - rect.top) * scaleY;
@@ -807,26 +904,56 @@ function moveGhost(){
 		notationCtx.fillText(noteInfo.symbol, noteInfo.x, noteInfo.y)
 		return;
 	}
-	
-	notationCtx.fillStyle == "black";
-	noteInfo = findClosestNoteInTime(x, y);
-	
 	var roundedCoords = roundCoords(x, y)
-	if(toTrueX(roundedCoords.x, roundedCoords.y) < toTrueX(displayArray[lastNote].x, displayArray[lastNote].y)){
-		noteInfo.x -= canX/125;
-		noteInfo.y = roundedCoords.y;
+	var LastNote = displayArray[lastNote];
+	notationCtx.fillStyle == "black";
+	
+	noteInfo = new Object();
+	if(displayArray[0].symbol != " "){
+		var closestNote = findClosestNoteInTime(roundedCoords.x, roundedCoords.y)
+		if(toTrueX(roundedCoords.x, roundedCoords.y) - toTrueX(displayArray[lastNote].x, displayArray[lastNote].y) > canX/200){
+			noteInfo.x = displayArray[lastNote].x + canX/50
+			noteInfo.y = roundYToStaff(roundedCoords.y, LastNote.y);
+			console.log("new farthest note");
+		}
+		else if(Math.abs(closestNote.x - roundedCoords.x) < canX/200 && closestNote.y != roundedCoords.y){
+			noteInfo.x = closestNote.x
+			noteInfo.y =  roundYToStaff(roundedCoords.y, closestNote.y);
+
+			console.log("same X, different Y");
+		}
+		else{
+			console.log(closestNote.x, roundedCoords.x)
+			console.log("inbetween position");
+			newNote = findNewNoteIndex(roundedCoords.x, roundedCoords.y);
+			console.log(newNote);
+			noteInfo.x = displayArray[newNote.x].x - canX/125;
+			noteInfo.y = roundYToStaff(roundedCoords.y, closestNote.y);
+			console.log(noteInfo)
+		}
 	}
 	else{
-		noteInfo = findValidNote(x, y);
+		noteInfo.x = staffBounds[0] ;
+		noteInfo.y = roundYToStaff(roundedCoords.y, LastNote.y);
+
+		console.log("first note");
+
 	}
 
 	notationCtx.globalAlpha = 0.5;
-	//var coords = getCoordinates(noteInfo.xIndex, noteInfo.yIndex, canX, canY);
 
 	notationCtx.fillText(noteChar, noteInfo.x, noteInfo.y);
 
 	notationCtx.globalAlpha = 1;
 
+}
+
+function roundYToStaff(y, y2, norm = true){
+	var staff = Math.floor(getStaffFromY(y, norm));
+	var targetStaff = Math.floor(getStaffFromY(y2, norm));
+	console.log(staff, targetStaff)
+	y -= Math.abs(targetStaff-staff) * (canY/100 * 14)
+	return y;
 }
 
 function findClosestNote(x, y){
@@ -917,8 +1044,13 @@ function rebuildDisplayArray(){
 
 	drawSymbols();
 	for(var i = 0; i< pieceFile.notes[ai].length; i++){
-		var coords = getCoordinates(i, pieceFile.notes[ai][i].y, canX, canY);
+		var coords = getCoordinates(pieceFile.notes[ai][i].x, pieceFile.notes[ai][i].y, canX, canY);
 		var noteChar = durationToChar(pieceFile.notes[ai][i].duration);
+
+		if((pieceFile.notes[ai][i].y < 6 || (pieceFile.notes[ai][i].y > 12 && pieceFile.notes[ai][i].y < 18)) && pieceFile.notes[ai][i].volume != 0 && pieceFile.notes[ai][i].duration != 4 ){
+			noteChar = noteChar.charCodeAt(0);
+			noteChar = String.fromCharCode(noteChar+1)
+		}
 		displayArray.push( {symbol: noteChar, x: coords[0], y: coords[1]});
 
 		if(toTrueX(displayArray[i].x, displayArray[i].y) > toTrueX(displayArray[lastNote].x, displayArray[lastNote].y)){

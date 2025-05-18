@@ -156,13 +156,13 @@ function saveCurve(){
 }
 
 async function saveWave(){
-	var instrumentList = JSON.parse(sessionStorage.getItem("instrumentList"));
 	var ai = sessionStorage.getItem("activeInstrument");
 	var activeCurve = sessionStorage.getItem("activeCurve");
 	
-	var instrument = instrumentList[ai];
-	
 	saveCurve();
+	var instrumentList = JSON.parse(sessionStorage.getItem("instrumentList"));
+	
+	var instrument = instrumentList[ai];
 
 	samples = sampleBezier(instrument[3].bezier);
 	transform = fourierForward(samples);
@@ -173,10 +173,22 @@ async function saveWave(){
 		}
 		transform.splice(i, 1);
 	}
+	var real = [];
+	var imag = [];
+	for(var i = 0; i < transform.length; i++){
+		real.push(transform[i][0]);
+		imag.push(transform[i][1]);
+	}
+	instrument[3].real = real;
+	instrument[3].imag = imag;
 
 	var requestData = new FormData();
 	requestData.append("instrument", JSON.stringify(instrument));
-	var request = await fetch("/api/saveWave.php");
+	console.log(instrument);
+	var request = await fetch("/api/saveWave.php", {
+		method: "POST",
+		body: requestData,
+	});
 
 	return;
 }

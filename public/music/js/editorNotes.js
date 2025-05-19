@@ -264,7 +264,8 @@ function interpretClick(){
 	note = findNewNotePosition(roundedCoords.x, roundedCoords.y);
 	note.duration = charToDuration(noteChar)[0];
 	note.volume = 1;
-	
+	note.y = Math.round(note.y);
+
 	addNote(note);
 	rebuildDisplayArray();
 }
@@ -430,6 +431,9 @@ function addNote(note){
 	
 	pieceFile.notes[ai].splice(note.x, 0, note);
 	
+	pieceFile.notes[ai].sort(compareNoteX);
+
+
 	for(var i = 0; i < pieceFile.notes[ai].length; i++){
 		if(!i){  
 			t = 0;
@@ -444,9 +448,15 @@ function addNote(note){
 		pieceFile.notes[ai][i].t = t;
 	}
 	
+	//pieceFile.notes[ai].sort(compareNoteX);
+
 	//pieceFile.notes[ai].splice(note.x, 0, note);
 	sessionStorage.setItem("pieceFile", JSON.stringify(pieceFile));
 	return;
+}
+
+function compareNoteX(a, b){
+	return (a.x+a.duration/10)-(b.x+b.duration/10);
 }
 
 function roundCoords(x, y, canX = sessionStorage.getItem("canX"), canY = sessionStorage.getItem("canY")){
@@ -939,7 +949,21 @@ function moveGhost(){
 		console.log("first note");
 
 	}
-
+	if(noteChar.charCodeAt(0) >= 58595 && noteChar.charCodeAt(0) <= 58600){
+		var halfStaff = [canY/10 + (Math.floor(getStaffFromY(noteInfo.y, true)) * canY/100 * 14) + canY/200*4];
+		halfStaff.push(halfStaff[0]+ (canY/200*12))
+		if(Math.abs(noteInfo.y - halfStaff[0]) > Math.abs(noteInfo.y - halfStaff[1])){
+			noteInfo.y = halfStaff[1];
+		}
+		else{
+			noteInfo.y = halfStaff[0];
+		}
+		if(noteChar.charCodeAt(0) == 58595){
+			noteInfo.y -= canY/100;
+		}
+		//noteInfo.y = canY/10 + (Math.floor(getStaffFromY(noteInfo.y, true)) * canY/100 * 14) + canY/200*16;
+		console.log("rest!");
+	}
 	notationCtx.globalAlpha = 0.5;
 
 	notationCtx.fillText(noteChar, noteInfo.x, noteInfo.y);

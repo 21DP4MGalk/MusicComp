@@ -16,14 +16,15 @@ Made for the qualification work of RVT 4th course.
 ## TODO
 
 - [x] Grand staff
-- [ ] Multiple pages of the grand staff
+- [X] Multiple pages of the grand staff
 - [x] Note placement
 - [x] Custom notation format
 - [x] Bar expansion for notes under the beat notes
-- [ ] Playback with fundamental waves
-- [ ] Playback with custom wave files
+- [X] Playback with fundamental waves
+- [X] Playback with custom wave files
 - [x] Instrument beizer curve display
 - [x] Bezier curve editor
 - [x] Bezier curve to fourier series
 - [ ] Additional symbols (ties, forte, piano)
 - [x] Auxiliary pages
+- [X] Accidentals

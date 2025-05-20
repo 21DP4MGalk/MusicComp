@@ -41,7 +41,7 @@ function playInstrumentPart(startMeasure = 0, endMeasure = -1){
 			timeStop = timeStart + pieceFile.notes[ai][i].duration * s_per_crochet;
 			playNote(waveform, timeStart, timeStop, frequency, audioCtx);
 	}
-	setTimeout(() => {audioCtx.close();}, timeStop*1000);
+	setTimeout(() => {audioCtx.close();}, (timeStop*1000)+10000);
 	return;
 }
 
@@ -145,6 +145,7 @@ function yToFreq(yIndex){
 
 async function setInstrument(instruments, ai){
 	sessionStorage.setItem("activeInstrument", ai);
+	sessionStorage.setItem("activePage", 0);
 	instruments[ai][3] = JSON.parse(instruments[ai][3]);
 	sessionStorage.setItem("real", instruments[ai][3].real);
 	sessionStorage.setItem("imag", instruments[ai][3].imag);

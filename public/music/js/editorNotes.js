@@ -96,6 +96,8 @@ async function init(){
 	sessionStorage.setItem("canX", notationCan.width);
 	sessionStorage.setItem("canY", notationCan.height);
 	
+	sessionStorage.setItem("activePage", 0);
+
 	sessionStorage.setItem("displayArray", JSON.stringify([]));	
 	sessionStorage.setItem("displayMisc", JSON.stringify([]));
 
@@ -253,7 +255,6 @@ function interpretClick(){
 	var noteChar = sessionStorage.getItem("note");
 	var ai = sessionStorage.getItem("activeInstrument");
 	var displayArray = JSON.parse(sessionStorage.getItem("displayArray"));
-	var lastNote = sessionStorage.getItem("lastNote");
 
 	if(noteChar == "" || noteChar == " "){
 		return;
@@ -359,7 +360,7 @@ function findNewNotePosition(x, y, noteChar){
 	var displayArray = JSON.parse(sessionStorage.getItem("displayArray"));
 	var ai = sessionStorage.getItem("activeInstrument");
 	var pieceFile = JSON.parse(sessionStorage.getItem("pieceFile"));
-	var lastNote = sessionStorage.getItem("lastNote")
+	var lastNote = displayArray.length-1
 	var canX = sessionStorage.getItem("canX");
 	var note = new Object();
 
@@ -457,7 +458,7 @@ function findValidNote(x, y){
 	var displayArray = JSON.parse(sessionStorage.getItem("displayArray"));
 	var coords = roundCoords(x, y);
 	var staffBounds = JSON.parse(sessionStorage.getItem("staffBounds"));
-	var lastNote = sessionStorage.getItem("lastNote");
+	var lastNote = displayArray.length-1
 	
 
 	lastNoteStaff = Math.floor(getStaffFromY(displayArray[lastNote].y, true));
@@ -541,22 +542,23 @@ function drawMeasures(){
 	var quarterNotesPerMeasure = 1/bottomTime * 4 * topTime;
 	var ai = sessionStorage.getItem("activeInstrument");
 	var displayArray = JSON.parse(sessionStorage.getItem("displayArray"));
-
+	var ap = Number(sessionStorage.getItem("activePage"));
 	const canX = notationCan.width
 	const canY = notationCan.height
 
 	var measureHeight = canY/10;
 	var currentNote = 0;
-	if(pieceFile.notes[ai].length == 0){
+	if(displayArray.length == 0){
 		return;
 	}
 	cursor = 0;
-	for(var i = 0; i < pieceFile.notes[ai].length; i++){
+	for(var i = 0 + ap*181; i < pieceFile.notes[ai].length && i < 181*(ap+1); i++){
 		currentNote = pieceFile.notes[ai][i]
+		
 		currentMeasure = Math.floor( (currentNote.t+currentNote.duration) /quarterNotesPerMeasure);
 		
-		if(currentMeasure-cursor == 1 && (currentNote.t+currentNote.duration) /quarterNotesPerMeasure - currentMeasure < 0.125/quarterNotesPerMeasure){
-			drawMeasure(displayArray[i].x + (canX/75), displayArray[i].y);
+		if(currentMeasure-cursor > 0 && (currentNote.t+currentNote.duration) /quarterNotesPerMeasure - currentMeasure < 0.125/quarterNotesPerMeasure){
+			drawMeasure(displayArray[i%181].x + (canX/75), displayArray[i%181].y);
 			cursor = currentMeasure;
 		}
 		else if(currentMeasure-cursor == 1 && (currentNote.t+currentNote.duration) /quarterNotesPerMeasure - currentMeasure >= 0.125/quarterNotesPerMeasure){
@@ -846,8 +848,11 @@ function drawPieceInfo(){
 	var canY = sessionStorage.getItem("canY");
 	var displayMisc = JSON.parse(sessionStorage.getItem("displayMisc"));
 	var pieceFile = JSON.parse(sessionStorage.getItem("pieceFile"));
+	var ap = Number(sessionStorage.getItem("activePage"));
+
 	displayMisc.push({ symbol: pieceFile.pieceName, x: canX/2.5, y: canY/15 });
 	displayMisc.push({ symbol: "BPM = " + pieceFile.bpm, x: canX/15, y: canY/15 });
+	displayMisc.push({ symbol: "Page " + (ap+1), x: canX/10, y: canY/100 * 85})
 	sessionStorage.setItem("displayMisc", JSON.stringify(displayMisc));
 	return;
 }
@@ -924,6 +929,7 @@ function redrawCanvas(){
 
 function getCoordinates(xIndex, yIndex, canX, canY){
 	var staffBounds = JSON.parse(sessionStorage.getItem("staffBounds"));
+	var ap = Number(sessionStorage.getItem("activePage"));
 	var staffLength = staffBounds[1] - staffBounds[0] - canX/25;
 
 	var x_pos = xIndex * canX/50;
@@ -935,6 +941,8 @@ function getCoordinates(xIndex, yIndex, canX, canY){
 	var y_pos = canY/10 + ((yIndex - 2) * (canY/200));
 	y_pos += staff*14*(canY/100);
 	
+	y_pos -= (ap*5*(canY/100)*14);
+
 	return [x_pos, y_pos];
 }
 
@@ -946,8 +954,8 @@ function moveGhost(){
 	var notationCan = document.getElementById("notation");
 	var notationCtx = notationCan.getContext("2d");
 	var noteChar = sessionStorage.getItem("note");
-	var lastNote = sessionStorage.getItem("lastNote");
 	var displayArray = JSON.parse(sessionStorage.getItem("displayArray"));
+	var lastNote = displayArray.length -1
 	var staffBounds = JSON.parse(sessionStorage.getItem("staffBounds"));
 	
 	if(noteChar == " "){
@@ -1126,15 +1134,26 @@ function rebuildDisplayArray(){
 	var pieceFile = JSON.parse(sessionStorage.getItem("pieceFile"));
 	var displayArray = [];
 	var displayMisc = [];
-	var lastNote = 0
+	var ap = Number(sessionStorage.getItem("activePage"));
+	var staff;
+	var coords;
+	var noteChar;
 
 	const canX = sessionStorage.getItem("canX");
 	const canY = sessionStorage.getItem("canY");
 
 	//drawSymbols();
-	for(var i = 0; i< pieceFile.notes[ai].length; i++){
-		var coords = getCoordinates(pieceFile.notes[ai][i].x, pieceFile.notes[ai][i].y, canX, canY);
-		var noteChar = durationToChar(pieceFile.notes[ai][i].duration, pieceFile.notes[ai][i].volume);
+
+	for(var i = 0 + ap*181; i < pieceFile.notes[ai].length  && i < 181*(ap+1); i++){
+		coords = getCoordinates(pieceFile.notes[ai][i].x, pieceFile.notes[ai][i].y, canX, canY);
+
+		//staff = Math.floor(getStaffFromY(coords[1], true)) ;
+
+		//if( staff > 4+(ap*5) || staff < ap*5){
+		//	continue;
+		//}
+		noteChar = durationToChar(pieceFile.notes[ai][i].duration, pieceFile.notes[ai][i].volume);
+
 
 		if((pieceFile.notes[ai][i].y <= 6 || (pieceFile.notes[ai][i].y > 12 && pieceFile.notes[ai][i].y <= 18)) && pieceFile.notes[ai][i].volume != 0 && pieceFile.notes[ai][i].duration != 4 ){
 			noteChar = noteChar.charCodeAt(0);
@@ -1143,25 +1162,18 @@ function rebuildDisplayArray(){
 		displayArray.push( {symbol: noteChar, x: coords[0], y: coords[1]});
 		
 		if(pieceFile.notes[ai][i].accidental != 0){
-			console.log("bazinga");
 			if(pieceFile.notes[ai][i].accidental == 1){
 				displayMisc.push( {symbol: "", x: coords[0] - canX/200, y: coords[1]} )
-				console.log("kachinga");
 			}
 			else{
 				displayMisc.push( {symbol: "", x: coords[0] - canX/200, y: coords[1]} )
 			}
 
 		}
-		if(toTrueX(displayArray[i].x, displayArray[i].y) > toTrueX(displayArray[lastNote].x, displayArray[lastNote].y)){
-			lastNote = i
-		}
-
 	}
 
 	sessionStorage.setItem("displayArray", JSON.stringify(displayArray));
 	sessionStorage.setItem("displayMisc", JSON.stringify(displayMisc));
-	sessionStorage.setItem("lastNote", lastNote);
 	drawPieceInfo();
 	//redrawCanvas();
 }

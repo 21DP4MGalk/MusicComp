@@ -96,6 +96,8 @@ function numberToKey(num){
 function keyToNumber(key){
 	var num = 0;
 
+	key = key.toUpperCase()
+
 	switch(key[0]){
 		case 'C':
 			break;
@@ -128,4 +130,23 @@ function keyToNumber(key){
 		num += 1;
 	}
 	return num%12;
+}
+
+function pageBack(){
+	var ap = Number(sessionStorage.getItem("activePage"));
+	if(ap > 0){
+		sessionStorage.setItem("activePage", ap-1);
+		console.log("WENT BACK")
+	}
+}
+function pageForward(){
+	var ap = Number(sessionStorage.getItem("activePage"));
+	var ai = sessionStorage.getItem("activeInstrument");
+	var pieceFile = JSON.parse(sessionStorage.getItem("pieceFile"));
+	if(pieceFile.notes[ai].length >= 181*(ap+1)){
+		console.log(181*ap)
+		sessionStorage.setItem("activePage", ap+1);
+		console.log("WENT FORWARDS")
+	}
+
 }

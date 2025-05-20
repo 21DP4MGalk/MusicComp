@@ -21,7 +21,7 @@
 
 		<center>
 			<button id="prevPage" onclick="pageBack()"> &#x003C; </button>
-			<button onclick="audioCtx.resume()">Turn on audio</button>
+			<button onclick="playInstrumentPart()">Play this part</button>
 			<button onclick="openBaseInfo()">Edit piece info</button>
 			<button onclick="editBaseInfo(true)">Save work</button>
 			<button id="nextPage" onclick="pageForward()"> &#x003E; </button>

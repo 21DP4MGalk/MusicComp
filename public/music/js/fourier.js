@@ -130,18 +130,22 @@ function addCurve(){
 }
 
 function sampleBezier(curves){
-	var samplesPerCurve = 4000/curves.length;
+	var samplesPerCurve = 4000///curves.length;
 	var samples = [];
 	for(var i = 0; i < curves.length; i++){
 		for(var j = 0; j < samplesPerCurve; j++){
-			samples.push(cubicBezier((i*samplesPerCurve + j)/4000, curves[i][0], curves[i][1], curves[i][2], curves[i][3], curves[i][4], curves[i][5], curves[i][6], curves[i][7]));
+			samples.push(cubicBezier(j/4000, curves[i][0], curves[i][1], curves[i][2], curves[i][3], curves[i][4], curves[i][5], curves[i][6], curves[i][7]));
+		}
+		for(var j = 0; j < samplesPerCurve; j++){
+			samples[i*samplesPerCurve+j].x += i;
+			samples[i*samplesPerCurve+j].x /= curves.length
 		}
 	}
 	samples.sort();
 	properSamples = [];
-	
+	console.log(samples);
 	for(var i = 0; i < samples.length/10; i++ ){
-		for(var j = 0; j<4000; j++){
+		for(var j = 0; j<4000*curves.length; j++){
 			if( Math.abs(samples[j].x - i*10/samples.length) <( 3/samples.length ) ){
 				properSamples.push(samples[j]);
 				break;

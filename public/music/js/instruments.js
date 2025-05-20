@@ -184,7 +184,6 @@ async function saveWave(){
 
 	var requestData = new FormData();
 	requestData.append("instrument", JSON.stringify(instrument));
-	console.log(instrument);
 	var request = await fetch("/api/saveWave.php", {
 		method: "POST",
 		body: requestData,
@@ -197,7 +196,8 @@ function drawFourier(fromEditor = true){
 	var ai = sessionStorage.getItem("activeInstrument");
 	var instruments = JSON.parse(sessionStorage.getItem("instrumentList"));
 	var curves = instruments[ai][3].bezier;
-	
+	var ac = Number(sessionStorage.getItem("activeCurve"));
+	fromEditor = false;
 	if(fromEditor){
 		var sx  = document.getElementById("sx").value - 75;
 		var sy  = document.getElementById("sy").value -75;
@@ -210,7 +210,7 @@ function drawFourier(fromEditor = true){
 	
 		curves = [[sx/120, sy/120, c1x/120, c1y/120, c2x/120, c2y/120, ex/120, ey/120]];
 	}
-
+	
 	var samples = sampleBezier(curves);
 	var transform = fourierForward(samples);
 	var display = document.getElementById("fourierDisplay");
@@ -281,4 +281,78 @@ async function addInstrument(){
 	}
 	document.getElementById("addError").innerHTML = await response.text();
 
+}
+
+function nextSegment(){
+	saveCurve();	
+	var ac = Number(sessionStorage.getItem("activeCurve"));
+	var ai = sessionStorage.getItem("activeInstrument");
+	var instruments = JSON.parse(sessionStorage.getItem("instrumentList"));
+	var instrumentFile = instruments[ai][3].bezier
+	
+	ac += 1
+
+	var scale = 120;
+	var xOff = 75;
+	var yOff = 75;
+	var sx  = document.getElementById("sx");
+	var sy  = document.getElementById("sy");
+	var c1x = document.getElementById("c1x");
+	var c1y = document.getElementById("c1y");
+	var c2x = document.getElementById("c2x");
+	var c2y = document.getElementById("c2y");
+	var ex  = document.getElementById("ex");
+	var ey  = document.getElementById("ey");
+	
+	if(!instrumentFile[ac]){
+		instrumentFile.push( [0,0, 0.35,0.55, 0.65,-0.5513, 1,0] )
+	}
+
+	sx.value  = xOff + instrumentFile[ac][0]*scale;
+	sy.value  = yOff + instrumentFile[ac][1]*scale;
+	c1x.value = xOff + instrumentFile[ac][2]*scale;
+	c1y.value = yOff + instrumentFile[ac][3]*scale;
+	c2x.value = xOff + instrumentFile[ac][4]*scale;
+	c2y.value = yOff + instrumentFile[ac][5]*scale;
+	ex.value  = xOff + instrumentFile[ac][6]*scale;
+	ey.value  = yOff + instrumentFile[ac][7]*scale;
+
+	instruments[ai][3].bezier = instrumentFile;
+
+	sessionStorage.setItem("activeCurve", ac);
+	sessionStorage.setItem("instrumentList", JSON.stringify(instruments));
+	redrawCurve();
+}
+
+function prevSegment(){
+	ac = Number(sessionStorage.getItem("activeCurve"));
+	ai = Number(sessionStorage.getItem("activeInstrument"));
+	instruments = JSON.parse(sessionStorage.getItem("instrumentList"));
+	console.log(instruments[ai][3])
+	instrumentFile = instruments[ai][3].bezier;
+	ac -= 1
+	
+	var scale = 120;
+	var xOff = 75;
+	var yOff = 75;
+	var sx  = document.getElementById("sx");
+	var sy  = document.getElementById("sy");
+	var c1x = document.getElementById("c1x");
+	var c1y = document.getElementById("c1y");
+	var c2x = document.getElementById("c2x");
+	var c2y = document.getElementById("c2y");
+	var ex  = document.getElementById("ex");
+	var ey  = document.getElementById("ey");
+	
+	sx.value  = xOff + instrumentFile[ac][0]*scale;
+	sy.value  = yOff + instrumentFile[ac][1]*scale;
+	c1x.value = xOff + instrumentFile[ac][2]*scale;
+	c1y.value = yOff + instrumentFile[ac][3]*scale;
+	c2x.value = xOff + instrumentFile[ac][4]*scale;
+	c2y.value = yOff + instrumentFile[ac][5]*scale;
+	ex.value  = xOff + instrumentFile[ac][6]*scale;
+	ey.value  = yOff + instrumentFile[ac][7]*scale;
+
+	sessionStorage.setItem("activeCurve", ac);	
+	redrawCurve();
 }

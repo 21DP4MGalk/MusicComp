@@ -31,19 +31,19 @@
 				<div id="coordinates">
 					<label>Start point</label>
 					<input type="range" id="sx" min="75" max="195" oninput="redrawCurve()"/>
-					<input type="range" id="sy" max="300" oninput="redrawCurve()"/>
+					<input type="range" id="sy" min="-300" max="300" oninput="redrawCurve()"/>
 					<hr>
 					<label>Control point 1</label>
 					<input type="range" id="c1x" min="75" max="195" oninput="redrawCurve()"/>
-					<input type="range" id="c1y" max="300" oninput="redrawCurve()"/>
+					<input type="range" id="c1y" min="-300" max="300" oninput="redrawCurve()"/>
 					<hr>
 					<label>Control point 2</label>
 					<input type="range" id="c2x" min="75" max="195" oninput="redrawCurve()"/>
-					<input type="range" id="c2y" max="300" oninput="redrawCurve()"/>
+					<input type="range" id="c2y" min= "-300" max="300" oninput="redrawCurve()"/>
 					<hr>
 					<label>End point</label>
 					<input type="range" id="ex" min="75" max="195" oninput="redrawCurve()"/>
-					<input type="range" id="ey" max="300" oninput="redrawCurve()"/>
+					<input type="range" id="ey" min="-300" max="300" oninput="redrawCurve()"/>
 				</div>
 				<br>
 				<button onclick="prevSegment()"> &#x003C; </button>
@@ -51,7 +51,7 @@
 				<button onclick="saveCurve()">Save curve</button>
 				<button onclick="saveWave()">Save waveform</button>
 				<button onclick="drawFourier()">Render waveform</button>
-				<button onclick="nextSegment()"> &#x003C; </button>
+				<button onclick="nextSegment()"> &#x003E; </button>
 				<br>
 				<canvas id="fourierDisplay" height="200px", width="600px"></canvas>
 			</div>

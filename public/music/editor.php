@@ -43,6 +43,8 @@
 			</div>
 			<div id="noteFunctions">
 				<button onclick="selectNote()" title="Delete note"> <p class="noclick rest"> &#x2715; </p></button>
+				<button onclick="selectNote()" title="Make note flat"> <p class="noclick leland"> &#xE260;  </p> </button>
+				<button onclick="selectNote()" title="Make note sharp"> <p class="noclick  leland"> &#xE262; </p> </button>
 			</div>
 
 		</center>

@@ -31,6 +31,20 @@
 	font-style: normal;
 	outline: none;
 }
+#noteFunctions button{
+	font-weight: normal;
+	font-style: normal;
+	outline: none;
+	font-family: "Leland";
+
+}
+.leland{
+	font-weight: normal;
+	font-style: normal;
+	outline: none;
+	font-family: "LelandMusic";
+
+}
 #noteSelect button p{
 	font-family: "LelandMusic";
 }

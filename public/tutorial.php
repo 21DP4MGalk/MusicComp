@@ -36,8 +36,38 @@
         <hr/>
 		<h2>The main screen</h2>
 		<img src="/media/editor_window.png"/>
-		<hr/>
+		<p>
+			The editor page is the first major component of the system. On the leftmost part you can see the list <br/> 
+			of instruments, each instrument has their own part, with their own notes to be played. In the image   <br/>
+			above, there is only the default instrument, the default sine wave. These are added and edited in the <br/>
+			instrument editor, here you can simply choose between the musical parts to edit or play back.         <br/>
+			<br/>
+			The middle of the screen is the actual notation, containing the notes which make up the piece.        <br/>
+			<br/>
+			On the very right there are buttons for adding or removing notes and rests. <br/>
+		</p>
+		<img src="/media/instrument_list.png"/>
+		<p>
+			The instrument editor is the second part, containing a list of all the instruments in all the pieces  <br/>
+			you've made. Every piece has the option to add an instrument, and you can add or delete instruments at will. <br/>
+			<br/>
+		</p>
+		<img id="ie" src="/media/instrument_editor.png"/>
+		<p>
+			This is the actual editor window, here you can see the current wave in the top display, and sliders to <br/>
+			adjust various points that define the wave, by changing the location of these points you can alter the <br/>
+			sound of the instrument. The sound is determined by the overtones, which you can see displayed on the  <br/>
+			bottom display, next to the second render of the wave. <br/>
+			<br/>
+		</p>
 
+
+
+		<hr/>
+			
+		<h1>Frequently Asked Questions</h1>
+
+		<br/>
         <h2 class="section">"How do compose"</h2>
         <p class="explanation">I don't know, I'm not a composer</p>
         <h2 class="section">"How do delete accont"</h2>
@@ -57,7 +87,7 @@
 
         <hr>
         
-        <h1 onclick="window.location.href = 'index.php';" style="cursor: pointer; text-decoration: underline;">NOW THAT YOU'RE EDUCATED, GO AND ENJOY!</h1>
+        <h1 onclick="window.location.href = '/music/projects.php';" style="cursor: pointer; text-decoration: underline;">NOW THAT YOU'RE EDUCATED, GO AND ENJOY!</h1>
 
         <div id="footer">
 			<div id="footerPages">

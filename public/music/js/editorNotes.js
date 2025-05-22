@@ -387,8 +387,9 @@ function findNewNotePosition(x, y, noteChar){
 
 	}
 	note.rest = false;
+	
 	if(noteChar.charCodeAt(0) >= 58595 && noteChar.charCodeAt(0) <= 58600){
-		var halfStaff = [canY/10 + (Math.floor(getStaffFromY(y, true)) * canY/100 * 14) + canY/200*4];
+	/*	var halfStaff = [canY/10 + (Math.floor(getStaffFromY(y, true)) * canY/100 * 14) + canY/200*4];
 		halfStaff.push(halfStaff[0]+ (canY/200*12))
 		if(Math.abs(y - halfStaff[0]) > Math.abs(y - halfStaff[1])){
 			note.y = 18;
@@ -399,7 +400,7 @@ function findNewNotePosition(x, y, noteChar){
 		if(noteChar.charCodeAt(0) == 58595){
 			note.y -= 2;
 		}
-		//noteInfo.y = canY/10 + (Math.floor(getStaffFromY(noteInfo.y, true)) * canY/100 * 14) + canY/200*16;
+		//noteInfo.y = canY/10 + (Math.floor(getStaffFromY(noteInfo.y, true)) * canY/100 * 14) + canY/200*16;  */
 		note.rest = true;
 	}
 
@@ -432,9 +433,9 @@ function findNewNoteIndex(x, y){
 	var trueX = toTrueX(x, y);
 	var index = -1;
 	for(var i = 0; i < displayArray.length; i++){
-		if((noteChar > 57820 || noteChar < 57810) && noteChar !== 57506){
-			continue;
-		}
+		//if((noteChar > 57820 || noteChar < 57810) && noteChar !== 57506){
+		//	continue;
+		//}
 		currentTrueX = toTrueX( displayArray[i].x, displayArray[i].y);
 		if(trueX <= currentTrueX){
 			index = i;
@@ -1008,6 +1009,7 @@ function moveGhost(){
 	if(displayArray.length > 0){
 		var closestNote = findClosestNoteInTime(roundedCoords.x, roundedCoords.y)
 		if(toTrueX(roundedCoords.x, roundedCoords.y) - toTrueX(displayArray[lastNote].x, displayArray[lastNote].y) > canX/200){
+			console.log("notenote")
 			noteInfo.x = displayArray[lastNote].x + canX/50
 			noteInfo.y = roundYToStaff(roundedCoords.y, LastNote.y);
 		}
@@ -1026,6 +1028,7 @@ function moveGhost(){
 		noteInfo.y = roundYToStaff(roundedCoords.y, canY/100 * 15);
 	}
 
+	/*
 	if(noteChar.charCodeAt(0) >= 58595 && noteChar.charCodeAt(0) <= 58600){
 		var halfStaff = [canY/10 + (Math.floor(getStaffFromY(noteInfo.y, true)) * canY/100 * 14) + canY/200*4];
 		halfStaff.push(halfStaff[0]+ (canY/200*12))
@@ -1039,7 +1042,7 @@ function moveGhost(){
 			noteInfo.y -= canY/100;
 		}
 		//noteInfo.y = canY/10 + (Math.floor(getStaffFromY(noteInfo.y, true)) * canY/100 * 14) + canY/200*16;
-	}
+	}*/
 	notationCtx.globalAlpha = 0.5;
 
 	notationCtx.fillText(noteChar, noteInfo.x, noteInfo.y);
@@ -1087,9 +1090,6 @@ function findClosestNoteInTime(x, y){
 
 	for(var i = 0; i < displayArray.length; i++){
 		noteChar = displayArray[i].symbol.charCodeAt(0);
-		if((noteChar > 57820 || noteChar < 57810) && noteChar !== 57506){
-			continue;
-		}
 		currentNote = displayArray[i];
 		currentTrueX = toTrueX(currentNote.x, currentNote.y);
 		

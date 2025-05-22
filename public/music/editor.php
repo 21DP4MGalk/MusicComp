@@ -42,9 +42,9 @@
 				<button> <p class="noclick rest"> &#xE4E8; </p></button>
 			</div>
 			<div id="noteFunctions">
-				<button onclick="selectNote()" title="Delete note"> <p class="noclick rest"> &#x2715; </p></button>
-				<button onclick="selectNote()" title="Make note flat"> <p class="noclick leland"> &#xE260;  </p> </button>
-				<button onclick="selectNote()" title="Make note sharp"> <p class="noclick  leland"> &#xE262; </p> </button>
+				<button onclick="selectFunc(1)" id="delete" title="Delete note"> <p class="noclick rest"> &#x2715; </p></button>
+				<button onclick="selectFunc(2)" id="flat" title="Make note flat"> <p class="noclick leland"> &#xE260;  </p> </button>
+				<button onclick="selectFunc(3)" id="sharp" title="Make note sharp"> <p class="noclick  leland"> &#xE262; </p> </button>
 			</div>
 
 		</center>

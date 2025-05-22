@@ -150,3 +150,32 @@ function pageForward(){
 	}
 
 }
+
+function selectFunc(func){
+	var _delete = document.getElementById("delete");
+	var flat = document.getElementById("flat");
+	var sharp = document.getElementById("sharp");
+
+	_delete.classList.remove("selectedNote");
+	sharp.classList.remove("selectedNote");
+	flat.classList.remove("selectedNote");
+	note = "";
+
+	switch(func){
+		case 1:
+			_delete.classList.add("selectedNote")
+			note = "✕";
+			break;
+		case 2:
+			flat.classList.add("selectedNote")
+			note = "";
+			break;
+		case 3:
+			sharp.classList.add("selectedNote")
+			note = "";
+			break;
+		case 4:
+			return;
+	}
+	sessionStorage.setItem("note", note);
+}

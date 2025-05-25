@@ -53,9 +53,10 @@ h6{
 	display: block;
 	background-color: oldlace;
 	position: fixed;
+	top: 0;
 	width: 25%;
 	height: 25%;
-	margin: 25% 37.5% 50% 37.5%;
+	margin: 15% 37.5% 50% 37.5%;
 }
 #instrumentAddWindow input{
 	margin: 5px;

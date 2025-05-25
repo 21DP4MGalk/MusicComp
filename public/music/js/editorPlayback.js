@@ -159,7 +159,7 @@ async function setInstrument(instruments, ai){
 		}
 	}
 	sessionStorage.setItem("pieceFile", JSON.stringify(pieceFile));
-	rebuildDisplayArray();
+	//rebuildDisplayArray();
 	return;
 }
 

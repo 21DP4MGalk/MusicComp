@@ -193,6 +193,9 @@ async function saveWave(){
 }
 
 function drawFourier(fromEditor = true){
+		
+	saveWave();
+
 	var ai = sessionStorage.getItem("activeInstrument");
 	var instruments = JSON.parse(sessionStorage.getItem("instrumentList"));
 	var curves = instruments[ai][3].bezier;
@@ -355,4 +358,45 @@ function prevSegment(){
 
 	sessionStorage.setItem("activeCurve", ac);	
 	redrawCurve();
+}
+
+function deleteCurve(){
+	ac = Number(sessionStorage.getItem("activeCurve"));
+	ai = Number(sessionStorage.getItem("activeInstrument"));
+	instruments = JSON.parse(sessionStorage.getItem("instrumentList"));
+	if(ac == 0 && instruments[ai][3].bezier.length == 1){
+		alert("Cannot delete the only curve!");
+		return;
+	}
+	instruments[ai][3].bezier.splice(ac, 1);
+	sessionStorage.setItem("instrumentList", JSON.stringify(instruments));
+
+	if(ac == 0){
+		openEditor(ai);
+	}
+	else{
+		prevSegment();
+	}
+
+}
+
+async function deleteInstrument(instrument){
+	var instruments = JSON.parse(sessionStorage.getItem("instrumentList"));
+	
+	requestData = new FormData();
+	requestData.append("pieceID", instruments[instrument][5]);
+	requestData.append("instrumentID", instruments[instrument][4]);
+
+	var response = await fetch("/api/removeInstrument.php", {
+		method: "POST",
+		body: requestData,
+	})
+	if(await response.ok){
+		instruments.splice(instrument, 1);
+		sessionStorage.setItem("instrumentList", JSON.stringify(instruments) );
+	}
+	else{
+		alert(await response.text());
+	}
+	return;
 }

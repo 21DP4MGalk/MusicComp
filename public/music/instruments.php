@@ -48,7 +48,7 @@
 				<br>
 				<button onclick="prevSegment()"> &#x003C; </button>
 				<button onclick="closeEditor()">Close</button>
-				<button onclick="saveCurve()">Save curve</button>
+				<button onclick="deleteCurve()">Delete curve</button>
 				<button onclick="saveWave()">Save waveform</button>
 				<button onclick="drawFourier()">Render waveform</button>
 				<button onclick="nextSegment()"> &#x003E; </button>

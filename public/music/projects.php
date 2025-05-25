@@ -14,9 +14,11 @@
 			<a id="navHome" href="/index.php">Home</a>
 			<a id="navProjects" href="/music/projects.php">Projects</a> 
 			<a id="navInstruments" href="/music/instruments.php">Instrument manager</a>
+			<a id="navLogout" onclick="logout()">Logout</a>
 		</div>
 		<div id="toolBar">
-			<button id="filters" onclick="filteringPopup()">Filtering</button>
+			<!--<button id="filters" onclick="filteringPopup()">Filtering</button>
+			-->
 			<input id="search" placeholder="Search your pieces" />
 			<button id="searchBtn" onclick="search()">Search</button>
 			<button id="newPiece" onclick="newPiecePopup()">New piece</button>

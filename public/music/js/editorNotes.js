@@ -1,28 +1,5 @@
 var staffBounds = [[]];
 
-function getPitchGivenA(desiredPitchNum, referenceANum = 69, referenceA = 440){		
-	// desiredPitchNum is the number assigned to the pitch we want to generate in a scale, for example how Middle C in MIDI format is 60
-	// referenceANum is the number assigned to concert A in the same context, reference A defines concert A. 
-	//All values should be INT
-	if(isNaN(desiredPitchNum) || isNaN(referenceANum) || isNaN(referenceA)){
-		throw new TypeError("One or more of of the parameters used for generating a pitches turned out not to be numbers, but rapscallions in trench coats!");
-	}
-
-	return (referenceA * (Math.pow( Math.pow(2, 1/12), (desiredPitchNum - referenceANum) ) ));
-}
-
-function getChromatic12TET(referenceA){
-	if(isNaN(referenceA)){
-		throw new TypeError("Concert A does not appear to be a number.");
-	}
-	
-	tet12 = [];
-	for(i = 0; i < 128; i++){
-		tet12.push(getPitchGivenA(i, 69, referenceA));
-	}
-	return tet12;
-}
-
 class Note{
 	constructor(x, y, duration, volume = 1){ //all must be numeric
 		this.duration = duration;
@@ -389,18 +366,6 @@ function findNewNotePosition(x, y, noteChar){
 	note.rest = false;
 	
 	if(noteChar.charCodeAt(0) >= 58595 && noteChar.charCodeAt(0) <= 58600){
-	/*	var halfStaff = [canY/10 + (Math.floor(getStaffFromY(y, true)) * canY/100 * 14) + canY/200*4];
-		halfStaff.push(halfStaff[0]+ (canY/200*12))
-		if(Math.abs(y - halfStaff[0]) > Math.abs(y - halfStaff[1])){
-			note.y = 18;
-		}
-		else{
-			note.y = 6
-		}
-		if(noteChar.charCodeAt(0) == 58595){
-			note.y -= 2;
-		}
-		//noteInfo.y = canY/10 + (Math.floor(getStaffFromY(noteInfo.y, true)) * canY/100 * 14) + canY/200*16;  */
 		note.rest = true;
 	}
 
@@ -433,9 +398,6 @@ function findNewNoteIndex(x, y){
 	var trueX = toTrueX(x, y);
 	var index = -1;
 	for(var i = 0; i < displayArray.length; i++){
-		//if((noteChar > 57820 || noteChar < 57810) && noteChar !== 57506){
-		//	continue;
-		//}
 		currentTrueX = toTrueX( displayArray[i].x, displayArray[i].y);
 		if(trueX <= currentTrueX){
 			index = i;
@@ -487,7 +449,6 @@ function findValidNote(x, y){
 
 function addNote(note){
 	var pieceFile = JSON.parse(sessionStorage.getItem("pieceFile"));
-	//var finalNote = new Note(note.xIndex, note.yIndex, note.duration);
 	var ai = sessionStorage.getItem("activeInstrument");
 	var t
 	
@@ -1028,21 +989,6 @@ function moveGhost(){
 		noteInfo.y = roundYToStaff(roundedCoords.y, canY/100 * 15);
 	}
 
-	/*
-	if(noteChar.charCodeAt(0) >= 58595 && noteChar.charCodeAt(0) <= 58600){
-		var halfStaff = [canY/10 + (Math.floor(getStaffFromY(noteInfo.y, true)) * canY/100 * 14) + canY/200*4];
-		halfStaff.push(halfStaff[0]+ (canY/200*12))
-		if(Math.abs(noteInfo.y - halfStaff[0]) > Math.abs(noteInfo.y - halfStaff[1])){
-			noteInfo.y = halfStaff[1];
-		}
-		else{
-			noteInfo.y = halfStaff[0];
-		}
-		if(noteChar.charCodeAt(0) == 58595){
-			noteInfo.y -= canY/100;
-		}
-		//noteInfo.y = canY/10 + (Math.floor(getStaffFromY(noteInfo.y, true)) * canY/100 * 14) + canY/200*16;
-	}*/
 	notationCtx.globalAlpha = 0.5;
 
 	notationCtx.fillText(noteChar, noteInfo.x, noteInfo.y);
@@ -1147,11 +1093,6 @@ function rebuildDisplayArray(){
 	for(var i = 0 + ap*181; i < pieceFile.notes[ai].length  && i < 181*(ap+1); i++){
 		coords = getCoordinates(pieceFile.notes[ai][i].x, pieceFile.notes[ai][i].y, canX, canY);
 
-		//staff = Math.floor(getStaffFromY(coords[1], true)) ;
-
-		//if( staff > 4+(ap*5) || staff < ap*5){
-		//	continue;
-		//}
 		noteChar = durationToChar(pieceFile.notes[ai][i].duration, pieceFile.notes[ai][i].volume);
 
 

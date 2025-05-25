@@ -1,23 +1,66 @@
 <?php
 include 'config.php';
+include 'global.php';
 
-$data = json_decode(file_get_contents('php://input'), false);
+$token = $_COOKIE["token"];
 
-//BLAH BLAH ADD VALIDITY CHECK TO PREVENT SPAMMING;
-$piece = $data->piece;
-$tag = $data->tag; 	// tag name
-//$token = $data->token;
+$tagName = $_POST["tagName"];
+$pieceID = $_POST["pieceID"];
 
-$query = "INSERT INTO tags VALUES(NULL, ?)";
-$stmnt = $connection->prepare($query);
-$stmnt->bind_param('s', $tag);
+
+if(!$token){
+	echo "No token!";
+	http_response_code(401);
+	exit();
+}
+
+if(verifyData($tagName, 12)){
+	echo "Invalid tag name!";
+	http_response_code(400);
+	exit();
+
+}
+
+$stmnt = $connection->prepare("SELECT ID FROM users WHERE token = ?");
+$stmnt->bind_param("s", $token);
+$stmnt->execute();
+$result = $stmnt->get_result();
+
+if($result->num_rows == 0){
+	echo "Invalid token!";
+	http_response_code(401);
+	exit();
+}
+$result = $result->fetch_object();
+$userID = $result->ID;
+
+$stmnt = $connection->prepare("SELECT ID FROM tags WHERE name = ?");
+$stmnt->bind_param("s", $tagName);
+$stmnt->execute();
+$result = $stmnt->get_result();
+
+if($result->num_rows == 0){
+	$stmnt = $connection->prepare("INSERT INTO tags(name) VALUES(?)");
+	$stmnt->bind_param("s", $tagName);
+	$stmnt->execute();
+	$tagID = $connection->insert_id;
+	http_response_code(201);
+}
+else{
+	$result = $result->fetch_object();
+	$tagID = $result->ID;
+}
+
+$stmnt = $connection->prepare("INSERT INTO tags_connect(pieceID, tagID) VALUES(?, ?)");
+$stmnt->bind_param("ii", $pieceID, $tagID);
 $stmnt->execute();
 
-//get TAG ID and create tag if doesn't exist
-/*
+if($connection->error){
+	http_response_code(500);
+	echo "fuckd";
+	exit();
+}
 
-$query = "INSERT INTO tags_connect VALUES(NULL, ?, ?)";
-$stmnt = $connection->prepare($query);
-$stmnt->bind_param("ss", $piece, $tagID)
-*/
+echo("All good!");
+exit();
 ?>

@@ -43,18 +43,18 @@ if(!$result->num_rows){
 $result = $result->fetch_object();
 $pieceID = $result->ID;
 
-$query = $connection->prepare("SELECT ID FROM pieces WHERE title = ? AND userID = ?");
-$query->bind_param("si", $pieceFile->pieceName, $userID);
-$query->execute();
-$result = $query->get_result();
-var_dump($result);
-echo $result->num_rows;
-if($result->num_rows > 0){
-	http_response_code(400);
-	echo "Cannot change name when there's already piece by this name!";
-	exit();
-}
 
+if($oldName != $pieceFile->pieceName){
+	$query = $connection->prepare("SELECT ID FROM pieces WHERE title = ? AND userID = ?");
+	$query->bind_param("si", $pieceFile->pieceName, $userID);
+	$query->execute();
+	$result = $query->get_result();
+	if($result->num_rows > 0){
+		http_response_code(400);
+		echo "Cannot change name when there's already piece by this name!";
+		exit();
+	}
+}
 $query = $connection->prepare("UPDATE pieces SET title = ?, file = ? WHERE ID = ?");
 $query->bind_param("ssi", $pieceFile->pieceName, json_encode($pieceFile), $pieceID);
 $query->execute();

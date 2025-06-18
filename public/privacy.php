@@ -24,12 +24,12 @@
 		
         <div id="contentStart"></div>
         <h1> THIS SITE USES COOKIES FOR YOUR LOGIN TOKEN </h1>
-        <h4> So far that's it, you can check it yourself, I don't collect shit.</h4>
-        <h6> Your username is also stored in session storage and that's it.</h6>
-        <p>If you don't trust me, go check the code out you bald bastard.</p>
+        <h4> So far that's it, you can check it yourself, I don't collect stuff.</h4>
+        <h6> Your username, hashed password, email and the stuff you create here is also stored in the database and that's it.</h6>
+        <p>If you don't trust me, go check the code out.</p>
         <a href="https://github.com/21DP4MGalk/MusicComp">My github</a>
         <p>Enjoy this pic stolen shamelessly from <a href="https://tesladownunder.com/">tesladownunder.com</a>, I really like it. All rights reserved by them obviously.</p>
-        <p>Alternatively, enjoy <a href="https://vimm.net/vault/290">Duck Tales for the NES</a></p>
+        <!-- <p>Alternatively, enjoy <a href="https://vimm.net/vault/290">Duck Tales for the NES</a></p> -->
         <img src="https://tesladownunder.com/TeslaColorREDBilat00811000.jpg" alt="Picture of a man hooked up to a ladder via tesla coil, looks cool"/>
         
         <div id="footer">

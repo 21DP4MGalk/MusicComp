@@ -37,7 +37,7 @@ async function logout(){
             alert(response.text());
             return
         }
-        sessionStorage.setItem("username", "");
+        //sessionStorage.setItem("username", "");
         window.location.href = "";
     }
 }

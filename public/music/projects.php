@@ -3,6 +3,7 @@
 	<head>
 		<title> Musical experiments </title>
 		<script src="./js/projects.js"></script>
+		<script src="/js/navbar.js"></script>
 		<link rel="stylesheet" href="/css/global.css">
 		<link rel="stylesheet" href="/css/navbar.css">
 		<link rel="stylesheet" href="/css/footer.css">

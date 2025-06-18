@@ -25,7 +25,7 @@ function newInstrumentRow(element, id, instrument, description){
 function updateList(){
 	var instrumentList = JSON.parse(sessionStorage.getItem("instrumentList"));
 	var listElement = document.getElementById("instrumentList");
-	
+	listElement.innerHTML = "";
 	var currentPiece;
 	
 	for(var i = 0; i < instrumentList.length; i++){
@@ -280,10 +280,10 @@ async function addInstrument(){
 	});
 	if(response.ok){
 		addInstrumentWindowClose();
+		await init();
 		return;
 	}
 	document.getElementById("addError").innerHTML = await response.text();
-
 }
 
 function nextSegment(){
@@ -398,5 +398,6 @@ async function deleteInstrument(instrument){
 	else{
 		alert(await response.text());
 	}
+	await init();
 	return;
 }

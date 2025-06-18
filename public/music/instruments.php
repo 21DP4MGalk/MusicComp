@@ -65,8 +65,9 @@
 
 				<label>Description</label> <input id="instrumentDescription"/> <br/>
 				<p id="addError"></p>
+				<button onclick="addInstrumentWindowClose()">Cancel</button>
 				<button onclick="addInstrument()">Submit</button>
-			</div>
+		</div>
 		</div>
 
 		<div id="footer">

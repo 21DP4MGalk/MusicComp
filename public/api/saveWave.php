@@ -14,7 +14,7 @@ $result = $result->fetch_object();
 
 if(!$result->ID){
 	http_response_code(400);
-	echo "Invalid token" + $result->ID;
+	echo "Invalid token";
 	exit();
 }
 

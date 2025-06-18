@@ -1,5 +1,22 @@
 function navInit(){
-    if(document.cookie){
+    let cookies = decodeURIComponent(document.cookie);
+    let name = "token=";
+    let cookeh = "";
+    cookies = cookies.split(';');
+    for(let i = 0; i <cookies.length; i++) {
+        cookeh = cookies[i];
+        while (cookeh.charAt(0) == ' ') {
+            cookeh = cookeh.substring(1);
+        }
+        if (cookeh.indexOf(name) == 0) {
+            cookeh.substring(name.length, cookeh.length);
+            break;
+        }
+        cookeh = "";
+    }
+    console.log(cookies);
+    console.log(cookeh);
+    if(cookeh){
         document.getElementById("navRegister").style.display = "none";
         document.getElementById("navLogin").style.display = "none";
         document.getElementById("navLogout").style.display = "block";

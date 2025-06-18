@@ -13,7 +13,7 @@ async function submitLoginForm(){
 	var result = await response
 	if(result.ok){
 		sessionStorage.setItem("username", usernameField.value)
-		window.location.href = "tutorial.php";
+		//window.location.href = "tutorial.php";
 	}
 }
 
